@@ -1,0 +1,1028 @@
+
+<main>
+
+	<div  class="">
+
+	<!--<div class="checkbox">-->
+		<!--<label>-->
+			<!--<input type="checkbox" ng-model="oneAtATime">-->
+			<!--Open only one at a time-->
+		<!--</label>-->
+	<!--</div>-->
+	<div>
+		<p>View {{user.personal_information.first_name + user.personal_information.last_name}}'s Profile &nbsp;&nbsp;   | &nbsp;&nbsp;   Your Profile Views: 157	times</p>
+	</div>
+
+	<uib-accordion close-others="oneAtATime">
+		<uib-accordion-group ng-repeat="(docParamName, docParamValues) in user track by $index" ng-init="status = $first" is-open="status" ng-if="docParamName != 'files'" class="" >
+			<uib-accordion-heading >
+				<div ng-class="{'grey': !status,  'cyan':  status}" class="waves-effect waves-light" style="width: 100%;">
+					<i class="glyphicon glyphicon-plus"  ng-class="{'glyphicon glyphicon-circle-arrow-right': !status,  'glyphicon glyphicon-circle-arrow-down':  status}"></i>
+					{{docParamName  | underscoreless | capitalize:true}}
+				</div>
+			</uib-accordion-heading>
+
+			<form editable-form class="editableForm" e-name="editableForm" name="editableForm" onaftersave="saveUser(user)" ng-init="loadGroups()" shown="0" e-ng-model="user">
+
+
+
+				<div ng-if="docParamName == 'personal_information'" class="">
+					<div class="paramDiv  col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
+
+						<div class="param_label col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							First Name*
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<div editable-text="user.personal_information.first_name" e-class="form-control" class="" e-name="first_name"  ng-model="user.personal_information.first_name" required>
+								{{user.personal_information.first_name}}
+							</div>
+						</div>
+
+
+					</div>
+
+					<div class="paramDiv  col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
+
+						<div class="param_label col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							Last Name*
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<div editable-text="user.personal_information.last_name" e-class="form-control" e-name="last_name"  ng-model="user.personal_information.last_name" required>
+								{{user.personal_information.last_name}}
+							</div>
+						</div>
+					</div>
+
+					<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+						<div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							E-mail*
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<div editable-email="user.personal_information.email" e-class="form-control " e-name="email"  ng-model="user.personal_information.email" required>
+								{{user.personal_information.email}}
+							</div>
+						</div>
+					</div>
+
+					<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+						<div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							Phone/Cell*
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<div editable-tel="user.personal_information.mobile" e-class="form-control " e-name="mobile"  ng-model="user.personal_information.mobile" required>
+								{{user.personal_information.mobile}}
+							</div>
+						</div>
+					</div>
+
+
+					<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+						<div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							Password*
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<div class="" >
+
+							</div>
+						</div>
+						<!-- <div editable-text="user.personal_information.password" e-type="password" e-class="form-control " e-name="password"  ng-model="user.personal_information.password" required>
+                        </div> -->
+
+					</div>
+
+					<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+						<div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							Gender*
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<div e-class="form-control postInput" class="" editable-select="user.personal_information.gender" e-name="user.personal_information.gender" ng-model="user.personal_information.gender"   e-ng-options="g.value as g.text for g in genders">
+								{{ user.personal_information.gender}}
+							</div>
+						</div>
+					</div>
+
+					<!-- <div>
+
+                        <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                            Birthdate*
+                        </div>
+
+                        <div>
+                            <input type='date' class="form-control " name="date_of_birth" placeholder="Birthdate" ng-model="user.personal_information.date_of_birth" required>
+                        </div>
+
+                    </div>
+                     -->
+					<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+						<div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							Marital Status
+						</div>
+
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<div e-class="form-control postInput" class="" editable-select="user.personal_information.martial_status" e-name="user.personal_information.martial_status" ng-model="user.personal_information.martial_status" e-ng-options="g.value as g.text for g in martialStatuses">
+								{{ user.personal_information.martial_status}}
+							</div>
+						</div>
+					</div>
+
+					<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+						<div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							Education Status
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<div e-class="form-control postInput" class="" editable-select="user.personal_information.education_status" e-name="user.personal_information.education_status" ng-model="user.personal_information.education_status" e-ng-options="g.value as g.text for g in educationStatuses">
+								{{ user.personal_information.education_status}}
+							</div>
+						</div>
+					</div>
+
+					<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+						<div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							Street Address 1
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<div editable-text="user.personal_information.street_1" ng-model="user.personal_information.street_1" name="street_1" e-class="form-control ">
+								{{user.personal_information.street_1}}
+							</div>
+						</div>
+					</div>
+
+
+					<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+						<div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							country
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<div editable-text="user.personal_information.country" ng-model="user.personal_information.country" e-class="form-control " e-typeahead="country as country for country in countries  | filter:$viewValue | limitTo:8">
+								{{user.personal_information.country}}
+							</div>
+						</div>
+
+
+					</div>
+
+					<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+						<div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							State*
+						</div>
+
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<div editable-text="user.personal_information.state" name="state" ng-model="user.personal_information.state" placeholder="" e-class="form-control " e-typeahead="state.name as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" ng-model="user.personal_information.state">
+								{{user.personal_information.state}}
+							</div>
+						</div>
+					</div>
+
+					<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+						<div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							city*
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<div editable-text="user.personal_information.city" name="city" e-class="form-control " ng-model="asyncSelected" placeholder="" e-typeahead="address for address in getLocation($viewValue)" e-typeahead-loading="loadingLocations" e-typeahead-no-results="noResults" ng-model="user.personal_information.city" >
+								{{user.personal_information.city}}
+							</div>
+						</div>
+					</div>
+
+					<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+						<div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							Zip Code
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<div editable-text="user.personal_information.zipcode" name="zipcode" e-class="form-control " ng-model="user.personal_information.zipcode">
+								{{user.personal_information.zipcode}}
+							</div>
+						</div>
+					</div>
+
+					<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+						<div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							Facebook
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<div editable-text="user.personal_information.facebook" name="facebook" e-class="form-control " ng-model="user.personal_information.facebook">
+								<a href="http://www.{{user.personal_information.facebook}}">{{user.personal_information.facebook}}</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+						<div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							Twitter
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<div editable-text="user.personal_information.twitter" name="twitter" e-class="form-control " ng-model="user.personal_information.twitter">
+								{{user.personal_information.twitter}}
+							</div>
+						</div>
+					</div>
+
+					<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+						<div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							LinkedIn
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<div editable-text="user.personal_information.linkedin" name="linkedin" e-class="form-control " ng-model="user.personal_information.linkedin">
+								{{user.personal_information.linkedin}}
+							</div>
+						</div>
+					</div>
+
+					<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+						<div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							YouTube video
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							<div editable-text="user.personal_information.youtube" name="youtube" e-class="form-control " ng-model="user.personal_information.youtube">
+								{{user.personal_information.youtube}}
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div ng-repeat="(paramKey,paramValues)  in docParamValues" class="" style="" ng-class="{parameterFix:!isArray(docParamValues),parameterFix2:isArray(docParamValues)}"repeat-done="initDatePicker()">
+
+					<div ng-repeat="(k,v) in paramValues track by $index" class="parameterFix" ng-class="{notFirst:!$first}">
+
+						<div ng-if="!isArray(docParamValues)" class="">
+							<div class="" ng-if="k == 'slug'" style="float:left;font-weight:bold;">
+								{{v}}:
+							</div>
+
+
+							<div  ng-if="k == 'paramValue'" ng-switch="paramValues.inputType" class=""  style="float:right;padding-right: 15px;margin-bottom:10px;width:100%;">
+
+								<div ng-switch-when="text">
+									<div e-class="form-control  " e-form="rowform" editable-text="user[docParamName][paramKey][k]" e-name="user[docParamName][paramKey][k]" >
+										{{v}}
+									</div>
+								</div>
+
+								<div ng-switch-when="select">
+
+
+									<div editable-select="user[docParamName][paramKey][k]" e-form="rowform"  ng-model="user[docParamName][paramKey][k]" e-class="form-control   "  e-ng-options="o.value as o.text for o in groups[paramValues['paramName']] | toArray:true "  >
+										{{	showGroup(paramKey, docParamName, paramValues['paramName'])  }}
+
+
+									</div>
+
+
+								</div>
+
+								<div ng-switch-when="checklist" class="">
+									<div editable-checklist="user[docParamName][paramKey][k]" e-form="rowform" ng-model="user[docParamName][paramKey][k]" e-class="" class=""  e-name="user[docParamName][paramKey][k]" e-ng-options="o.value as o.text for o in groups[paramValues['paramName']] | toArray:true " >
+										{{	showChecklistGroup(paramValues['paramName'], docParamName)  }}
+									</div>
+								</div>
+
+								<div ng-switch-when="textarea">
+									<div e-class="form-control   " class="" e-form="rowform" editable-textarea="user[docParamName][paramKey][k]" e-name="user[docParamName][paramKey][k]" >
+										{{v}}
+									</div>
+								</div>
+
+								<style>
+									.full button span {
+										background-color: limegreen;
+
+										color: black;
+									}
+									.partially button span {
+										background-color: orange;
+
+										color: black;
+									}
+								</style>
+								<div ng-switch-when="date">
+									<p ng-hide="editableForm.$visible">{{user[docParamName][paramKey][k] | date:"MM/dd/yyyy"}}</p>
+
+									<input input-date
+										   ng-show="editableForm.$visible"
+										   type="text"
+										   name="created"
+										   id="inputCreated"
+										   e-class="form-control"
+										   class="datepicker form-control"
+										   ng-model="user[docParamName][paramKey][k]"
+										   container="body"
+										   format="mmmm/dd/yyyy"
+										   months-full="{{ month }}"
+										   months-short="{{ monthShort }}"
+										   weekdays-full="{{ weekdaysFull }}"
+										   weekdays-short="{{ weekdaysShort }}"
+										   weekdays-letter="{{ weekdaysLetter }}"
+										   min="{{ minDate }}"
+										   max="{{ maxDate }}"
+										   today="today"
+										   clear="clear"
+										   close="close"
+										   select-years="15"
+										   on-start="onStart()"
+										   on-render="onRender()"
+										   on-open="onOpen()"
+										   on-close="onClose()"
+										   on-set="onSet()"
+										   on-stop="onStop()" />
+
+									<!--<p ng-hide="editableForm.$visible">-->
+										<!--{{user[docParamName][paramKey][k] | date:"MM/dd/yyyy"}}-->
+									<!--</p>-->
+									<!--<p class="input-group"  ng-show="editableForm.$visible">-->
+										<!--<input type="text" class="form-control datePickerInput"  style="width:247px;" uib-datepicker-popup="{{format}}"  ng-model="user[docParamName][paramKey][k]" is-open="opened[paramKey]" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"  close-text="Close" />-->
+										  <!--<span class="input-group-btn">-->
+											<!--<button type="button" class="btn btn-default" ng-click="open($event,paramKey)"><i class="glyphicon glyphicon-calendar"></i></button>-->
+										  <!--</span>-->
+									<!--</p>-->
+								</div>
+								<script>
+
+									$(document).ready(function(){
+
+										$('.datepicker').pickadate();
+
+									});
+
+								</script>
+								<div ng-switch-when="cv">
+									{{v}}
+									<!--<div ng-hide="pdfing "  class="col-xs-12 col-sm-4 col-md-4 col-lg-4">-->
+										<!--<input  id="cvUpload" ng-show="editableForm.$visible"  type="file" nv-file-select uploader="uploader" />-->
+										<!--<ul>-->
+											<!--<li ng-repeat="item in uploader.queue" style="text-align:left;">-->
+												<!--<label>File name:</label> <span ng-bind="item.file.name"></span><br/>-->
+												<!--<button class="waves-effect waves-lights waves-teal" ng-click="item.upload();" style="font-size:16px;cursor:pointer;background-color: #FFFFFF;"><i class="glyphicon glyphicon-cloud-upload" ></i> &nbsp; Upload </button>-->
+											<!--</li>-->
+										<!--</ul>-->
+									<!--</div>-->
+									<!--<div ng-show="pdfing" ng-init="!showPdf">-->
+										<!--<button  ng-show="pdfing" type="button" class="waves-effect waves-lights waves-teal" ng-click="showPdf = !showPdf" style="background-color: #FFFFFF;font-size:16px;">-->
+											<!--<div ng-show="showPdf">Show CV<i  class="glyphicon glyphicon-chevron-down"></i></div>-->
+											<!--<div ng-show="!showPdf">Hide CV<i  class="glyphicon glyphicon-chevron-up"></i></div>-->
+										<!--</button>-->
+										<!--<button  ng-show="pdfing && editableForm.$visible" type="button" class="waves-effect waves-lights waves-teal" ng-click="resetPdfUrl();" style="background-color: #FFFFFF;font-size:16px;">-->
+											<!--<div >Reset<i  class="glyphicon glyphicon-erase"></i></div>-->
+										<!--</button>-->
+									<!--</div>-->
+									<!--<div  ng-if="pdfUrl" uib-collapse="showPdf" ng-show="pdfing" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align:center;">-->
+										<!--<pdf-viewer	delegate-handle="my-pdf-container" url="pdfUrl" scale="0.5"	show-toolbar="true"></pdf-viewer>-->
+									<!--</div>-->
+
+									<!--<div class="col-xs-12col-sm-4 col-md-4 col-lg-4">-->
+										<!--<div ng-hide="pdfing ">-->
+											<!--<input ng-hide="hideInput" id="cvUpload"  type="file" nv-file-select uploader="uploader" /><br/>-->
+											<!--<ul>-->
+												<!--<li ng-repeat="item in uploader.queue" style="text-align:left;">-->
+													<!--<label>File name:</label> <span ng-bind="item.file.name"></span><br/>-->
+													<!--<button class="waves-effect waves-lights waves-teal" ng-click="item.upload();" style="font-size:22px;cursor:pointer;background-color: #FFFFFF;"><i class="glyphicon glyphicon-cloud-upload" ></i> &nbsp; Upload </button>-->
+												<!--</li>-->
+											<!--</ul>-->
+										<!--</div>-->
+
+									<!--</div>-->
+
+									<!--<button  ng-show="pdfing" type="button" class="waves-effect waves-lights waves-teal" ng-click="showPdf = !showPdf" style="background-color: #FFFFFF;font-size:22px;">-->
+										<!--<div ng-show="showPdf">Show CV<i  class="glyphicon glyphicon-chevron-down"></i></div>-->
+										<!--<div ng-show="!showPdf">Hide CV<i  class="glyphicon glyphicon-chevron-up"></i></div>-->
+									<!--</button>-->
+									<!--<button  ng-show="pdfing" type="button" class="waves-effect waves-lights waves-teal" ng-click="resetPdfUrl();" style="background-color: #FFFFFF;font-size:22px;">-->
+										<!--<div >Reset<i  class="glyphicon glyphicon-erase"></i></div>-->
+									<!--</button>-->
+
+									<!--<div id="soprano" ng-if="pdfUrl" uib-collapse="showPdf" ng-show="pdfing" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align:center;">-->
+										<!--<pdf-viewer-->
+												<!--delegate-handle="soprano"-->
+												<!--url="pdfUrl"-->
+												<!--scale="0.5"-->
+												<!--show-toolbar="true">-->
+										<!--</pdf-viewer>-->
+									<!--</div>-->
+								</div>
+
+								<div ng-switch-default>
+									<div e-class="form-control" class="" editable-text="user[docParamName][paramKey][k]" e-name="user[docParamName][paramKey][k]" >
+										{{v}}
+									</div>
+								</div>
+							</div >
+							<!--<div ng-if="k == 'paramValue'" e-class="form-control " class="" editable-text="user[docParamName][paramKey][k]" e-name="user[docParamName][paramKey][k]">-->
+							<!--{{v}}-->
+							<!--</div>-->
+						</div>
+
+						<div ng-repeat="(r,s) in v track by $index" ng-show="isArray(docParamValues)" class="" style="margin-bottom:20px;" repeat-done="initDatePicker()">
+
+							<div class="col-md-3" ng-if="r == 'slug'" style="float:left;font-weight:bold;">
+								{{s}}:
+							</div>
+							<div  ng-if="r == 'paramValue'" ng-switch="v.inputType" class="col-md-6" style="padding-right:15px;margin-bottom:10px; ">
+
+								<div ng-switch-when="text">
+
+									<div e-class="form-control" ng-model="user[docParamName][paramKey][k][r]" class="" e-form="rowform" editable-text="user[docParamName][paramKey][k][r]" name="user[docParamName][paramKey][k][r]" e-name="user[docParamName][paramKey][k][r]">
+										{{user[docParamName][paramKey][k][r]}}
+									</div>
+								</div>
+
+								<div ng-switch-when="select">
+
+									<!--<div editable-select="user[docParamName][paramKey][k]"-->
+										 <!--e-form="rowform"-->
+										 <!--ng-model="user[docParamName][paramKey][k]"-->
+										 <!--e-class="form-control"-->
+										 <!--e-ng-options="o.value as o.text for o in groups[paramValues['paramName']]"-->
+										 <!--ng-init="loadGroups(paramValues['paramName'], user[docParamName]['docParamId'])"-->
+										 <!--ng-disabled="!groups[paramValues['paramName']]" >-->
+										<!--{{	showGroup(paramKey, docParamName, paramValues['paramName'])  }}-->
+
+
+									<!--</div>-->
+
+
+									<div editable-select="user[docParamName][paramKey][k][r]"
+
+										 e-form="rowform"
+										 name="user[docParamName][paramKey][k][r]"
+										 e-name="user[docParamName][paramKey][k][r]"
+										 ng-model="user[docParamName][paramKey][k][r]"
+										 e-ng-model="user[docParamName][paramKey][k][r]"
+										 e-class="form-control"
+										 e-ng-options="o.value as o.text for o in groups[v.paramName] | toArray:true  | filter:{parent_id: user[docParamName][user[docParamName][paramKey]['paramParentId']]['paramValue'] }:true"										>
+
+										{{ showIterableGroup(v['paramId'], docParamName, paramKey, v.paramName) }}
+									</div>
+
+
+									<!--<select class="form-control" ng-model="user[docParam][paramId]['paramValue']" ng-options="o.id as o.text for o in groups[paramValues.paramName] | toArray:true  | filter:{parent_id: user[docParam][user[docParam][paramId]['paramParentId']]['paramValue'] }:true "   ng-init="loadGroups(paramValues.paramName, user[docParam]['docParamId'])">-->
+									<!--</select>-->
+
+									<!--<div editable-select="user[docParamName][paramKey][k][r]" e-form="rowform" e-ng-model="user[docParamName][paramKey][k][r]" e-class="form-control   "  e-ng-options="o.value as o.text for o in groups[v.paramName]" onshow="loadGroups(v.paramName,paramValues['docParamId'])" >-->
+										<!--{{ showIterableGroup(v['paramName'], docParamName, paramKey) }}-->
+
+									<!--</div>-->
+
+
+								</div>
+
+								<div ng-switch-when="checklist">
+									<div editable-checklist="user[docParamName][paramKey][k][r]" e-form="rowform" ng-model="user[docParamName][paramKey][k][r]"  e-class="" class=""  e-name="user[docParamName][paramKey][k][r]" e-ng-options="o.value as o.text for o in groups[v.paramName] track by $index | toArray:true "  ng-disabled="!groups[paramKey]">
+
+										<!--onshow="loadGroups(v.paramName,docParamValues['docParamId'])"-->
+										{{	showIterableChecklistGroup(v['paramName'], docParamName, paramKey)  }}
+									</div>
+								</div>
+
+								<div ng-switch-when="textarea">
+									<div e-class="form-control   " class="" e-form="rowform" editable-textarea="user[docParamName][paramKey][k][r]" e-name="user[docParamName][paramKey][k][r]">
+										{{s}}
+									</div>
+								</div>
+
+
+
+								<div ng-switch-when="date">
+									<!--materialize pickDate-->
+									<p ng-hide="editableForm.$visible">{{user[docParamName][paramKey][k][r] | date:"MM/dd/yyyy"}}</p>
+									<div  ng-show="editableForm.$visible" class="input-group">
+										<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+										<input input-date
+
+										   type="text"
+										   placeholder="Click for calender"
+										   name="created"
+										   id="inputCreated[paramKey][k]"
+										   class="datepicker form-control  "
+										   ng-model="user[docParamName][paramKey][k][r]"
+										   container="body"
+										   format="mm/dd/yyyy"
+										   months-full="{{ month }}"
+										   months-short="{{ monthShort }}"
+										   weekdays-full="{{ weekdaysFull }}"
+										   weekdays-short="{{ weekdaysShort }}"
+										   weekdays-letter="{{ weekdaysLetter }}"
+										   min="{{ minDate }}"
+										   max="{{ maxDate }}"
+										   today="today"
+										   clear="clear"
+										   close="close"
+										   select-years="15"
+										   on-start="onStart()"
+										   on-render="onRender()"
+										   on-open="onOpen()"
+										   on-close="onClose()"
+										   on-set="onSet()"
+										   on-stop="onStop()" />
+										</div>
+									<!--end materialize pickDate-->
+									<script>
+//										$('.datepicker').pickadate();
+									</script>
+									<!--materialize pickDate initiator-->
+
+
+
+									<!--<p ng-hide="editableForm.$visible">-->
+										<!--{{user[docParamName][paramKey][k][r] | date:"MM/dd/yyyy" }}-->
+									<!--</p>-->
+									<!--<div class="input-group"  ng-show="editableForm.$visible">-->
+										<!--<input type="text" class="form-control " style="width:247px;" uib-datepicker-popup="{{format}}" ng-model="user[docParamName][paramKey][k][r]" is-open="openedIterable[paramKey][k]" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"  close-text="Close" />-->
+										  <!--<span class="input-group-btn">-->
+											<!--<button type="button" class="btn btn-default" ng-click="openIterable($event,k,paramKey)"><i class="glyphicon glyphicon-calendar"></i></button>-->
+										  <!--</span>-->
+									<!--</div>-->
+
+								</div>
+
+								<div ng-switch-when="cv">
+									<div   class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+										{{user[docParamName][paramKey][k][r]}}
+									</div>
+									<input  id="cvUpload" ng-show="editableForm.$visible"  type="file" nv-file-select uploader="uploader" />
+									<!--<div ng-hide="pdfing "  class="col-xs-12 col-sm-4 col-md-4 col-lg-4" ng-init="getThisLengthKey(paramKey);">-->
+										<!--<input  id="cvUpload" ng-show="editableForm.$visible"  type="file" nv-file-select uploader="uploader" />-->
+										<!--<ul>-->
+											<!--<li ng-repeat="item in uploader.queue" style="text-align:left;">-->
+												<!--<label>File name:</label> <span ng-bind="item.file.name"></span><br/>-->
+												<!--<button class="waves-effect waves-lights waves-teal" ng-click="item.upload();" style="font-size:16px;cursor:pointer;background-color: #FFFFFF;"><i class="glyphicon glyphicon-cloud-upload" ></i> &nbsp; Upload </button>-->
+											<!--</li>-->
+										<!--</ul>-->
+									<!--</div>-->
+									<!--<div ng-show="pdfing" ng-init="!showPdf">-->
+										<!--<button  ng-show="pdfing" type="button" class="waves-effect waves-lights waves-teal" ng-click="showPdf = !showPdf" style="background-color: #FFFFFF;font-size:16px;">-->
+											<!--<div ng-show="showPdf">Show CV<i  class="glyphicon glyphicon-chevron-down"></i></div>-->
+											<!--<div ng-show="!showPdf">Hide CV<i  class="glyphicon glyphicon-chevron-up"></i></div>-->
+										<!--</button>-->
+										<!--<button  ng-show="pdfing && editableForm.$visible" type="button" class="waves-effect waves-lights waves-teal" ng-click="resetPdfUrl();" style="background-color: #FFFFFF;font-size:16px;">-->
+											<!--<div >Reset<i  class="glyphicon glyphicon-erase"></i></div>-->
+										<!--</button>-->
+									<!--</div>-->
+
+
+
+									<!--<div class="col-xs-12col-sm-4 col-md-4 col-lg-4">-->
+									<!--<div ng-hide="pdfing ">-->
+									<!--<input ng-hide="hideInput" id="cvUpload"  type="file" nv-file-select uploader="uploader" /><br/>-->
+									<!--<ul>-->
+									<!--<li ng-repeat="item in uploader.queue" style="text-align:left;">-->
+									<!--<label>File name:</label> <span ng-bind="item.file.name"></span><br/>-->
+									<!--<button class="waves-effect waves-lights waves-teal" ng-click="item.upload();" style="font-size:22px;cursor:pointer;background-color: #FFFFFF;"><i class="glyphicon glyphicon-cloud-upload" ></i> &nbsp; Upload </button>-->
+									<!--</li>-->
+									<!--</ul>-->
+									<!--</div>-->
+
+									<!--</div>-->
+
+									<!--<button  ng-show="pdfing" type="button" class="waves-effect waves-lights waves-teal" ng-click="showPdf = !showPdf" style="background-color: #FFFFFF;font-size:22px;">-->
+									<!--<div ng-show="showPdf">Show CV<i  class="glyphicon glyphicon-chevron-down"></i></div>-->
+									<!--<div ng-show="!showPdf">Hide CV<i  class="glyphicon glyphicon-chevron-up"></i></div>-->
+									<!--</button>-->
+									<!--<button  ng-show="pdfing" type="button" class="waves-effect waves-lights waves-teal" ng-click="resetPdfUrl();" style="background-color: #FFFFFF;font-size:22px;">-->
+									<!--<div >Reset<i  class="glyphicon glyphicon-erase"></i></div>-->
+									<!--</button>-->
+
+									<!--<div id="soprano" ng-if="pdfUrl" uib-collapse="showPdf" ng-show="pdfing" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align:center;">-->
+									<!--<pdf-viewer-->
+									<!--delegate-handle="soprano"-->
+									<!--url="pdfUrl"-->
+									<!--scale="0.5"-->
+									<!--show-toolbar="true">-->
+									<!--</pdf-viewer>-->
+									<!--</div>-->
+								</div>
+
+								<div ng-switch-default>
+									{{paramKey}}
+									<div e-class="form-control" class="" editable-text="user[docParamName][paramKey][k][r]" ng-model="user[docParamName][paramKey][k][r]" e-name="user[docParamName][paramKey][k][r]">
+										{{user[docParamName][paramKey][k][r]}}
+									</div>
+								</div>
+							</div >
+
+
+							<!--<div ng-if="r == 'paramValue'" e-class="form-control " class="" editable-text="user[docParamName][paramKey][k][r]" e-name="user[docParamName][paramKey][k][r]">-->
+							<!--{{s}}-->
+							<!--</div>-->
+						</div>
+					</div>
+					<div class="clearfix"></div>
+					<div class="iterationCtrls" ng-show="editableForm.$visible && docParamValues.length > 1">
+
+						<div class="iterationCtrl" ng-click="remove(docParamValues,$index)">
+							X Delete
+						</div>
+						<div class="iterationCtrl" ng-hide="$first" ng-click="move(docParamValues,$index,$index-1)">
+							Move Up
+						</div>
+						<div class="iterationCtrl" ng-hide="$last" ng-click="move(docParamValues,$index,$index+1)">
+							Move Down
+						</div>
+
+					</div>
+
+
+
+					<hr ng-show="isArray(docParamValues) && !$last">
+
+					<!--<div ng-show="editableForm.$visible && docParamName != 'personal_information'" style="float:left;">-->
+						<!--<div class="clearfix" ></div>-->
+						<!--<div ng-show="$last" >-->
+							<!--<button type="button" class="btn btn-default" ng-click="addWhenEdit(docParamName,$index)">+ Add a Record</button>-->
+						<!--</div>-->
+
+					<!--</div>-->
+				</div>
+				<div class="clearfix" ></div>
+				<div class="buttons" >
+
+					<button type="button" class="btn btn-default editBtn" ng-click="editableForm.$show()" ng-show="!editableForm.$visible" style="float:right;">Edit</button>
+
+					<div ng-show="editableForm.$visible" style="float:left;">
+						<button type="button" class="btn btn-default" ng-click="addWhenEdit(docParamName,$index)">+ Add a Record</button>
+					</div>
+					<div ng-show="editableForm.$visible" style="float:right;">
+						<button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting" >Save</button>
+						<button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()" >Cancel</button>
+					</div>
+				</div>
+
+			</form>
+		</uib-accordion-group>
+	</uib-accordion>
+
+	<div class="">
+		<div ng-repeat="footerNavli in footerNavlis" repeat-done="initModals()" class="userHomeFooterNavLi modal-trigger"  href='#{{footerNavli.tag}}'   modal>{{footerNavli.tag}}</div>
+	</div>
+		<div id="gallery" class="modal modal-fixed-footer">
+
+
+			<div class="modal-header">
+				Gallery
+				<div style="float:right;">
+					<ul >
+						<li style="display:inline;"><a class='dropdown-button' href='javascript:void(0);' data-activates='galleryoptions' dropdown data-hover="true"><i class="glyphicon glyphicon-option-vertical"></i></a></li>
+						<!--<li style="display:inline;"><a class="menu navbar-toggle button-collapse modalSideNav" data-activates="post-modal-nav" data-sidenav="left"  data-closeonclick="true"><i class="glyphicon glyphicon-th-list"></i></a></li>-->
+					</ul>
+					<!-- Dropdown Structure -->
+					<ul id='galleryoptions' class='dropdown-content'>
+						<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-share"></i> Share</a></li>
+						<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-save"></i> Save</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="modal-content">
+				<!--iterating over files-->
+				<div ng-repeat="(m,n) in user.files" ng-hide="m == 'docParamId'">
+					<div flow-init="flowOp(m)"
+							 flow-files-submitted="$flow.upload()"
+							 flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
+						     flow-file-success="getFileInfo($flow, $file, $message)"
+							 class="">
+							<br/>
+
+						<div class="thumbnail" >
+							<div class="thumbnail_title">Image</div>
+
+							<img  ng-src="/{{n.paramValue }}">
+							<div class="btn-group">
+								<a class="btn btn-xs btn-danger delBtnBtn" ng-click="deleteImage(user.personal_information.id,n,m)">
+									<i class="delBtnIcon glyphicon glyphicon-trash"></i>
+								</a>
+							</div>
+
+						</div>
+
+						<div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">
+								<p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>
+								<div ng-repeat="file in $flow.files" class="thumb_preview">
+
+									<div class="thumbnail_title">{{file.name}}</div>
+
+									<div class="thumbnail " ng-show="$flow.files.length" >
+
+										<!--file preview-->
+										<img flow-img="file" />
+
+										<!--progress bar-->
+										<div class="progress progress-striped" ng-class="{active: file.isUploading()}">
+											<div class="progress-bar" role="progressbar"
+												 aria-valuenow="{{file.progress() * 100}}"
+												 aria-valuemin="0"
+												 aria-valuemax="100"
+												 ng-style="{width: (file.progress() * 100) + '%'}">
+												<div class="sr-only">{{file.progress()}}% Complete</div>
+											</div>
+										</div>
+										<!--end progress bar-->
+
+										<div class="btn-group">
+											<a class="btn btn-xs btn-danger" ng-click="file.cancel()">
+												<i class="glyphicon glyphicon-trash"></i>
+											</a>
+										</div>
+									</div>
+
+								</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<a  class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+				<a  class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+			</div>
+		</div>
+
+		<div id="Resumes" class="modal modal-fixed-footer">
+
+
+			<div class="modal-header">
+				CV
+				<div style="float:right;">
+					<ul >
+						<li style="display:inline;"><a class='dropdown-button' href='javascript:void(0);' data-activates='options' dropdown data-hover="true"><i class="glyphicon glyphicon-option-vertical"></i></a></li>
+						<!--<li style="display:inline;"><a class="menu navbar-toggle button-collapse modalSideNav" data-activates="post-modal-nav" data-sidenav="left"  data-closeonclick="true"><i class="glyphicon glyphicon-th-list"></i></a></li>-->
+					</ul>
+					<!-- Dropdown Structure -->
+					<ul id='options' class='dropdown-content'>
+						<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-share"></i> Share</a></li>
+						<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-save"></i> Save</a></li>
+
+					</ul>
+				</div>
+			</div>
+
+			<div class="modal-content">
+
+				CV CV CV
+
+			</div>
+
+
+			<div class="modal-footer">
+				<a  class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+				<a  class="-action modal-close waves-effect waves-green btn-flat">Close</a>
+			</div>
+		</div>
+
+		<div id="References" class="modal modal-fixed-footer">
+
+
+			<div class="modal-header">
+				References
+				<div style="float:right;">
+					<ul >
+						<li style="display:inline;"><a class='dropdown-button' href='javascript:void(0);' data-activates='options' dropdown data-hover="true"><i class="glyphicon glyphicon-option-vertical"></i></a></li>
+						<!--<li style="display:inline;"><a class="menu navbar-toggle button-collapse modalSideNav" data-activates="post-modal-nav" data-sidenav="left"  data-closeonclick="true"><i class="glyphicon glyphicon-th-list"></i></a></li>-->
+					</ul>
+					<!-- Dropdown Structure -->
+					<ul id='options' class='dropdown-content'>
+						<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-share"></i> Share</a></li>
+						<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-save"></i> Save</a></li>
+
+					</ul>
+				</div>
+			</div>
+
+			<div class="modal-content">
+
+				References
+
+			</div>
+
+
+			<div class="modal-footer">
+				<a  class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+				<a  class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+			</div>
+		</div>
+
+		<div id="Certifications" class="modal modal-fixed-footer">
+
+
+			<div class="modal-header">
+				Certifications
+				<div style="float:right;">
+					<ul >
+						<li style="display:inline;"><a class='dropdown-button' href='javascript:void(0);' data-activates='options' dropdown data-hover="true"><i class="glyphicon glyphicon-option-vertical"></i></a></li>
+						<!--<li style="display:inline;"><a class="menu navbar-toggle button-collapse modalSideNav" data-activates="post-modal-nav" data-sidenav="left"  data-closeonclick="true"><i class="glyphicon glyphicon-th-list"></i></a></li>-->
+					</ul>
+					<!-- Dropdown Structure -->
+					<ul id='options' class='dropdown-content'>
+						<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-share"></i> Share</a></li>
+						<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-save"></i> Save</a></li>
+
+					</ul>
+				</div>
+			</div>
+
+			<div class="modal-content">
+
+				Certifications
+
+			</div>
+
+
+			<div class="modal-footer">
+				<a  class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+				<a  class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+			</div>
+		</div>
+
+		<div id="cover" class="modal modal-fixed-footer">
+
+
+			<div class="modal-header">
+				Cover Letters
+				<div style="float:right;">
+					<ul >
+						<li style="display:inline;"><a class='dropdown-button' href='javascript:void(0);' data-activates='options' dropdown data-hover="true"><i class="glyphicon glyphicon-option-vertical"></i></a></li>
+						<!--<li style="display:inline;"><a class="menu navbar-toggle button-collapse modalSideNav" data-activates="post-modal-nav" data-sidenav="left"  data-closeonclick="true"><i class="glyphicon glyphicon-th-list"></i></a></li>-->
+					</ul>
+					<!-- Dropdown Structure -->
+					<ul id='options' class='dropdown-content'>
+						<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-share"></i> Share</a></li>
+						<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-save"></i> Save</a></li>
+
+					</ul>
+				</div>
+			</div>
+
+			<div class="modal-content">
+				Cover Letters
+			</div>
+
+			<div class="modal-footer">
+				<a  class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+				<a  class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+			</div>
+		</div>
+</div>
+
+
+</main>
+<!--<script>-->
+
+			<!--$(document).ready(function(){-->
+				<!--$('.modal-trigger').leanModal();-->
+				<!--$('.button-collapse').sideNav();-->
+<!--//				$('.datepicker').pickadate({-->
+<!--//					selectMonths: true, // Creates a dropdown to control month-->
+<!--//					selectYears: 15 // Creates a dropdown of 15 years to control year-->
+<!--//				});-->
+				<!--$('.datepicker').pickadate();-->
+
+			<!--});-->
+
+		<!--</script>-->
+
+
+<!--<div id="demoModal" class="modal modal-fixed-footer">-->
+
+
+	<!--<div class="modal-header">-->
+		<!--{{post.postInfo.title || 'Job Title'}} <small>Job no' {{post.postInfo.id }}</small>-->
+		<!--<div style="float:right;">-->
+			<!--<ul >-->
+				<!--<li style="display:inline;"><a class='dropdown-button' href='javascript:void(0);' data-activates='options' dropdown data-hover="true"><i class="glyphicon glyphicon-option-vertical"></i></a></li>-->
+				<!--&lt;!&ndash;<li style="display:inline;"><a class="menu navbar-toggle button-collapse modalSideNav" data-activates="post-modal-nav" data-sidenav="left"  data-closeonclick="true"><i class="glyphicon glyphicon-th-list"></i></a></li>&ndash;&gt;-->
+			<!--</ul>-->
+			<!--&lt;!&ndash; Dropdown Structure &ndash;&gt;-->
+			<!--<ul id='options' class='dropdown-content'>-->
+				<!--<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-share"></i> Share</a></li>-->
+				<!--<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-save"></i> Save</a></li>-->
+
+			<!--</ul>-->
+		<!--</div>-->
+	<!--</div>-->
+
+	<!--<div class="modal-content">-->
+
+		<!--<div ng-repeat="(m,n) in user.files" class="gallery-box col-md-2" ng-hide="m == 'docParamId'">&ndash;&gt;-->
+			<!--<div flow-init="flowOp(m)"-->
+				 <!--flow-files-submitted="$flow.upload()"-->
+				 <!--flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"-->
+				 <!--class="">-->
+				<!--<br/>-->
+
+				<!--<div class="thumbnail" >-->
+					<!--<div class="thumbnail_title">{{q}}</div>-->
+
+					<!--<img  ng-src="{{n.paramValue }}" width="200px">-->
+					<!--<div class="btn-group">-->
+						<!--<a class="btn btn-xs btn-danger delBtnBtn" ng-click="deleteImage(user.personal_information.id,n,m)">-->
+							<!--<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>-->
+						<!--</a>-->
+					<!--</div>-->
+
+				<!--</div>-->
+
+				<!--<div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">-->
+					<!--<p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>-->
+					<!--<div ng-repeat="file in $flow.files" class="gallery-box col-md-2">-->
+
+						<!--<div class="thumbnail_title">{{file.name}}</div>-->
+						<!--<div class="thumbnail upthumbnail" ng-show="$flow.files.length" >-->
+							<!--<img flow-img="file" />-->
+
+							<!--<div class="progress progress-striped" ng-class="{active: file.isUploading()}">-->
+								<!--<div class="progress-bar" role="progressbar"-->
+									 <!--aria-valuenow="{{file.progress() * 100}}"-->
+									 <!--aria-valuemin="0"-->
+									 <!--aria-valuemax="100"-->
+									 <!--ng-style="{width: (file.progress() * 100) + '%'}">-->
+									<!--<div class="sr-only">{{file.progress()}}% Complete</div>-->
+								<!--</div>-->
+							<!--</div>-->
+							<!--<div class="btn-group">-->
+								<!--<a class="btn btn-xs btn-danger" ng-click="file.cancel()">-->
+									<!--<i class="glyphicon glyphicon-trash"></i>-->
+								<!--</a>-->
+							<!--</div>-->
+						<!--</div>-->
+
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
+	<!--</div>-->
+	<!--<div class="modal-footer">-->
+		<!--<a  class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>-->
+		<!--<a  class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>-->
+	<!--</div>-->
+<!--</div>-->
+
+<!--<script type="text/ng-template" id="gallery.html">-->
+	<!--<div class="modal-header">-->
+		<!--<h3 class="modal-title">I'm a modal!</h3>-->
+	<!--</div>-->
+	<!--<div ng-repeat="(m,n) in user.files" class="gallery-box col-md-2" ng-hide="m == 'docParamId'">-->
+		<!--<div flow-init="flowOp(m)"-->
+			 <!--flow-files-submitted="$flow.upload()"-->
+			 <!--flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"-->
+			 <!--class="">-->
+			<!--<br/>-->
+
+			<!--<div class="thumbnail" >-->
+				<!--<div class="thumbnail_title">{{q}}</div>-->
+
+				<!--<img  ng-src="{{n.paramValue }}" width="200px">-->
+				<!--<div class="btn-group">-->
+					<!--<a class="btn btn-xs btn-danger delBtnBtn" ng-click="deleteImage(user.personal_information.id,n,m)">-->
+						<!--<i class="delBtnIcon btn btn-default btn-xs glyphicon glyphicon-trash"></i>-->
+					<!--</a>-->
+				<!--</div>-->
+
+			<!--</div>-->
+
+			<!--<div class="drop galleryDiv col-md-12" flow-drop ng-class="dropClass" flow-drag-enter="style={border:'1px solid #4E75AD'}" flow-drag-leave="style={border:'1px dashed blue'}" ng-style="style">-->
+				<!--<p class="dragNdrop">Drag & Drop JPG, GIF or PNG Files Here!</p>-->
+				<!--<div ng-repeat="file in $flow.files" class="gallery-box col-md-2">-->
+
+					<!--<div class="thumbnail_title">{{file.name}}</div>-->
+					<!--<div class="thumbnail upthumbnail" ng-show="$flow.files.length" >-->
+						<!--<img flow-img="file" />-->
+
+						<!--<div class="progress progress-striped" ng-class="{active: file.isUploading()}">-->
+							<!--<div class="progress-bar" role="progressbar"-->
+								 <!--aria-valuenow="{{file.progress() * 100}}"-->
+								 <!--aria-valuemin="0"-->
+								 <!--aria-valuemax="100"-->
+								 <!--ng-style="{width: (file.progress() * 100) + '%'}">-->
+								<!--<div class="sr-only">{{file.progress()}}% Complete</div>-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div class="btn-group">-->
+							<!--<a class="btn btn-xs btn-danger" ng-click="file.cancel()">-->
+								<!--<i class="glyphicon glyphicon-trash"></i>-->
+							<!--</a>-->
+						<!--</div>-->
+					<!--</div>-->
+
+				<!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
+	<!--</div>-->
+	<!--</div>-->
+	<!--<div class="modal-footer">-->
+		<!--<button class="btn " type="button" ng-click="ok()">OK</button>-->
+		<!--<button class="btn " type="button" ng-click="cancel()">Cancel</button>-->
+	<!--</div>-->
+<!--</script>-->
+

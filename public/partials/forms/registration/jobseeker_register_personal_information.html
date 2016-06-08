@@ -1,0 +1,462 @@
+<!--<style type="text/css">-->
+    <!--input.ng-invalid.ng-touched.ng-dirty {-->
+        <!--border-color: #FA787E;-->
+    <!--}-->
+
+    <!--input.ng-valid.ng-touched.ng-dirty {-->
+        <!--/*border-color: #F2DEDE;*/-->
+    <!--}-->
+<!--</style>-->
+
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+    <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3 "> First Name* </div>
+    <div class="col-xs-12 col-sm-4 col-lg-6 col-lg-6 form-group"
+         ng-class="{'has-error' : errors['first_name'] && registerForm.first_name.$touched || errors['first_name'] && sent }" >
+        <input type='text'
+               class="form-control "
+               name="first_name"
+               placeholder="First Name"
+               ng-model="user.personal_information[0][42]['paramValue']"
+               ng-change="validate('first_name')"
+               required>
+        <!--ng-pattern="/^[a-zA-Z- ]*$/"-->
+        <!--ng-focus="errors.first_name"-->
+        <!--ng-change="validateThis('first_name')"-->
+        <!--ng-class="{'has-error': errors.first_name}"-->
+    </div>
+
+    <ul ng-if="registerForm['first_name'].$touched">
+        <li>{{errors.first_name}}</li>
+    </ul>
+    <!--<ul ng-show="registerForm.first_name.$dirty || registerForm.last_name.$touched || serverValidation">-->
+
+        <!--<li class="help-block" ng-show="registerForm.first_name.$error.pattern">Please insert your real name. only english characters.</li>-->
+        <!--<li class="help-block" ng-show="registerForm.first_name.$error.required">Required</li>-->
+        <!--<li class="help-block" ng-show="registerForm.first_name.$error.minlength">Please insert at least 3 letters</li>-->
+        <!--<span class="help-block" ng-show="registerForm.first_name.$error.maxlength">Please insert a maximum of 15 letters</span>-->
+        <!--<span class="help-block" ng-show="registerForm.first_name.$touched && registerForm.first_name.$valid">Hi {{user.personal_information.first_name | capitalize}}, Cool Name!!</span>-->
+    <!--</ul>-->
+
+</div>
+
+
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+    <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3"> Last Name* </div>
+    <div class="col-xs-12 col-sm-4 col-lg-6 col-lg-6 form-group"
+         ng-class="{'has-error' : errors['last_name'] && registerForm.last_name.$touched || errors['last_name'] && sent}" >
+        <input type='text' class="form-control " name="last_name" placeholder="Last Name" ng-change="validate('last_name')" ng-model="user.personal_information.last_name"  required>
+    </div>
+    <ul  ng-if="registerForm['last_name'].$touched">
+        <li>{{errors['last_name']}}</li>
+    </ul>
+    <!--<div ng-show="registerForm.last_name.$dirty || registerForm.last_name.$touched || serverValidation">-->
+        <!--<span class="help-block" ng-show="registerForm.last_name.$error.pattern">Please insert your real last name and use only english letters</span>-->
+        <!--<span class="help-block" ng-show="registerForm.last_name.$error.required">Required</span>-->
+        <!--<span class="help-block" ng-show="registerForm.last_name.$error.minlength">Please insert at least 3 letters</span>-->
+        <!--<span class="help-block" ng-show="registerForm.last_name.$error.maxlength">Please insert a maximum of 15 letters</span>-->
+        <!--<span class="help-block" ng-show="registerForm.last_name.$touched && registerForm.last_name.$valid">Welcome to Our Career System!!</span>-->
+    <!--</div>-->
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3"> Phone/Cell* </div>
+
+    <div class="col-xs-12 col-sm-4 col-lg-6 col-lg-6 form-group">
+        <input type='text' class="form-control " name="phone_1"    placeholder="Phone/Cell" ng-model="user.personal_information.phone_1" >
+    </div>
+
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3"> *E-mail </div>
+
+    <div class="col-xs-12 col-sm-4 col-lg-6 col-lg-6 form-group"  ng-class="{'has-error': errors.email && registerForm.email.$touched  || errors['email'] && sent}">
+        <input type='email' class="form-control " name="email" placeholder="email"  ng-change="validate('email')"  ng-model="user.personal_information.email" required>
+    </div>
+    <!--<span class="help-block" ng-if="emailUnique || serverValidation" ng-repeat="error in emailUnique">{{error}}</span>-->
+    <ul  ng-if="registerForm['email'].$touched">
+        <li>{{errors['email']}}</li>
+    </ul>
+    <!--<div ng-show="registerForm.email.$dirty || registerForm.email.$touched || serverValidation">-->
+        <!--<span class="help-block" ng-show="registerForm.email.$error.required">Required</span>-->
+        <!--<span class="help-block" ng-show="registerForm.email.$touched && registerForm.email.$invalid">please insert a valid email address</span>-->
+        <!--<span class="help-block" ng-show="registerForm.email.$touched && registerForm.email.$valid">thanks. </span>-->
+    <!--</div>-->
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3"> Password* </div>
+
+    <div class="col-xs-12 col-sm-4 col-lg-6 col-lg-6 form-group" ng-class="{'has-error': errors.password && registerForm.password.$touched  || errors['password'] && sent}">
+        <input type='password' class="form-control " name="password" placeholder="Password"  ng-change="validate('password')" ng-model="user.personal_information.password"  required>
+    </div>
+
+    <ul  ng-if="registerForm['password'].$touched">
+        <li>{{errors['password']}}</li>
+    </ul>
+    <!--<div ng-show="registerForm.password.$dirty || registerForm.password.$touched || serverValidation">-->
+        <!--<span class="help-block" ng-show="registerForm.password.$error.required">Required</span>-->
+        <!--<span class="help-block" ng-show="registerForm.password.$invalid">password must be 6-10 characters </span>-->
+        <!--<span class="help-block" ng-show="registerForm.password.$touched && registerForm.password.$valid">Dont worry, your secret is safe with us.</span>-->
+    <!--</div>-->
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3"> Gender* </div>
+    <div class="col-xs-12 col-sm-4 col-lg-6 col-lg-6 form-group" show-errors>
+        <select class="form-control " name="gender" ng-model="user.personal_information.gender" >
+
+            <option value="male" >Male</option>
+            <option value="female" >Female</option>
+        </select>
+    </div>
+</div>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3">Birth Date</div>
+    <div class="col-xs-12 col-sm-4 col-lg-6 col-lg-6 form-group" show-errors >
+        <div class="col-md-3">
+            <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+            </p>
+        </div>
+        <!--<input  input-date-->
+            <!--type="text"-->
+            <!--name="created"-->
+            <!--id=""-->
+            <!--class="form-control"-->
+            <!--ng-model="user.personal_information.date_of_birth"-->
+            <!--container="body"-->
+            <!--format="mm/dd/yyyy"-->
+            <!--months-full="{{ month }}"-->
+            <!--months-short="{{ monthShort }}"-->
+            <!--weekdays-full="{{ weekdaysFull }}"-->
+            <!--weekdays-short="{{ weekdaysShort }}"-->
+            <!--weekdays-letter="{{ weekdaysLetter }}"-->
+            <!--min="{{ minDate }}"-->
+            <!--max="{{ maxDate }}"-->
+            <!--today="today"-->
+            <!--clear="clear"-->
+            <!--close="close"-->
+            <!--select-years="15"-->
+            <!--on-start="onStart()"-->
+            <!--on-render="onRender()"-->
+            <!--on-open="onOpen()"-->
+            <!--on-close="onClose()"-->
+            <!--on-set="onSet()"-->
+            <!--on-stop="onStop()" />-->
+    </div>
+
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3"> Marital Status </div>
+    <div class="col-xs-12 col-sm-4 col-lg-6 col-lg-6 form-group" show-errors >
+        <select class="form-control  " name="martial_status" ng-model="user.personal_information.martial_status" >
+            <option value="" selected></option>
+            <option value="single" >Single</option>
+            <option value="married" >Married</option>
+            <option value="Divorced" >Divorced</option>
+            <option value="Widowed" >Widowed</option>
+        </select> </div>
+</div>
+
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3"> Education Status </div>
+    <div class="col-xs-12 col-sm-4 col-lg-6 col-lg-6 form-group" show-errors>
+        <select class="form-control"
+                name="education_status"
+                ng-model="user.personal_information.education_status"
+                ng-options="s.value as s.text for s in educationStatuses"
+                ng-selected="user.personal_information.education_status" >
+        </select>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3"> Street Address 1 </div>
+
+    <div class="col-xs-12 col-sm-4 col-lg-6 col-lg-6 form-group" show-errors>
+        <input type='text' class="form-control " id="street_1" name="street_1" placeholder="" ng-model="user.personal_information.street_1" >
+    </div>
+
+</div>
+
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3  "> country </div>
+
+    <div class="col-xs-12 col-sm-4 col-lg-6 col-lg-6 form-group" show-errors>
+        <input type="text" name="country" ng-model="user.personal_information.country" data-geo="country" class="form-control"  >
+        <!--typeahead="country for country in countries  | filter:$viewValue | limitTo:8"-->
+    </div>
+
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3"> State* </div>
+
+    <div class="col-xs-12 col-sm-4 col-lg-6 col-lg-6 form-group" show-errors>
+        <input type="text" name="state" ng-model="user.personal_information.state" placeholder="" class="form-control " data-geo="administrative_area_level_1"  ng-model="user.personal_information.state" >
+        <!--typeahead="state.name as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html"-->
+    </div>
+
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3"> city* </div>
+
+    <div class="col-xs-12 col-sm-4 col-lg-6 col-lg-6 form-group" show-errors>
+        <input type="text" name="city" class="form-control " ng-model="user.personal_information.city" placeholder=""  data-geo="locality" ng-model="user.personal_information.city" >
+        <!--typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults"-->
+    </div>
+
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3"> Zip Code </div>
+
+    <div class="col-xs-12 col-sm-4 col-lg-6 col-lg-6 form-group" show-errors>
+        <input type="text" name="zipcode" class="form-control " data-geo="postal_code" ng-model="user.personal_information.zipcode">
+    </div>
+
+</div>
+
+
+
+
+
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdBZvkZDB2Q3lllTCO3RU7zvj7Bal-rVE&libraries=places&callback=initAutocomplete"
+        async defer></script>
+
+
+
+<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdBZvkZDB2Q3lllTCO3RU7zvj7Bal-rVE&libraries=places"></script>-->
+
+<script>
+    // This example displays an address form, using the autocomplete feature
+    // of the Google Places API to help users fill in the information.
+
+    // This example requires the Places library. Include the libraries=places
+    // parameter when you first load the API. For example:
+    // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+    var placeSearch, autocomplete;
+    var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        locality: 'long_name',
+        administrative_area_level_1: 'long_name',
+        country: 'long_name',
+        postal_code: 'short_name'
+    };
+
+
+    function initAutocomplete() {
+        // Create the autocomplete object, restricting the search to geographical
+        // location types.
+        autocomplete = new google.maps.places.Autocomplete(
+                /** @type {!HTMLInputElement} */(document.getElementById('street_1')),
+                {types: ['geocode']});
+
+        // When the user selects an address from the dropdown, populate the address
+        // fields in the form.
+        autocomplete.addListener('place_changed', fillInAddress);
+    }
+
+    // [START region_fillform]
+    function fillInAddress() {
+        // Get the place details from the autocomplete object.
+        var place = autocomplete.getPlace();
+
+        for (var component in componentForm) {
+
+            $("[data-geo='"+component+"']").val('');
+            $("[data-geo='"+component+"']").disabled = false;
+            // document.getElementById(component).value = '';
+            // document.getElementById(component).disabled = false;
+        }
+
+        // Get each component of the address from the place details
+        // and fill the corresponding field on the form.
+        for (var i = 0; i < place.address_components.length; i++) {
+
+            var addressType = place.address_components[i].types[0];
+
+            if (componentForm[addressType]) {
+                var val = place.address_components[i][componentForm[addressType]];
+                //document.getElementById(addressType).value = val;
+                $("[data-geo='"+addressType+"']").val(val) ;
+
+                if(addressType == 'administrative_area_level_1'){
+                    $("#state select").val(val) ;
+                }
+            }
+
+
+
+
+        }
+    }
+
+    // [END region_fillform]
+
+    // [START region_geolocation]
+    // Bias the autocomplete object to the user's geographical location,
+    // as supplied by the browser's 'navigator.geolocation' object.
+    function geolocate() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var geolocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                var circle = new google.maps.Circle({
+                    center: geolocation,
+                    radius: position.coords.accuracy
+                });
+                autocomplete.setBounds(circle.getBounds());
+            });
+        }
+    }
+    // [END region_geolocation]
+
+</script>
+
+
+
+
+
+
+
+
+
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12-">
+
+    <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3"> Facebook </div>
+
+    <div class="col-xs-12 col-sm-4 col-lg-6 col-lg-6 form-group" show-errors>
+        <input type="text"  name="facebook" class="form-control " >
+    </div>
+
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3"> Twitter </div>
+
+    <div class="col-xs-12 col-sm-4 col-lg-6 col-lg-6 form-group" show-errors>
+        <input type="text"  name="twitter" class="form-control " >
+    </div>
+
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3"> LinkedIn </div>
+
+    <div class="col-xs-12 col-sm-4 col-lg-6 col-lg-6 form-group" show-errors>
+        <input type="text" name="linkedin" class="form-control " >
+    </div>
+
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <div class=" col-xs-12 col-sm-4 col-md-3 col-lg-3"> YouTube video </div>
+
+    <div class="col-xs-12 col-sm-4 col-lg-6 col-lg-6 form-group" show-errors>
+        <input type="text" name="youtube" class="form-control" >
+    </div>
+
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <div class="" style="float:left;cursor:pointer;">
+        <label style="cursor:pointer;padding-left:15px;">
+            <input type="checkbox" class="" ng-model="user.personal_information.send_newsletters" style="width:15px;">
+            I wish to receive newsletters with updates from time to time
+        </label>
+    </div>
+
+</div>
+
+<div class="" style="padding-left:30px;">
+    <div class="modal-trigger disclaimerDiv col-xs-12 col-sm-8 col-md-9 col-lg-9" href='#disclaimer'>
+        <ng-include class="" src="'../../../partials/disclaimer.html'"  ></ng-include>
+    </div>
+</div>
+
+<!--expanded disclaimer-->
+<div id="disclaimer" class="disclaimerModal modal bottom-sheet">
+    <div class="navbar-fixed" >
+        <nav style="background-color:#5D2C87;">
+            <div class="nav-wrapper">
+                <a class="brand-logo" >Privacy Policy</a>
+
+                <ul class="hide-on-med-and-down" style="width:25%;float:right;" >
+                    <li class="" >
+                        <a href=""  class="modal-action modal-close waves-effect waves-purple" ng-click="disclaimerOpen = false; user.personal_information.registration = true"  tooltipped  data-position="left" data-delay="100" data-tooltip="Please Read Everything First"><i class="glyphicon glyphicon-ok"></i>Agree</a>
+                    </li>
+                    <li>
+                        <a href="" class="modal-action modal-close waves-effect waves-purple" ng-click="disclaimerOpen = false; user.personal_information.registration = false"><i class="glyphicon glyphicon-remove"></i>Decline</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="disclaimerModalContent" >
+        <ng-include class="  col-xs-12 col-sm-12 col-md-12 col-lg-12" src="'../../../partials/disclaimer.html'"></ng-include>
+    </div>
+</div>
+
+
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+    <div style="float:left;cursor:pointer;" class="form-group" >
+        <label style="cursor:pointer;padding-left:15px;">
+            <input type="checkbox" ng-model="user.personal_information.registration" name="registration" class=""  required>
+            I have read and approved the disclaimer
+        </label>
+    </div>
+</div>
+</div>

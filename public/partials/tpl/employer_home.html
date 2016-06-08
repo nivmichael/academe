@@ -1,0 +1,121 @@
+<main>
+    <!-- <div ui-view="employer.jobs.159" class="col-md-8"></div> -->
+    <div ng-repeat="(a,b) in user" id="status-buttons" class="text-center">
+        <div ui-view="employer.{{a}}"></div>
+    </div>
+    <div ui-view=""        class="col-lg-12"></div>
+
+</main>
+
+
+<div id="demoModal" class="modal modal-fixed-footer">
+
+    <div class="modal-header">
+        New Job
+        <div style="float:right;">
+            <ul >
+                <li style="display:inline;"><a class='dropdown-button' href='javascript:void(0);' data-activates='options' dropdown data-hover="true"><i class="glyphicon glyphicon-option-vertical"></i></a></li>
+            </ul>
+            <!-- Dropdown Structure -->
+            <ul id='options' class='dropdown-content'>
+                <li><a href="javascript:void(0);"><i class="glyphicon glyphicon-share"></i> Share</a></li>
+                <li><a href="javascript:void(0);"><i class="glyphicon glyphicon-save"></i> Save</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="modal-content">
+        <form editable-form  id="signup-form" role="form"   ng-model="post" shown="true" >
+
+            <div ng-repeat="(docParamName, docParamValues) in jobPost" ng-if="docParamName != 'postInfo'" >
+                <div class="postDocParamNameDivider">
+                    {{docParamName | underscoreless | capitalize}}
+                    <hr>
+                </div>
+
+                <div ng-repeat="(paramKey,paramValues) in docParamValues" ng-hide="paramKey == 'docParamId'" >
+                    <div>
+                        <div class="param_label col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                            {{paramKey | underscoreless | capitalize}}
+                        </div>
+
+                        <div ng-switch="paramValues.inputType">
+                            <div ng-switch-when="text">
+                                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                    <input type='text' class="form-control" placeholder="{{paramKey}}" name="jobPost[docParamName][paramKey]['paramValue']" ng-model="jobPost[docParamName][paramKey]['paramValue']">
+                                </div>
+                            </div>
+
+                            <div ng-switch-when="select">
+                                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                    <select class="form-control" ng-model="jobPost[docParamName][paramKey]['paramValue']" ng-options="o.value as o.text for o in groups[paramKey]" ng-init="loadGroups(paramKey, jobPost[docParamName]['docParamId'], true)"  ng-disabled="!groups[paramKey]">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div ng-switch-when="textarea">
+                                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                    <textarea class="form-control" placeholder="{{paramKey}}" name="jobPost[docParamName][paramKey]['paramValue']" ng-model=jobPost[docParamName][paramKey]['paramValue']"></textarea>
+                                </div>
+                            </div>
+
+                            <div ng-switch-when="date">
+                                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                    <p class="input-group">
+                                        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="jobPost[docParamName][paramKey]['paramValue']" is-open="opened[paramKey]" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+		<span class="input-group-btn">
+		<button type="button" class="btn btn-default" ng-click="open($event,paramKey)"><i class="glyphicon glyphicon-calendar"></i></button>
+		</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div ng-switch-when="checklist">
+                                <div  class="col-xs-5 col-sm-5 col-md-5 col-lg-5"   ng-init="loadGroups(paramKey, jobPost[docParamName]['docParamId'], true)">
+                                    <label ng-repeat="check in groups[paramKey] track by $index" >
+                                        <input type="checkbox" checklist-model="jobPost[docParamName][paramKey]['paramValue']" checklist-value="check.value"  >
+                                        <small>{{check.text}}</small>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div ng-switch-default>
+                                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                    <input type='text' class="form-control" placeholder="{{paramKey}}" name="jobPost[docParamName][paramKey]['paramValue']" ng-model="jobPost[docParamName][paramKey]['paramValue']">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="modal-footer">
+        <a type="submit" class="modal-close" ng-click="savePost(jobPost)">
+            <img src="https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/save_job.png">
+        </a>
+
+        <a  class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+        <a  class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+</div>
+
+<script>
+
+    $('.button-collapse').sideNav();
+    $('body').click(function(){ $('div[id^=sidenav-overlay]').remove();});
+    //$('.modal-trigger').leanModal(); // Initialize the modals
+    $('.dropdown-button').dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                constrain_width: false, // Does not change width of dropdown to that of the activator
+                hover: true, // Activate on hover
+                gutter: -80, // Spacing from edge
+                belowOrigin: false, // Displays dropdown below the button
+                alignment: 'left' // Displays dropdown with edge aligned to the left of button
+            }
+    );
+</script>

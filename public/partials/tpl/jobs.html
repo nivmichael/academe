@@ -1,0 +1,416 @@
+<main>
+	<div class="col-md-12" style="margin-top:20px;">
+	<label >View {{user.company[19]['paramValue']}} List of Jobs Offered    |    The Number of Jobs Posted:  {{allJobs.length}} </label>
+	<hr>
+	</div>
+
+	<div  class="text-center col-xs-12 col-sm-6 col-lg-6 col-lg-6" ng-repeat="(key,job) in allJobs | toArray:true | filter:searchText | orderBy:orderByFilter:reverse" repeat-done="initModals()">
+
+	<!--<div  ng-click="getPost(job.postInfo.id)"  href="#modal1" class='modal-trigger' modal>-->
+	<div ui-sref="employer.company.job({jobId:job.id})" class="waves-effect waves-light">
+
+	<div  class="job-card card text-center">
+	<div class="col-xs-3 col-sm-3 col-lg-3 col-lg-3 job-card-inner"><img ng-src="/{{job.postInfo.company_logo || '../../img/icons/academelogo.jpg' }}" style="width:100px"  class=""></div>
+	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+	<!--<p></p>-->
+
+
+	<h4 class="" style="font-size:1.5em; font-weight:200;">{{ job.postInfo.description || job.title || 'Job Title' }} </h4>
+	<hr style="margin:0;">
+
+	<label class="left" style="font-size:10px;"> View Job Info - {{job.postInfo.id|| job.id || 'Job Id'}} </label>
+	<label class="right" style="font-size:10px;"> Posted in 12 Institution </label>
+	</div>
+	<div class="col-xs-3 col-sm-3 col-lg-3 col-lg-3"></div>
+	</div>
+	</div>
+	</div>
+</main>
+<!--<main>-->
+
+		<!--<script type="text/ng-template" id="myModalContent.html">-->
+			<!--<div class="modal-header">-->
+				<!--<h3 class="modal-title">I'm a modal!</h3>-->
+			<!--</div>-->
+			<!--<div class="modal-body">-->
+				<!--<ul>-->
+					<!--<li ng-repeat="item in items">-->
+						<!--<a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>-->
+					<!--</li>-->
+				<!--</ul>-->
+				<!--Selected: <b>{{ selected.item }}</b>-->
+			<!--</div>-->
+			<!--<div class="modal-footer">-->
+				<!--<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>-->
+				<!--<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>-->
+			<!--</div>-->
+		<!--</script>-->
+
+		<!--<button type="button" class="btn btn-default" ng-click="open()">Open me!</button>-->
+		<!--<button type="button" class="btn btn-default" ng-click="open('lg')">Large modal</button>-->
+		<!--<button type="button" class="btn btn-default" ng-click="open('sm')">Small modal</button>-->
+		<!--<button type="button" class="btn btn-default" ng-click="toggleAnimation()">Toggle Animation ({{ animationsEnabled }})</button>-->
+		<!--<div ng-show="selected">Selection from a modal: {{ selected }}</div>-->
+
+<!--</main>-->
+
+
+
+<!--<main>-->
+
+
+	<!--<div class="col-md-12" style="margin-top:20px;">-->
+		<!--<label >View {{user.company[19]['paramValue']}} List of Jobs Offered    |    The Number of Jobs Posted:  {{allJobs.length}} </label>-->
+		<!--<hr>-->
+	<!--</div>-->
+
+	<!--<div  class="text-center col-xs-12 col-sm-6 col-lg-6 col-lg-6" ng-repeat="(key,job) in allJobs | toArray:true | filter:searchText | orderBy:orderByFilter:reverse" repeat-done="initModals()">-->
+
+			<!--&lt;!&ndash;<div  ng-click="getPost(job.postInfo.id)"  href="#modal1" class='modal-trigger' modal>&ndash;&gt;-->
+			<!--<div ui-sref="employer.company.job({jobId:job.id})" class="modal-trigger waves-effect waves-light" data-target="modal1">-->
+				<!--<a class="waves-effect waves-light btn modal-trigger" data-target="#modal1">Modal</a>-->
+				<!--<div  class="job-card card text-center">-->
+					<!--<div class="col-xs-3 col-sm-3 col-lg-3 col-lg-3 job-card-inner"><img ng-src="/{{job.postInfo.company_logo || '../../img/icons/academelogo.jpg' }}" style="width:100px"  class=""></div>-->
+					<!--<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">-->
+						<!--&lt;!&ndash;<p></p>&ndash;&gt;-->
+
+
+						<!--<h4 class="" style="font-size:1.5em; font-weight:200;">{{ job.postInfo.description || job.title || 'Job Title' }} </h4>-->
+						<!--<hr style="margin:0;">-->
+
+						<!--<label class="left" style="font-size:10px;"> View Job Info - {{job.postInfo.id|| job.id || 'Job Id'}} </label>-->
+						<!--<label class="right" style="font-size:10px;"> Posted in 12 Institution </label>-->
+					<!--</div>-->
+					<!--<div class="col-xs-3 col-sm-3 col-lg-3 col-lg-3"></div>-->
+				<!--</div>-->
+			<!--</div>-->
+	<!--</div>-->
+
+	<!--<div id="modal2" class="modal modal-fixed-footer">-->
+		<!--<div class="modal-content">-->
+			<!--<h4>Modal Header</h4>-->
+			<!--<p>{{post}}</p>-->
+		<!--</div>-->
+		<!--<div class="modal-footer">-->
+			<!--<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>-->
+		<!--</div>-->
+	<!--</div>-->
+
+
+	<!--<div id="modal1" class="modal modal-fixed-footer">-->
+	<!--&lt;!&ndash;<div class="">&ndash;&gt;-->
+	<!--&lt;!&ndash;<div>&ndash;&gt;-->
+	<!--&lt;!&ndash;<h3>{{post.postInfo.title || 'Job Title'}}</h3>&ndash;&gt;-->
+	<!--&lt;!&ndash;<small>Job no' {{post.postInfo.id }}</small>&ndash;&gt;-->
+	<!--&lt;!&ndash;</div>&ndash;&gt;-->
+	<!--&lt;!&ndash;<div>&ndash;&gt;-->
+	<!--&lt;!&ndash;<button class="btn"><i class="glyphicon glyphicon-envelope"></i></button>&ndash;&gt;-->
+	<!--&lt;!&ndash;<span><i class="glyphicon glyphicon-heart"></i></span>&ndash;&gt;-->
+	<!--&lt;!&ndash;<span><i class="glyphicon glyphicon-fire"></i></span>&ndash;&gt;-->
+	<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+	<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+	<!--<div class="modal-header">-->
+		<!--New Job-->
+		<!--<div style="float:right;">-->
+			<!--<ul >-->
+				<!--<li style="display:inline;"><a class='dropdown-button' href='javascript:void(0);' data-activates='options' dropdown data-hover="true"><i class="glyphicon glyphicon-option-vertical"></i></a></li>-->
+			<!--</ul>-->
+			<!--&lt;!&ndash; Dropdown Structure &ndash;&gt;-->
+			<!--<ul id='options' class='dropdown-content'>-->
+				<!--<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-share"></i> Share</a></li>-->
+				<!--<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-save"></i> Save</a></li>-->
+			<!--</ul>-->
+		<!--</div>-->
+	<!--</div>-->
+
+	<!--<div class="modal-content">-->
+		<!--<form editable-form name="editableForm" onaftersave="savePost(post)">-->
+			<!--<ul class="col-md-2 sideNav">-->
+			<!--<div ng-click="!editableForm.$cancel()" class="postLi">-->
+			<!--Job Details-->
+			<!--</div>-->
+			<!--<div ng-click="editableForm.$show()" class="postLi">-->
+			<!--Edit-->
+			<!--</div>-->
+			<!--</ul>-->
+
+
+			<!--<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">-->
+			<!--<div ng-repeat="(docParamName, docParamValues) in post track by $index"  ng-if="docParamName != 'files'">-->
+
+			<!--<div ng-repeat="(paramKey,paramValues)  in docParamValues track by $index" class="" style="" ng-class="{parameterFix:!isArray(docParamValues),parameterFix2:isArray(docParamValues)}">-->
+
+			<!--<div ng-repeat="(k,v) in paramValues track by $index" class="parameterFix" ng-class="{notFirst:!$first}">-->
+
+			<!--<div ng-if="!isArray(docParamValues)" class="">-->
+			<!--<div class="" ng-if="k == 'slug'" style="float:left;font-weight:bold;">-->
+			<!--{{v}}:-->
+			<!--</div>-->
+
+
+			<!--<div  ng-if="k == 'paramValue'" ng-switch="paramValues.inputType" class=""  style="float:right;padding-right: 15px;margin-bottom:10px;">-->
+
+			<!--<div ng-switch-when="text">-->
+			<!--<div e-class="form-control  form-con-width-modal" e-form="rowform" editable-text="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" >-->
+			<!--{{v}}-->
+			<!--</div>-->
+			<!--</div>-->
+
+			<!--<div ng-switch-when="select">-->
+
+
+			<!--<div editable-select="post[docParamName][paramKey][k]" e-form="rowform"  ng-model="post[docParamName][paramKey][k]" e-class="form-control  form-con-width-modal"  e-ng-options="o.value as o.text for o in groups[paramKey] track by $index" onshow="loadGroups(paramKey, post[docParamName]['docParamId'],true)"  e-ng-disabled="!groups[paramKey]" >-->
+			<!--{{	showGroup(paramKey, docParamName)  }}-->
+			<!--</div>-->
+
+
+			<!--</div>-->
+
+			<!--<div ng-switch-when="checklist" class="">-->
+
+			<!--<div editable-checklist="post[docParamName][paramKey][k]" e-form="rowform" ng-model="post[docParamName][paramKey][k]" e-class="" class=""  e-name="post[docParamName][paramKey][k]" e-ng-options="o.value as o.text for o in groups[paramKey] track by $index" onshow="loadGroups(paramKey, post[docParamName]['docParamId'],true)"  e-ng-disabled="!groups[paramKey]" >-->
+			<!--{{	showChecklistGroup(paramKey, docParamName)  }}-->
+			<!--</div>-->
+
+			<!--</div>-->
+
+			<!--<div ng-switch-when="textarea">-->
+			<!--<div e-class="form-control  form-con-width-modal" class="" e-form="rowform" editable-textarea="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" >-->
+			<!--{{v}}-->
+			<!--</div>-->
+			<!--</div>-->
+
+
+			<!--<div ng-switch-when="date">-->
+			<!--<p ng-hide="editableForm.$visible">-->
+			<!--{{post[docParamName][paramKey][k]}}-->
+			<!--</p>-->
+			<!--<p class="input-group"  ng-show="editableForm.$visible">-->
+			<!--<input type="text" class="form-control datePickerInput"  style="width:247px;" uib-datepicker-popup="{{format}}"  ng-model="post[docParamName][paramKey][k]" is-open="opened[paramKey]" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"  close-text="Close" />-->
+			<!--<span class="input-group-btn">-->
+			<!--<button type="button" class="btn btn-default" ng-click="open($event,paramKey)"><i class="glyphicon glyphicon-calendar"></i></button>-->
+			<!--</span>-->
+			<!--</p>-->
+			<!--</div>-->
+
+			<!--<div ng-switch-default>-->
+			<!--<div e-class="form-control  form-con-width-modal" class="" editable-text="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" >-->
+			<!--{{v}}-->
+			<!--</div>-->
+			<!--</div>-->
+			<!--</div >-->
+
+			<!--</div>-->
+
+
+			<!--</div>-->
+			<!--</div>-->
+
+			<!--<div class="iterationCtrls" ng-show="editableForm.$visible && docParamValues.length > 1">-->
+
+			<!--<div class="iterationCtrl" ng-click="remove(docParamValues,$index)">-->
+			<!--X Delete-->
+			<!--</div>-->
+			<!--<div class="iterationCtrl" ng-click="move(docParamValues,$index,$index-1)">-->
+			<!--Move Up-->
+			<!--</div>-->
+			<!--<div class="iterationCtrl" ng-click="move(docParamValues,$index,$index+1)">-->
+			<!--Move Down-->
+			<!--</div>-->
+
+			<!--</div>-->
+			<!--<div class="clearfix" ></div>-->
+			<!--<hr ng-show="isArray(docParamValues) && !$last">-->
+
+			<!--<div ng-show="editableForm.$visible && docParamName != 'personal_information'" >-->
+			<!--<div ng-show="$last" >-->
+			<!--<button type="button" class="btn btn-default" ng-click="addWhenEdit(docParamName,$index)">+ Add a Record</button>-->
+			<!--</div>-->
+			<!--</div>-->
+			<!--</div>-->
+			<!--</div>-->
+
+			<!--<div  ng-show="editableForm.$visible">-->
+			<!--<button class="btn btn-default" type="button" ng-click="savePost(post)">-->
+			<!--Save-->
+			<!--</button>-->
+			<!--</div>-->
+
+			<!--</div>-->
+
+			<!--<div class="modal-footer" style="height:70px;">-->
+
+
+
+				<!--<a class="modal-action modal-close waves-effect waves-green btn-flat"  ui-sref="employer.jobs.system_matches">System Matches</a>-->
+				<!--<a  class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>-->
+				<!--<a  class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>-->
+
+
+			<!--</div>-->
+			<!--</form>-->
+<!--</div>-->
+
+<!--</main>-->
+
+<!--<script type="text/ng-template" id="myModalContent.html">-->
+
+	<!--<div class="modal-header">-->
+		<!--<h3 class="modal-title">-->
+			<!--<b>{{post.postInfo.title}}</b>-->
+			<!--<br>-->
+			<!--<small>{{post.postInfo.id}}</small>-->
+		<!--</h3>-->
+		<!--<button class="btn btn-default" type="button" ng-click="cancel()" style="float:right; margin-top:-35px;">-->
+			<!--&times;-->
+		<!--</button>-->
+	<!--</div>-->
+
+	<!--<div class="modal-body" style="height:680px;">-->
+
+		<!--<form editable-form name="editableForm" onaftersave="savePost(post)">-->
+			<!--<ul class="col-md-2 sideNav">-->
+				<!--<div ng-click="!editableForm.$cancel()" class="postLi">-->
+						<!--Job Details-->
+				<!--</div>-->
+				<!--<div ng-click="editableForm.$show()" class="postLi">-->
+							<!--Edit-->
+				<!--</div>-->
+			<!--</ul>-->
+
+
+			<!--<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">-->
+				<!--<div ng-repeat="(docParamName, docParamValues) in post track by $index"  ng-if="docParamName != 'files'">-->
+
+						<!--<div ng-repeat="(paramKey,paramValues)  in docParamValues track by $index" class="" style="" ng-class="{parameterFix:!isArray(docParamValues),parameterFix2:isArray(docParamValues)}">-->
+
+							<!--<div ng-repeat="(k,v) in paramValues track by $index" class="parameterFix" ng-class="{notFirst:!$first}">-->
+
+								<!--<div ng-if="!isArray(docParamValues)" class="">-->
+									<!--<div class="" ng-if="k == 'slug'" style="float:left;font-weight:bold;">-->
+										<!--{{v}}:-->
+									<!--</div>-->
+
+
+									<!--<div  ng-if="k == 'paramValue'" ng-switch="paramValues.inputType" class=""  style="float:right;padding-right: 15px;margin-bottom:10px;">-->
+
+										<!--<div ng-switch-when="text">-->
+											<!--<div e-class="form-control  form-con-width-modal" e-form="rowform" editable-text="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" >-->
+												<!--{{v}}-->
+											<!--</div>-->
+										<!--</div>-->
+
+										<!--<div ng-switch-when="select">-->
+
+
+											<!--<div editable-select="post[docParamName][paramKey][k]" e-form="rowform"  ng-model="post[docParamName][paramKey][k]" e-class="form-control  form-con-width-modal"  e-ng-options="o.value as o.text for o in groups[paramKey] track by $index" onshow="loadGroups(paramKey, post[docParamName]['docParamId'],true)"  e-ng-disabled="!groups[paramKey]" >-->
+												<!--{{	showGroup(paramKey, docParamName)  }}-->
+											<!--</div>-->
+
+
+										<!--</div>-->
+
+										<!--<div ng-switch-when="checklist" class="">-->
+
+											<!--<div editable-checklist="post[docParamName][paramKey][k]" e-form="rowform" ng-model="post[docParamName][paramKey][k]" e-class="" class=""  e-name="post[docParamName][paramKey][k]" e-ng-options="o.value as o.text for o in groups[paramKey] track by $index" onshow="loadGroups(paramKey, post[docParamName]['docParamId'],true)"  e-ng-disabled="!groups[paramKey]" >-->
+												<!--{{	showChecklistGroup(paramKey, docParamName)  }}-->
+											<!--</div>-->
+
+										<!--</div>-->
+
+										<!--<div ng-switch-when="textarea">-->
+											<!--<div e-class="form-control  form-con-width-modal" class="" e-form="rowform" editable-textarea="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" >-->
+												<!--{{v}}-->
+											<!--</div>-->
+										<!--</div>-->
+
+
+										<!--<div ng-switch-when="date">-->
+											<!--<p ng-hide="editableForm.$visible">-->
+												<!--{{post[docParamName][paramKey][k]}}-->
+											<!--</p>-->
+											<!--<p class="input-group"  ng-show="editableForm.$visible">-->
+												<!--<input type="text" class="form-control datePickerInput"  style="width:247px;" uib-datepicker-popup="{{format}}"  ng-model="post[docParamName][paramKey][k]" is-open="opened[paramKey]" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"  close-text="Close" />-->
+											  <!--<span class="input-group-btn">-->
+												<!--<button type="button" class="btn btn-default" ng-click="open($event,paramKey)"><i class="glyphicon glyphicon-calendar"></i></button>-->
+											  <!--</span>-->
+											<!--</p>-->
+										<!--</div>-->
+
+										<!--<div ng-switch-default>-->
+											<!--<div e-class="form-control  form-con-width-modal" class="" editable-text="post[docParamName][paramKey][k]" e-name="post[docParamName][paramKey][k]" >-->
+												<!--{{v}}-->
+											<!--</div>-->
+										<!--</div>-->
+									<!--</div >-->
+
+								<!--</div>-->
+
+
+								<!--</div>-->
+							<!--</div>-->
+
+							<!--<div class="iterationCtrls" ng-show="editableForm.$visible && docParamValues.length > 1">-->
+
+								<!--<div class="iterationCtrl" ng-click="remove(docParamValues,$index)">-->
+									<!--X Delete-->
+								<!--</div>-->
+								<!--<div class="iterationCtrl" ng-click="move(docParamValues,$index,$index-1)">-->
+									<!--Move Up-->
+								<!--</div>-->
+								<!--<div class="iterationCtrl" ng-click="move(docParamValues,$index,$index+1)">-->
+									<!--Move Down-->
+								<!--</div>-->
+
+							<!--</div>-->
+					<!--<div class="clearfix" ></div>-->
+					<!--<hr ng-show="isArray(docParamValues) && !$last">-->
+
+					<!--<div ng-show="editableForm.$visible && docParamName != 'personal_information'" >-->
+						<!--<div ng-show="$last" >-->
+							<!--<button type="button" class="btn btn-default" ng-click="addWhenEdit(docParamName,$index)">+ Add a Record</button>-->
+						<!--</div>-->
+					<!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
+
+			<!--<div  ng-show="editableForm.$visible">-->
+				<!--<button class="btn btn-default" type="button" ng-click="savePost(post)">-->
+					<!--Save-->
+				<!--</button>-->
+			<!--</div>-->
+
+	<!--</div>-->
+
+		<!--<div class="modal-footer" style="height:70px;">-->
+
+
+			<!--<div>-->
+
+			<!--</div>-->
+			<!--<button class="btn btn-default" type="button" ui-sref="employer.jobs.system_matches" ng-click="ok()">-->
+				<!--employer.jobs.system_matches-->
+			<!--</button>-->
+
+			<!--<button class="btn btn-default" type="button" ng-click="ok()">-->
+				<!--OK-->
+			<!--</button>-->
+			<!--<button class="btn btn-default" type="button" ng-click="cancel()">-->
+				<!--Cancel-->
+			<!--</button>-->
+
+		<!--</div>-->
+	<!--</form>-->
+<!--</script>-->
+
+
+<script>
+
+	$(document).ready(function(){
+	//	$('.modal-trigger').leanModal();
+
+		$('.button-collapse').sideNav();
+	});
+</script>

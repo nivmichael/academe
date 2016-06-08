@@ -1,0 +1,120 @@
+
+<main id="forms">
+    <!--{{form}}-->
+    <!-- Markup for lists inside the dropzone. It's inside a seperate template
+       because it will be used recursively. The dnd-list directive enables
+       to drop elements into the referenced array. The dnd-draggable directive
+       makes an element draggable and will transfer the object that was
+       assigned to it. If an element was dragged away, you have to remove
+       it from the original list yourself using the dnd-moved attribute -->
+    <script type="text/ng-template" id="list.html">
+        <ul dnd-list="list" dnd-inserted="logEvent(index, event, parameter)">
+            <li ng-repeat="parameter in list "
+                dnd-draggable="parameter"
+                dnd-effect-allowed="move"
+                dnd-moved="list.splice($index, 1);assign(parameter, $index)"
+                dnd-selected="models.selected = parameter"
+                ng-class="{selected: models.selected === parameter}"
+                ng-include="parameter.type + '.html'"
+
+
+                >
+
+            </li>
+        </ul>
+    </script>
+    <!-- This template is responsible for rendering a category element. It uses
+         the above list template to render each category column -->
+    <script type="text/ng-template" id="category.html">
+        <div class="category-element box box-blue">
+            <h3>{{parameter.name}}</h3>
+            <div class="column" ng-repeat="list in parameter.columns" ng-include="'list.html'"  ></div>
+            <div class="clearfix"></div>
+        </div>
+    </script>
+
+    <!-- Template for a normal list parameter -->
+    <script type="text/ng-template" id="parameter.html">
+        <div class="item" ng-if="parameter.inputType || parameter.new">{{parameter.name | underscoreless | capitalize }}<i ng-if="!parameter.show" class="glyphicon glyphicon-off right"></i><i class="glyphicon glyphicon-pencil right"></i></div>
+    </script>
+
+    <!-- Main area with dropzones and source code -->
+    <div class="col-md-6">
+        <div class="row">
+            <div ng-repeat="(zone, list) in models.dropzones" class="">
+                <div class="dropzone box box-yellow">
+                    <!-- The dropzone also uses the list template -->
+                    <h3>Form: {{zone}}</h3>
+                    <div ng-include="'list.html'"></div>
+                </div>
+            </div>
+        </div>
+
+        <div view-source="nested"></div>
+
+
+    </div>
+    <!--<h2>Generated Model</h2>-->
+    <!--<div class="col-md-6">-->
+        <!--<pre >{{modelAsJson}}</pre>-->
+    <!--</div>-->
+
+
+    <!-- Sidebar -->
+    <div class="col-md-4 tools right" >
+
+        <div class="toolbox box box-grey box-padding">
+            <h3>New Elements</h3>
+            <ul>
+                <!-- The toolbox only allows to copy objects, not move it. After a new
+                     element was created, dnd-copied is invoked and we generate the next id -->
+                <li ng-repeat="parameter in models.templates"
+                    dnd-draggable="parameter"
+                    dnd-effect-allowed="copy"
+                    dnd-copied="parameter.id = parameter.id + 1"
+                        >
+                    <button type="button" class="btn">{{parameter.type}}</button>
+                </li>
+            </ul>
+        </div>
+
+        <div ng-if="models.selected" class="box box-grey box-padding" ng-cloak>
+            <h3>Selected type:  {{models.selected.type}}</h3>
+            Parameter name:         <input type="text" ng-model="models.selected.name"  class="form-control" style="margin-top: 5px" ng-blur="save()" ng-disabled="!models.selected.modify"/>
+            Parameter input type:   <select class="form-control" ng-model="models.selected.inputType" ng-options="s.id as s.name for s in inputTypes" ng-change="save()" ng-disabled="!models.selected.modify">
+                                    </select>
+            Hide parameter in form: <input type="checkbox" ng-model="models.selected.show" ng-false-value="1" ng-true-value="0">
+        </div>
+
+        <div class="toolbox box box-grey box-padding" ng-if="models.selected.inputTypeName == 'select' || models.selected.inputTypeName == 'checklist' ">
+            <h3>Options for: {{models.selected.name}}</h3>
+            <div ng-repeat="option in groups[models.selected.name]" >
+                <div class="">
+                   <input type="text" ng-model="option.text" class="form-control" ng-blur="saveOptions(option.id)" style="margin-top: 5px;float:left;" ng-disabled="!option.modify"/>
+                </div>
+            </div>
+
+            <span ng-click="addOption(models.selected.name);">+ Add New</span>
+        </div>
+
+        <!--<div class="col-md-6" ng-if="option.param_parent_id">-->
+            <!--<select class="form-control"-->
+                    <!--ng-model="option.param_parent_id"-->
+                    <!--ng-options="s.id as s.text for s in groups[models.selected.name]"-->
+                    <!--ng-change="saveOptions()" style="margin-top: 5px;float:left;">-->
+            <!--</select>-->
+        <!--</div>-->
+
+        <div class="trashcan box box-grey box-padding">
+            <!-- If you use [] as referenced list, the dropped elements will be lost -->
+            <h3>Trashcan</h3>
+            <ul dnd-list="[]">
+                <li><i class="glyphicon glyphicon-trash" style="font-size: 3em;margin:0 auto;"></i></li>
+            </ul>
+        </div>
+
+    </div>
+</main>
+<script>
+    $('.tools').affix({offset: {top: 64}});
+</script>

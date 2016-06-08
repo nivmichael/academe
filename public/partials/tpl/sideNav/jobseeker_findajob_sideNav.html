@@ -1,0 +1,35 @@
+<ul id="nav-mobile" class="side-nav fixed col-xs-2 col-sm-2 col-md-2 col-lg-2">
+
+    <div class="">
+        <progressbar class="progress-striped active" value="dynamic" type="{{type}}"></progressbar>
+    </div>
+    <div class="" dropdown is-open="status.isopen">
+        <div>Status:  <b>{{ user.personal_information.education_status}}</b>
+            <button angular-ripple type="button" class="btn btn-default dropdown-toggle statusBtn"  dropdown-toggle >
+                {{user.personal_information.status }} <div class="caret"></div>
+            </button>
+        </div>
+
+        <div>Last Updated -  {{ user.personal_information.last_login}}  </div>
+
+        <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="status in userStatuses" ng-click="setStatus(status)">
+                {{status.name}}
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="">
+        <h3 class="text-center">{{user.personal_information.first_name +'  '+user.personal_information.last_name}}</h3>
+        <img class="profile-picture-card card" ng-src="/{{ user.files[27]['paramValue'] || '../../img/No-Photo.gif' }}"  alt="No Photo" >
+    </div>
+
+    <div>
+        <div class="docParamLi" ui-sref="jobseeker.findajob.interesting">Interesting</div>
+        <div class="docParamLi" ui-sref="jobseeker.findajob.my_applications">My Applications</div>
+        <div class="docParamLi" ui-sref="jobseeker.findajob.rejected">Rejected</div>
+    </div>
+</ul>
+<style>.affix{top: 0!important;}</style>
+<script>$('#nav-mobile').affix({offset: {top: 64}});</script>

@@ -1,0 +1,226 @@
+<div class="paramDiv  col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
+
+    <div class="param_label col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        First Name*
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div editable-text="user.personal_information.first_name" e-class="form-control" class="" e-name="first_name"  ng-model="user.personal_information.first_name" required>
+            {{user.personal_information.first_name}}
+        </div>
+    </div>
+
+
+</div>
+
+<div class="paramDiv  col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
+
+    <div class="param_label col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        Last Name*
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div editable-text="user.personal_information.last_name" e-class="form-control" e-name="last_name"  ng-model="user.personal_information.last_name" required>
+            {{user.personal_information.last_name}}
+        </div>
+    </div>
+</div>
+
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+    <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        E-mail*
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div editable-email="user.personal_information.email" e-class="form-control " e-name="email"  ng-model="user.personal_information.email" required>
+            {{user.personal_information.email}}
+        </div>
+    </div>
+</div>
+
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+    <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        Phone/Cell*
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div editable-tel="user.personal_information.mobile" e-class="form-control " e-name="mobile"  ng-model="user.personal_information.mobile" required>
+            {{user.personal_information.mobile}}
+        </div>
+    </div>
+</div>
+
+
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+    <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        Password*
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div class="" >
+
+        </div>
+    </div>
+    <!-- <div editable-text="user.personal_information.password" e-type="password" e-class="form-control " e-name="password"  ng-model="user.personal_information.password" required>
+    </div> -->
+
+</div>
+
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+    <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        Gender*
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div e-class="form-control postInput" class="" editable-select="user.personal_information.gender" e-name="user.personal_information.gender" ng-model="user.personal_information.gender"   e-ng-options="g.value as g.text for g in genders">
+            {{ user.personal_information.gender}}
+        </div>
+    </div>
+</div>
+
+<!-- <div>
+
+    <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        Birthdate*
+    </div>
+
+    <div>
+        <input type='date' class="form-control " name="date_of_birth" placeholder="Birthdate" ng-model="user.personal_information.date_of_birth" required>
+    </div>
+
+</div>
+ -->
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+    <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        Marital Status
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div e-class="form-control postInput" class="" editable-select="user.personal_information.martial_status" e-name="user.personal_information.martial_status" ng-model="user.personal_information.martial_status" e-ng-options="g.value as g.text for g in martialStatuses">
+            {{ user.personal_information.martial_status}}
+        </div>
+    </div>
+</div>
+
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+    <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        Education Status
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div e-class="form-control postInput" class="" editable-select="user.personal_information.education_status" e-name="user.personal_information.education_status" ng-model="user.personal_information.education_status" e-ng-options="g.value as g.text for g in educationStatuses">
+            {{ user.personal_information.education_status}}
+        </div>
+    </div>
+</div>
+
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+    <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        Street Address 1
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div editable-text="user.personal_information.street_1" ng-model="user.personal_information.street_1" name="street_1" e-class="form-control ">
+            {{user.personal_information.street_1}}
+        </div>
+    </div>
+</div>
+
+
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+    <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        country
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div editable-text="user.personal_information.country" ng-model="user.personal_information.country" e-class="form-control " e-typeahead="country as country for country in countries  | filter:$viewValue | limitTo:8">
+            {{user.personal_information.country}}
+        </div>
+    </div>
+
+
+</div>
+
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+    <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        State*
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div editable-text="user.personal_information.state" name="state" ng-model="user.personal_information.state" placeholder="" e-class="form-control " e-typeahead="state.name as state.name for state in statesWithFlags | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" ng-model="user.personal_information.state">
+            {{user.personal_information.state}}
+        </div>
+    </div>
+</div>
+
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+    <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        city*
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div editable-text="user.personal_information.city" name="city" e-class="form-control " ng-model="asyncSelected" placeholder="" e-typeahead="address for address in getLocation($viewValue)" e-typeahead-loading="loadingLocations" e-typeahead-no-results="noResults" ng-model="user.personal_information.city" >
+            {{user.personal_information.city}}
+        </div>
+    </div>
+</div>
+
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+    <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        Zip Code
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div editable-text="user.personal_information.zipcode" name="zipcode" e-class="form-control " ng-model="user.personal_information.zipcode">
+            {{user.personal_information.zipcode}}
+        </div>
+    </div>
+</div>
+
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+    <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        Facebook
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div editable-text="user.personal_information.facebook" name="facebook" e-class="form-control " ng-model="user.personal_information.facebook">
+            <a href="http://www.{{user.personal_information.facebook}}">{{user.personal_information.facebook}}</a>
+        </div>
+    </div>
+</div>
+
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+    <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        Twitter
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div editable-text="user.personal_information.twitter" name="twitter" e-class="form-control " ng-model="user.personal_information.twitter">
+            {{user.personal_information.twitter}}
+        </div>
+    </div>
+</div>
+
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+    <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        LinkedIn
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div editable-text="user.personal_information.linkedin" name="linkedin" e-class="form-control " ng-model="user.personal_information.linkedin">
+            {{user.personal_information.linkedin}}
+        </div>
+    </div>
+</div>
+
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+    <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        YouTube video
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div editable-text="user.personal_information.youtube" name="youtube" e-class="form-control " ng-model="user.personal_information.youtube">
+            {{user.personal_information.youtube}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+
+    <nav>
+        <div class="nav-wrapper col-md-12" style="position:inherit;background-color:#5D2C87;">
+
+            <a ui-sref="jobseeker.profile"    class="brand-logo text-center col-md-2" style="text-decoration:none;">
+               My Profile
+            </a>
+
+            <a href="" class="button-collapse right" data-activates="jobseeker_profile_sideNav" data-closeonclick="true"  ><i class="material-icons">menu</i></a>
+
+
+
+
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="">Messages<i class="material-icons left">message</i></a></a></li>
+                <li><a href="">Notifications<i class="material-icons right">announcement</i></a></li>
+                <li><!-- Dropdown Trigger -->
+                    <a class='dropdown-button' href='javascript:void(0);' data-activates='demoDropdown' dropdown data-hover="true">
+                        <i class="material-icons right">perm_identity</i>{{ user.personal_information.first_name }}
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+
+    <ul id='demoDropdown' class='dropdown-content'>
+
+        <li><a ui-sref="jobseeker.profile">My Profile</a></li>
+
+        <li ng-controller="LogoutCtrl"><a ng-click="logout()">Logout</a></li>
+
+
+    </ul>
+
+
+<script>
+    $(".button-collapse").sideNav({
+        closeOnClick: true
+    });
+</script>

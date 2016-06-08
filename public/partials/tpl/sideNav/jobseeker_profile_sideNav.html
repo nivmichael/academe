@@ -1,0 +1,35 @@
+<ul id="jobseeker_profile_sideNav" class="side-nav fixed">
+
+
+    <div class="container-fluid">
+        <progressbar class="progress-striped active" value="dynamic" type="{{type}}" style="height:15px;"></progressbar>
+    </div>
+    <div class="" style="height: 34px; line-height: 34px;" >
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="padding-right:0;">
+            Status: <b>{{user.personal_information.education_status | capitalize }}</b>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="padding-left:0;">
+            <select class="form-control" ng-model="currentStatus" ng-options="status.value as status.text for status in userStatuses" ng-change="changeStatus(status)"></select>
+        </div>
+    </div>
+    <div class="" style="padding-left:15px;margin:10px 0;">Last Updated -  {{ user.personal_information.last_login | amDateFormat: 'MM/DD/YYYY' }}</div>
+    <div class="" style="padding: 0 25px;">
+        <h5 class="text-center">{{user.personal_information.first_name +'  '+user.personal_information.last_name}}</h5>
+        <!--<img materialboxed class="materialboxed responsive-img initialized" width="650" ng-src="{{ user.files.user_photo.paramValue }}" src="../../img/No-Photo.gif">-->
+        <div ng-repeat="file in user.files" ng-if="$first">
+            <img class="profile-picture-card card" ng-src="/	{{file['paramValue'] || '../../img/profile-ph.gif '  }}" alt="Generic placeholder image">
+        </div>
+    </div>
+    <div class="text-center" style="position: absolute;top: 420px;width: 100%;left: 0;">
+        <div ui-sref="jobseeker.findajob" class=" col-xs-12 col-sm-12 col-md-12 waves-effect waves-light" >
+            <!--Find J<i class="glyphicon glyphicon-search"></i>bs-->
+            <img ng-src="https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/search_job.png" >
+        </div>
+    </div>
+
+
+    <style>.affix{top: 0!important;}</style>
+    <script>$('#jobseeker_profile_sideNav').affix({offset: {top: 64}});</script>
+
+
+</ul>

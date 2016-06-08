@@ -1,0 +1,12 @@
+
+<ul id="admin_tables_sideNav" class="side-nav fixed">
+     <li ng-repeat="table in tables" ng-click="getTable(table)">
+        {{table}}
+    </li>
+</ul>
+<style>
+    .affix{top: 0!important;}
+</style>
+<script>
+    $('#admin_tables_sideNav').affix({offset: {top: 64}});
+</script>

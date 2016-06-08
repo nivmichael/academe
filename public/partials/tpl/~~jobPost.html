@@ -1,0 +1,305 @@
+<main>
+
+	<div ng-if="errors" class="errors alert alert-danger" >
+		{{errors}}
+		<div ng-repeat="(key,error) in errors track by $index">
+			<span ng-if="$first">Please Check the following :<br><br></span>
+
+			- {{key}}
+		</div>
+	</div>
+
+	<form editable-form name="" id="" role="form" ng-model="post"  >
+
+
+
+
+		<!--hardcoded field-->
+		<div class="jobPost_field">
+			<div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+				Job Description<span ng-if="true">*</span>
+			</div>
+
+			<div  class="param_input col-xs-12 col-sm-6 col-md-5 col-lg-5">
+				<input type='text' class="form-control" name="" ng-model="jobPost['postInfo']['title']">
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<!--end of hardcoded field-->
+
+		<!--Employment fields-->
+		<div ng-repeat="(paramName,paramValues) in jobPost['employment']" ng-cloak>
+
+			<div ng-repeat="(k,v) in paramValues track by $index"  ng-if="k != 'docParamId'" class="jobPost_field">
+				<div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+					{{v.paramName}}<span ng-if="v.required">*</span>
+				</div>
+
+
+
+				<div ng-switch="v.inputType" class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+
+					<div ng-switch-when="text">
+						<div  class="param_input" >
+							<input type='text' class="form-control" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
+						</div>
+
+					</div>
+
+					<div ng-switch-when="select">
+						<div  class="param_input">
+							<select class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']"
+									ng-model="jobPost[docParamName][paramName][k]['paramValue']"
+									ng-options="o.id as o.text for o in groups[v.paramName] | toArray:true   ">
+
+							</select>
+							<!--{{jobPost[docParamName][paramName][k]['paramValue']}}-->
+							<!--{{jobPost[docParamName][paramName][k]['param_parent_id']}}-->
+
+						</div>
+
+					</div>
+
+					<div ng-switch-when="textarea">
+						<div class="param_input">
+							<textarea class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']"></textarea>
+						</div>
+					</div>
+
+
+					<div ng-switch-default>
+						<div  class="param_input" >
+							<input type='text' e-class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		<!--end of Employment fields-->
+
+
+
+		<!--Education fields-->
+
+
+		<div ng-repeat="(paramName,paramValues) in jobPost['education']" class="col-xs-12 col-sm-12 col-md-9 col-lg-9 jobPost_education" ng-cloak>
+
+
+			<div ng-repeat="(k,v) in paramValues | orderBy:'position':false track by $index"  ng-if="v.inputType" class="jobPost_field">
+
+				<div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+					{{v.paramName | underscoreless | capitalize}}<span ng-if="v.required">*</span>
+				</div>
+
+
+
+				<div ng-switch="v.inputType" class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+
+					<div ng-switch-when="text">
+						<div  class="param_input" >
+							<input type='text' class="form-control" name="jobPost['education'][paramName][k]['paramValue']" ng-model="jobPost['education'][paramName][k]['paramValue']">
+						</div>
+
+					</div>
+
+					<div ng-switch-when="select">
+						<div  class="param_input">
+							<select class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']"
+									ng-model="jobPost['education'][paramName][k]['paramValue']"
+									ng-options="o.id as o.text for o in groups[v.paramName]  | toArray:true   ">
+
+							</select>
+							<!--{{jobPost[docParamName][paramName][k]['paramValue']}}-->
+							<!--{{jobPost[docParamName][paramName][k]['param_parent_id']}}-->
+
+						</div>
+
+					</div>
+
+					<div ng-switch-when="textarea">
+						<div class="param_input">
+							<textarea class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']"></textarea>
+						</div>
+					</div>
+
+
+					<div ng-switch-default>
+						<div  class="param_input" >
+							<input type='text' e-class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="clearfix"></div>
+			</div>
+
+
+
+			<div class="iterationCtrls" ng-show="jobPost['education'].length > 1">
+				<div class="iterationCtrl" ng-click="remove(jobPost['education'],docParamName,$index)">
+					<i class="glyphicon glyphicon-remove"></i>Delete
+				</div>
+				<div class="iterationCtrl" ng-click="move(jobPost['education'],$index,$index-1)" ng-hide="$first">
+					<i class="glyphicon glyphicon-arrow-up"></i>Move Up
+				</div>
+				<div class="iterationCtrl" ng-click="move(jobPost['education'],$index,$index+1)"  ng-hide="$last">
+					<i class="glyphicon glyphicon-arrow-down"></i>Move Down
+				</div>
+			</div>
+
+			<div class="clearfix"></div>
+
+			<div ng-show="$last" >
+				<button type="button" class="btn btn-default add" ng-click="add('education',$index)" style="width: 45px; height: 45px; padding: 5px;border-radius:25px;">+</button>
+
+			</div>
+
+		</div>
+		<div class="clearfix"></div>
+		<!--end of Education fields-->
+
+
+		<!--Career Goals fields-->
+
+		<div ng-repeat="(paramName,paramValues) in jobPost['career_goals'] track by $index">
+
+			<div ng-repeat="(k,v) in paramValues" ng-if="v.paramName"   class="jobPost_field">
+
+				<div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+					{{v.paramName | underscoreless | capitalize}}<span ng-if="v.required">*</span>
+				</div>
+
+
+
+				<div ng-switch="v.inputType" class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+
+					<div ng-switch-when="text">
+
+						<div  class="param_input"  ng-if="v.paramName != 'location'">
+							<input type='text' class="form-control" name="jobPost['career_goals'][paramName][k]['paramValue']" ng-model="jobPost['career_goals'][paramName][k]['paramValue']">
+						</div>
+
+						<div  class="param_input" ng-if="v.paramName == 'location'">
+							<input type='text' id="pac-input" class="form-control" name="jobPost['career_goals'][paramName][k]['paramValue']" ng-model="jobPost['career_goals'][paramName][k]['paramValue']">
+						</div>
+
+					</div>
+
+					<div ng-switch-when="select">
+						<div  class="param_input">
+							<select class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']"
+									ng-model="jobPost['career_goals'][paramName][k]['paramValue']"
+									ng-options="o.id as o.text for o in groups[v.paramName]  | toArray:true   ">
+
+							</select>
+						</div>
+					</div>
+
+					<div ng-switch-when="textarea">
+						<div class="param_input">
+							<textarea class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']"></textarea>
+						</div>
+					</div>
+
+
+					<div ng-switch-default>
+						<div  class="param_input" >
+							<input type='text' class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="clearfix"></div>
+			</div>
+
+
+
+			<div class="iterationCtrls" ng-show="docParamValues.length > 1">
+				<div class="iterationCtrl" ng-click="remove(docParamValues,docParamName,$index)">
+					<i class="glyphicon glyphicon-remove"></i>Delete
+				</div>
+				<div class="iterationCtrl" ng-click="move(jobPost['education'],$index,$index-1)" ng-hide="$first">
+					<i class="glyphicon glyphicon-arrow-up"></i>Move Up
+				</div>
+				<div class="iterationCtrl" ng-click="move(jobPost['education'],$index,$index+1)"  ng-hide="$last">
+					<i class="glyphicon glyphicon-arrow-down"></i>Move Down
+				</div>
+
+			</div>
+
+			<div class="clearfix"></div>
+			<!--<div ng-show="$last && docParamName != 'postInfo'" >-->
+
+				<!--<button type="button" class="btn btn-default" ng-click="add(docParamName,$index)" style="width: 45px; height: 45px; padding: 5px;border-radius:25px;">+</button>-->
+
+			<!--</div>-->
+		</div>
+		<!--end of Career Goals fields-->
+
+		<!--hardcoded field-->
+		<div class="jobPost_field">
+			<div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+				Description<span ng-if="true">*</span>
+			</div>
+
+			<div  class="param_input col-xs-12 col-sm-6 col-md-5 col-lg-5">
+				<textarea class="form-control" name="" ng-model="jobPost['postInfo']['description']"></textarea>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<!--end of hardcoded field-->
+
+		<!--hardcoded field-->
+		<div class="jobPost_field">
+			<div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+				Requirements<span ng-if="true">*</span>
+			</div>
+
+			<div  class="param_input col-xs-12 col-sm-6 col-md-5 col-lg-5">
+				<textarea class="form-control" name="" ></textarea>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<!--end of hardcoded field-->
+
+		<!--hardcoded field-->
+		<div class="jobPost_field">
+			<div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+				Would you like to post this job offer in other institutions<span ng-if="true">*</span>
+			</div>
+
+			<div  class="param_input col-xs-12 col-sm-6 col-md-5 col-lg-5">
+				<select class="form-control" name="" ></select>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<!--end of hardcoded field-->
+		<div class="jobPost_field">
+			<div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+
+			</div>
+
+			<a  class="param_input col-xs-12 col-sm-6 col-md-5 col-lg-5 waves-effect waves-light" ng-click="savePost(jobPost)">
+				<img ng-src="../img/buttons/save_job.png" class="">
+			</a>
+			<div class="clearfix"></div>
+		</div>
+
+
+
+
+	</form>
+	<input id="locationTextField" type="text" size="50">
+
+
+</main>
+
+

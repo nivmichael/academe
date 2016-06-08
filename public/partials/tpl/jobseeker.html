@@ -1,0 +1,14 @@
+<div class="wrapper">
+    <!--<div  ui-view="sideNav"></div>-->
+    <!--<div  ui-view="nav"></div>-->
+    <div ui-view="profile.nav"  ng-show="$state.includes('jobseeker.profile')"></div>
+    <div ui-view="findajob.nav" ng-show="$state.includes('jobseeker.findajob')"></div>
+    <div ui-view="profile.sideNav"  ng-show="$state.includes('jobseeker.profile')"></div>
+    <div ui-view="findajob.sideNav" ng-show="$state.includes('jobseeker.findajob')"></div>
+    <div ui-view="profile"  ng-show="$state.includes('jobseeker.profile')"></div>
+    <div ui-view="findajob" ng-show="$state.includes('jobseeker.findajob')"></div>
+
+    <!--<div  ui-view="main" id="main" style="padding-top:10px;" ></div>-->
+    <!--<div  ui-view="footer" class=""></div>-->
+</div>
+

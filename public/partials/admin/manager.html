@@ -1,0 +1,87 @@
+
+<main >
+    <h4>{{table_name}}</h4>
+    <table st-table="columns" st-safe-src="displayed" class="table table-striped" wt-responsive-table>
+        <thead>
+        <tr>
+            <th ng-repeat="(key,col) in columns[0]">
+                    <span  st-sort="{{key}}">
+                          {{key}}
+                    </span>
+                    <!--<span uib-dropdown on-toggle="toggled(open)">-->
+                      <!--<ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">-->
+                          <!--<li>-->
+                              <!--reposition-->
+                          <!--</li>-->
+                      <!--</ul>-->
+                      <!--<a href id="simple-dropdown" uib-dropdown-toggle>-->
+                          <!--<i class="glyphicon glyphicon-book"></i>-->
+                      <!--</a>-->
+                    <!--</span>-->
+            </th>
+        </tr>
+        <!--<tr>-->
+            <!--<th st-sort="first_name">first name</th>-->
+            <!--<th st-sort="last_name">last name</th>-->
+            <!--<th st-sort="birthDate">birth date</th>-->
+            <!--<th st-sort="balance">balance</th>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<th colspan="5">-->
+                <!--<input st-search="" class="form-control" placeholder="global search ..." type="text"/>-->
+            <!--</th>-->
+        <!--</tr>-->
+        </thead>
+        <tbody>
+        <tr ng-repeat="row in columns">
+
+            <td ng-repeat="(key,tc) in row" data-title="{{ key }}">
+
+                <a href="#" editable-text="tc" e-class="form-control" class="table_cell_value" onaftersave="save(key, tc, table_name, row['id'], row )">
+                    {{ row[key] || '...'  }}
+                </a>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</main>
+<!--<table st-set-filter="customFilter" st-safe-src="displayed" st-table="users" class="table table-bordered table-striped container">-->
+    <!--<thead>-->
+    <!--<tr>-->
+        <!--<th  st-sort="displayed.first_name">first name</th>-->
+        <!--<th  st-sort="last_name">last name</th>-->
+        <!--<th  st-sort="birthDate">birth date</th>-->
+        <!--<th  st-sort="email">email</th>-->
+        <!--<th  st-sort="status">status</th>-->
+    <!--</tr>-->
+    <!--<tr>-->
+        <!--<th>-->
+            <!--<input placeholder="search firstname" st-search="first_name" />-->
+        <!--</th>-->
+        <!--<th>-->
+            <!--<input placeholder="search lastname" st-search="last_name" />-->
+        <!--</th>-->
+        <!--<th>-->
+            <!--<st-date-range predicate="birthDate" before="query.before" after="query.after"></st-date-range>-->
+        <!--</th>-->
+        <!--<th></th>-->
+        <!--<th>-->
+            <!--<st-number-range predicate="balance" lower="query.lower" higher="query.higher"></st-number-range>-->
+        <!--</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
+
+    <!--<tr ng-repeat="row in displayed track by $index">-->
+        <!--<td>{{row.first_name}}</td>-->
+        <!--<td>{{row.last_name | uppercase}}</td>-->
+        <!--<td>{{row.date_of_birth | date}}</td>-->
+        <!--<td>{{row.email}}</td>-->
+        <!--<td>{{row.status}}</td>-->
+    <!--</tr>-->
+    <!--</tbody>-->
+    <!--<tfoot>-->
+    <!--</tfoot>-->
+<!--</table>-->

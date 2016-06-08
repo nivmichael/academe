@@ -1,0 +1,743 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{ jobPost.postInfo.title }}</h3>
+</div>
+
+<div class="modal-body container-fluid">
+
+
+    <ul class="col-md-2 sideNav">
+        <div ng-click="!editableForm.$cancel()" class="postLi">
+            Job Details
+        </div>
+        <div ng-click="editableForm.$show()" class="postLi">
+            Edit
+        </div>
+    </ul>
+
+
+
+    <form editable-form name="editableForm" onaftersave="savePost()" class="col-md-10" novalidate>
+
+            <!--hardcoded field : job_title -->
+
+                <div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+                    Job Description<span ng-if="true">*</span>
+                </div>
+                <div class="param_input col-xs-12 col-sm-6 col-md-5 col-lg-5">
+                    <div editable-text="jobPost.postInfo.title" e-name="jobPost.postInfo.title"  e-class="form-control" e-required>{{ jobPost.postInfo.title || 'empty' }}</div>
+
+                </div>
+                <div class="clearfix"></div>
+            <!------end of hardcoded job title----------->
+
+            <!--Employment fields-->
+            <div ng-repeat="(paramName,paramValues) in jobPost['employment']" ng-cloak>
+
+                <div ng-repeat="(k,v) in paramValues track by $index"  ng-if="k != 'docParamId'" class="jobPost_field">
+
+                    <div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+                        {{v.paramName}}<span ng-if="true">*</span>
+                    </div>
+
+                    <div ng-switch="v.inputType" class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+
+                        <div ng-switch-when="text">
+
+                            <div  class="param_input" >
+                                <div editable-text="v.paramValue" e-name="v.paramValue" e-class="form-control" e-form="rowform" e-required>
+                                    {{v.paramValue}}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div ng-switch-when="select">
+
+                            <div  class="param_input">
+
+                                <div editable-select="v.paramValue"
+                                     e-form="rowform"
+                                     e-name="v.paramValue"
+                                     e-class="form-control"
+                                     e-ng-options="o.value as o.text for o in groups[v.paramName] | toArray:true "										>
+
+                                    {{v.paramValue}}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div ng-switch-when="textarea">
+                            <div class="param_input">
+                                <textarea class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']"></textarea>
+                            </div>
+                        </div>
+
+                        <div ng-switch-when="date">
+                            <p ng-hide="editableForm.$visible">{{jobPost[docParamName][paramName][k]['paramValue'] | date:"MM/dd/yyyy"}}</p>
+
+                            <div ng-show="editableForm.$visible">
+                                <div class="col-md-6">
+                                    <p class="input-group">
+                                        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                      <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                      </span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!--<p ng-hide="editableForm.$visible">-->
+                            <!--{{user[docParamName][paramKey][k] | date:"MM/dd/yyyy"}}-->
+                            <!--</p>-->
+                            <!--<p class="input-group"  ng-show="editableForm.$visible">-->
+                            <!--<input type="text" class="form-control datePickerInput"  style="width:247px;" uib-datepicker-popup="{{format}}"  ng-model="user[docParamName][paramKey][k]" is-open="opened[paramKey]" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"  close-text="Close" />-->
+                            <!--<span class="input-group-btn">-->
+                            <!--<button type="button" class="btn btn-default" ng-click="open($event,paramKey)"><i class="glyphicon glyphicon-calendar"></i></button>-->
+                            <!--</span>-->
+                            <!--</p>-->
+                        </div>
+                        <script>
+
+                            $(document).ready(function(){
+
+                                $('.datepicker').pickadate();
+
+                            });
+
+                        </script>
+
+
+                        <div ng-switch-default>
+                            <div class="param_input">
+                                <input type='text' e-class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <!--end of Employment fields-->
+
+
+            <!--hardcoded field-->
+            <div class="jobPost_field">
+                <div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+                    Employment Type<span ng-if="true">*</span>
+                </div>
+                <div  class="param_input col-xs-12 col-sm-6 col-md-5 col-lg-5">
+
+                    <div editable-select="v.paramValue"
+                         e-form="rowform"
+                         e-name="v.paramValue"
+                         e-class="form-control"
+                         e-ng-options="o.value as o.text for o in groups['employment_type'] | toArray:true ">
+
+                        {{jobPost.postInfo.employment_type}}
+                    </div>
+
+                </div>
+                <!--<div  class="param_input col-xs-12 col-sm-6 col-md-5 col-lg-5">-->
+                    <!--<input type='text' class="form-control" name="">-->
+                <!--</div>-->
+                <div class="clearfix"></div>
+            </div>
+            <!--end of hardcoded field-->
+
+        <!--Education fields-->
+
+
+        <div ng-repeat="(paramName,paramValues) in jobPost['education']" class="col-xs-12 col-sm-12 col-md-9 col-lg-9 jobPost_education" ng-cloak>
+
+
+            <div ng-repeat="(k,v) in paramValues track by $index"  ng-if="k != 'docParamId'" class="jobPost_field">
+
+                <div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+                    {{v.paramName}}<span ng-if="true">*</span>
+                </div>
+
+
+
+                <div ng-switch="v.inputType" class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+
+                    <div ng-switch-when="text">
+                        <div  class="param_input" >
+                            <div editable-text="v.paramValue" e-name="v.paramValue" e-class="form-control" e-form="rowform" e-required>
+                                {{v.paramValue}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-switch-when="select">
+                        <div  class="param_input">
+
+                            <div editable-select="v.paramValue"
+                                 e-form="rowform"
+                                 e-name="v.paramValue"
+                                 e-class="form-control"
+                                 e-ng-options="o.value as o.text for o in groups[v.paramName] | toArray:true "										>
+
+                                {{v.paramValue}}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div ng-switch-when="textarea">
+                        <div class="param_input">
+                            <textarea class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div ng-switch-default>
+                        <div  class="param_input" >
+                            <input type='text' e-class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+
+
+            <div class="iterationCtrls" ng-show="jobPost['education'].length > 1">
+                <div class="iterationCtrl" ng-click="remove(jobPost['education'],docParamName,$index)">
+                    <i class="glyphicon glyphicon-remove"></i>Delete
+                </div>
+                <div class="iterationCtrl" ng-click="move(jobPost['education'],$index,$index-1)" ng-hide="$first">
+                    <i class="glyphicon glyphicon-arrow-up"></i>Move Up
+                </div>
+                <div class="iterationCtrl" ng-click="move(jobPost['education'],$index,$index+1)"  ng-hide="$last">
+                    <i class="glyphicon glyphicon-arrow-down"></i>Move Down
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div ng-show="$last" >
+                <button type="button" class="btn btn-default add" ng-click="add('education',$index)" style="width: 45px; height: 45px; padding: 5px;border-radius:25px;">+</button>
+
+            </div>
+
+        </div>
+        <div class="clearfix"></div>
+        <!--end of Education fields-->
+
+        <!--Career Goals fields-->
+
+        <div ng-repeat="(paramName,paramValues) in jobPost['career_goals'] track by $index">
+
+            <div ng-repeat="(k,v) in paramValues | toArray:true | positioning" ng-if="v.paramName"   class="jobPost_field">
+
+                <div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+                    {{v.paramName | underscoreless | capitalize}}<span ng-if="true">*</span>
+                </div>
+
+
+
+                <div ng-switch="v.inputType" class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+
+                    <div ng-switch-when="text">
+
+                        <div ng-switch-when="text">
+                            <div  class="param_input" >
+                                <div editable-text="v.paramValue" e-name="v.paramValue" e-class="form-control" e-form="rowform" e-required>
+                                    {{v.paramValue}}
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div  class="param_input"  ng-if="v.paramName != 'location'">-->
+                            <!--<input type='text' class="form-control" name="jobPost['career_goals'][paramName][k]['paramValue']" ng-model="jobPost['career_goals'][paramName][k]['paramValue']">-->
+                        <!--</div>-->
+
+                        <!--<div  class="param_input" ng-if="v.paramName == 'location'">-->
+                            <!--<input type='text' id="pac-input" class="form-control" name="jobPost['career_goals'][paramName][k]['paramValue']" ng-model="jobPost['career_goals'][paramName][k]['paramValue']">-->
+                        <!--</div>-->
+
+                    </div>
+
+                    <div ng-switch-when="select">
+                        <div  class="param_input">
+                            <div editable-select="v.paramValue"
+                                 e-form="rowform"
+                                 e-name="v.paramValue"
+                                 e-class="form-control"
+                                 e-ng-options="o.value as o.text for o in groups[v.paramName] | toArray:true "										>
+                                {{v.paramValue}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-switch-when="textarea">
+                        <div class="param_input">
+                            <textarea class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div ng-switch-default>
+                        <div  class="param_input" >
+                            <input type='text' class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+
+
+            <div class="iterationCtrls" ng-show="docParamValues.length > 1">
+                <div class="iterationCtrl" ng-click="remove(docParamValues,docParamName,$index)">
+                    <i class="glyphicon glyphicon-remove"></i>Delete
+                </div>
+                <div class="iterationCtrl" ng-click="move(jobPost['education'],$index,$index-1)" ng-hide="$first">
+                    <i class="glyphicon glyphicon-arrow-up"></i>Move Up
+                </div>
+                <div class="iterationCtrl" ng-click="move(jobPost['education'],$index,$index+1)"  ng-hide="$last">
+                    <i class="glyphicon glyphicon-arrow-down"></i>Move Down
+                </div>
+
+            </div>
+
+            <div class="clearfix"></div>
+            <!--<div ng-show="$last && docParamName != 'postInfo'" >-->
+
+            <!--<button type="button" class="btn btn-default" ng-click="add(docParamName,$index)" style="width: 45px; height: 45px; padding: 5px;border-radius:25px;">+</button>-->
+
+            <!--</div>-->
+        </div>
+        <!--end of Career Goals fields-->
+        <!--hardcoded field-->
+        <div class="jobPost_field">
+            <div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+                Description<span ng-if="true">*</span>
+            </div>
+
+            <div class="param_input col-xs-12 col-sm-6 col-md-5 col-lg-5">
+                <div editable-textarea="jobPost.postInfo.description" e-name="jobPost.postInfo.description"  e-class="form-control">{{ jobPost.postInfo.description || 'empty' }}</div>
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!--end of hardcoded field-->
+
+        <!--hardcoded field-->
+        <div class="jobPost_field">
+            <div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+                Requirements<span ng-if="true">*</span>
+            </div>
+
+            <div class="param_input col-xs-12 col-sm-6 col-md-5 col-lg-5">
+                <div editable-textarea="jobPost.postInfo.requirements" e-name="jobPost.postInfo.requirements"  e-class="form-control">{{ jobPost.postInfo.requirements || 'empty' }}</div>
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!--end of hardcoded field-->
+
+        <!--hardcoded field-->
+        <div class="jobPost_field">
+            <div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+                Would you like to post this job offer in other institutions<span ng-if="true">*</span>
+            </div>
+
+            <div  class="param_input col-xs-12 col-sm-6 col-md-5 col-lg-5">
+                <div  class="param_input col-xs-12 col-sm-6 col-md-5 col-lg-5">
+
+                    <div editable-select="v.paramValue"
+                         e-form="rowform"
+                         e-name="v.paramValue"
+                         e-class="form-control"
+                         e-ng-options="o.value as o.text for o in groups['employment_type'] | toArray:true ">
+
+                        {{jobPost.postInfo.employment_type}}
+                    </div>
+
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!--end of hardcoded field-->
+
+        <div class="jobPost_field">
+            <div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+
+            </div>
+
+            <a  class="param_input col-xs-12 col-sm-6 col-md-5 col-lg-5 waves-effect waves-light" ng-click="savePost(jobPost)">
+                <img ng-src="../img/buttons/save_job.png" class="">
+            </a>
+            <div class="clearfix"></div>
+        </div>
+
+
+        <!--</div>-->
+
+
+
+        <div class="buttons">
+            <!-- button to show form -->
+            <!--<button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">-->
+                <!--Edit-->
+            <!--</button>-->
+            <!-- buttons to submit / cancel form -->
+          <span ng-show="editableForm.$visible">
+            <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+                Save
+            </button>
+            <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+                Cancel
+            </button>
+          </span>
+        </div>
+    </form>
+
+</div>
+
+
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="close()">Ok</button>
+    <!--<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>-->
+</div>
+
+<!--<div class="modal-header">-->
+    <!--<h3 class="modal-title">Edit text</h3>-->
+<!--</div>-->
+<!--<div class="modal-body">-->
+  <!--<div ng-repeat="(docParamName, docParamValues ) in post" ng-if="">-->
+      <!--<div ng-repeat="(itertaion_key, params ) in docParamValues" >-->
+          <!--<div ng-repeat="(paramId, paramValues ) in params track by $index" >-->
+              <!--{{paramValues}}-->
+          <!--</div>-->
+      <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+<!--<div class="modal-body">-->
+    <!--<button class="btn btn-warning" ng-click="close()">Close</button>-->
+    <!--<button class="btn btn-success pull-right" ng-click="save()">Save</button>-->
+<!--</div>-->
+
+
+
+<!--<form editable-form name="editableForm"  id="" role="form"   onaftersave="savePost()" >-->
+
+    <!--<ul class="col-md-2 sideNav">-->
+        <!--<div ng-click="!editableForm.$cancel()" class="postLi">-->
+          <!--Job Details-->
+        <!--</div>-->
+        <!--<div ng-click="editableForm.$show()" class="postLi">-->
+          <!--Edit-->
+        <!--</div>-->
+    <!--</ul>-->
+
+    <!--<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">-->
+
+    <!--&lt;!&ndash;hardcoded field&ndash;&gt;-->
+    <!--<div class="jobPost_field">-->
+        <!--<div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >-->
+            <!--Job Description<span ng-if="true">*</span>-->
+        <!--</div>-->
+        <!--<div editable-text="jobPost.postInfo.title" e-name="postInfo.title" e-class="form-control"  ng-model="jobPost.postInfo.title">-->
+          <!--{{ jobPost.postInfo.title }}-->
+        <!--</div>-->
+        <!--<div  class="param_input col-xs-12 col-sm-6 col-md-5 col-lg-5">-->
+            <!--<input type='text' class="form-control" ng-model="jobPost.postInfo.title">-->
+        <!--</div>-->
+        <!--<div class="clearfix"></div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;end of hardcoded field&ndash;&gt;-->
+
+    <!--&lt;!&ndash;Employment fields&ndash;&gt;-->
+    <!--<div ng-repeat="(paramName,paramValues) in jobPost['employment']" ng-cloak>-->
+
+        <!--<div ng-repeat="(k,v) in paramValues track by $index"  ng-if="k != 'docParamId'" class="jobPost_field">-->
+            <!--<div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >-->
+                <!--{{v.paramName}}<span ng-if="true">*</span>-->
+            <!--</div>-->
+
+
+
+            <!--<div ng-switch="v.inputType" class="col-xs-12 col-sm-6 col-md-5 col-lg-5">-->
+
+                <!--<div ng-switch-when="text">-->
+                    <!--<div  class="param_input" >-->
+                        <!--<input type='text' class="form-control" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">-->
+                    <!--</div>-->
+
+                <!--</div>-->
+
+                <!--<div ng-switch-when="select">-->
+                    <!--<div  class="param_input">-->
+                        <!--<select class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']"-->
+                                <!--ng-model="jobPost[docParamName][paramName][k]['paramValue']"-->
+                                <!--ng-options="o.id as o.text for o in groups[v.paramName] | toArray:true   ">-->
+
+                        <!--</select>-->
+                        <!--&lt;!&ndash;{{jobPost[docParamName][paramName][k]['paramValue']}}&ndash;&gt;-->
+                        <!--&lt;!&ndash;{{jobPost[docParamName][paramName][k]['param_parent_id']}}&ndash;&gt;-->
+
+                    <!--</div>-->
+
+                <!--</div>-->
+
+                <!--<div ng-switch-when="textarea">-->
+                    <!--<div class="param_input">-->
+                        <!--<textarea class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']"></textarea>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+
+                <!--<div ng-switch-default>-->
+                    <!--<div  class="param_input" >-->
+                        <!--<input type='text' e-class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">-->
+                    <!--</div>-->
+
+                <!--</div>-->
+
+            <!--</div>-->
+
+            <!--<div class="clearfix"></div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;end of Employment fields&ndash;&gt;-->
+
+    <!--&lt;!&ndash;hardcoded field&ndash;&gt;-->
+    <!--<div class="jobPost_field">-->
+        <!--<div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >-->
+            <!--Employment Type<span ng-if="true">*</span>-->
+        <!--</div>-->
+
+        <!--<div  class="param_input col-xs-12 col-sm-6 col-md-5 col-lg-5">-->
+            <!--<input type='text' class="form-control" name="">-->
+        <!--</div>-->
+        <!--<div class="clearfix"></div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;end of hardcoded field&ndash;&gt;-->
+
+
+    <!--&lt;!&ndash;Education fields&ndash;&gt;-->
+
+
+    <!--<div ng-repeat="(paramName,paramValues) in jobPost['education']" class="col-xs-12 col-sm-12 col-md-9 col-lg-9 jobPost_education" ng-cloak>-->
+
+
+        <!--<div ng-repeat="(k,v) in paramValues track by $index"  ng-if="k != 'docParamId'" class="jobPost_field">-->
+
+            <!--<div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >-->
+                <!--{{v.paramName}}<span ng-if="true">*</span>-->
+            <!--</div>-->
+
+
+
+            <!--<div ng-switch="v.inputType" class="col-xs-12 col-sm-6 col-md-5 col-lg-5">-->
+
+                <!--<div ng-switch-when="text">-->
+                    <!--<div  class="param_input" >-->
+                        <!--<input type='text' class="form-control" name="jobPost['education'][paramName][k]['paramValue']" ng-model="jobPost['education'][paramName][k]['paramValue']">-->
+                    <!--</div>-->
+
+                <!--</div>-->
+
+                <!--<div ng-switch-when="select">-->
+                    <!--<div  class="param_input">-->
+                        <!--<select class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']"-->
+                                <!--ng-model="jobPost['education'][paramName][k]['paramValue']"-->
+                                <!--ng-options="o.id as o.text for o in groups[v.paramName]  | toArray:true   ">-->
+
+                        <!--</select>-->
+                        <!--&lt;!&ndash;{{jobPost[docParamName][paramName][k]['paramValue']}}&ndash;&gt;-->
+                        <!--&lt;!&ndash;{{jobPost[docParamName][paramName][k]['param_parent_id']}}&ndash;&gt;-->
+
+                    <!--</div>-->
+
+                <!--</div>-->
+
+                <!--<div ng-switch-when="textarea">-->
+                    <!--<div class="param_input">-->
+                        <!--<textarea class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']"></textarea>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+
+                <!--<div ng-switch-default>-->
+                    <!--<div  class="param_input" >-->
+                        <!--<input type='text' e-class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">-->
+                    <!--</div>-->
+
+                <!--</div>-->
+
+            <!--</div>-->
+
+            <!--<div class="clearfix"></div>-->
+        <!--</div>-->
+
+
+
+        <!--<div class="iterationCtrls" ng-show="jobPost['education'].length > 1">-->
+            <!--<div class="iterationCtrl" ng-click="remove(jobPost['education'],docParamName,$index)">-->
+                <!--<i class="glyphicon glyphicon-remove"></i>Delete-->
+            <!--</div>-->
+            <!--<div class="iterationCtrl" ng-click="move(jobPost['education'],$index,$index-1)" ng-hide="$first">-->
+                <!--<i class="glyphicon glyphicon-arrow-up"></i>Move Up-->
+            <!--</div>-->
+            <!--<div class="iterationCtrl" ng-click="move(jobPost['education'],$index,$index+1)"  ng-hide="$last">-->
+                <!--<i class="glyphicon glyphicon-arrow-down"></i>Move Down-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="clearfix"></div>-->
+
+        <!--<div ng-show="$last" >-->
+            <!--<button type="button" class="btn btn-default add" ng-click="add('education',$index)" style="width: 45px; height: 45px; padding: 5px;border-radius:25px;">+</button>-->
+
+        <!--</div>-->
+
+    <!--</div>-->
+    <!--<div class="clearfix"></div>-->
+    <!--&lt;!&ndash;end of Education fields&ndash;&gt;-->
+
+
+    <!--&lt;!&ndash;Career Goals fields&ndash;&gt;-->
+
+    <!--<div ng-repeat="(paramName,paramValues) in jobPost['career_goals'] track by $index">-->
+
+        <!--<div ng-repeat="(k,v) in paramValues | toArray:true | positioning" ng-if="v.paramName"   class="jobPost_field">-->
+
+            <!--<div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >-->
+                <!--{{v.paramName | underscoreless | capitalize}}<span ng-if="true">*</span>-->
+            <!--</div>-->
+
+
+
+            <!--<div ng-switch="v.inputType" class="col-xs-12 col-sm-6 col-md-5 col-lg-5">-->
+
+                <!--<div ng-switch-when="text">-->
+
+                    <!--<div  class="param_input"  ng-if="v.paramName != 'location'">-->
+                        <!--<input type='text' class="form-control" name="jobPost['career_goals'][paramName][k]['paramValue']" ng-model="jobPost['career_goals'][paramName][k]['paramValue']">-->
+                    <!--</div>-->
+
+                    <!--<div  class="param_input" ng-if="v.paramName == 'location'">-->
+                        <!--<input type='text' id="pac-input" class="form-control" name="jobPost['career_goals'][paramName][k]['paramValue']" ng-model="jobPost['career_goals'][paramName][k]['paramValue']">-->
+                    <!--</div>-->
+
+                <!--</div>-->
+
+                <!--<div ng-switch-when="select">-->
+                    <!--<div  class="param_input">-->
+                        <!--<select class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']"-->
+                                <!--ng-model="jobPost['career_goals'][paramName][k]['paramValue']"-->
+                                <!--ng-options="o.id as o.text for o in groups[v.paramName]  | toArray:true   ">-->
+
+                        <!--</select>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+
+                <!--<div ng-switch-when="textarea">-->
+                    <!--<div class="param_input">-->
+                        <!--<textarea class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']"></textarea>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+
+                <!--<div ng-switch-default>-->
+                    <!--<div  class="param_input" >-->
+                        <!--<input type='text' class="form-control param_input" name="jobPost[docParamName][paramName][k]['paramValue']" ng-model="jobPost[docParamName][paramName][k]['paramValue']">-->
+                    <!--</div>-->
+
+                <!--</div>-->
+
+            <!--</div>-->
+
+            <!--<div class="clearfix"></div>-->
+        <!--</div>-->
+
+
+
+        <!--<div class="iterationCtrls" ng-show="docParamValues.length > 1">-->
+            <!--<div class="iterationCtrl" ng-click="remove(docParamValues,docParamName,$index)">-->
+                <!--<i class="glyphicon glyphicon-remove"></i>Delete-->
+            <!--</div>-->
+            <!--<div class="iterationCtrl" ng-click="move(jobPost['education'],$index,$index-1)" ng-hide="$first">-->
+                <!--<i class="glyphicon glyphicon-arrow-up"></i>Move Up-->
+            <!--</div>-->
+            <!--<div class="iterationCtrl" ng-click="move(jobPost['education'],$index,$index+1)"  ng-hide="$last">-->
+                <!--<i class="glyphicon glyphicon-arrow-down"></i>Move Down-->
+            <!--</div>-->
+
+        <!--</div>-->
+
+        <!--<div class="clearfix"></div>-->
+        <!--&lt;!&ndash;<div ng-show="$last && docParamName != 'postInfo'" >&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<button type="button" class="btn btn-default" ng-click="add(docParamName,$index)" style="width: 45px; height: 45px; padding: 5px;border-radius:25px;">+</button>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash;end of Career Goals fields&ndash;&gt;-->
+
+    <!--&lt;!&ndash;hardcoded field&ndash;&gt;-->
+    <!--<div class="jobPost_field">-->
+        <!--<div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >-->
+            <!--Description<span ng-if="true">*</span>-->
+        <!--</div>-->
+
+        <!--<div  class="param_input col-xs-12 col-sm-6 col-md-5 col-lg-5">-->
+            <!--<textarea class="form-control" name="" ng-model="jobPost['postInfo']['description']"></textarea>-->
+        <!--</div>-->
+        <!--<div class="clearfix"></div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;end of hardcoded field&ndash;&gt;-->
+
+    <!--&lt;!&ndash;hardcoded field&ndash;&gt;-->
+    <!--<div class="jobPost_field">-->
+        <!--<div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >-->
+            <!--Requirements<span ng-if="true">*</span>-->
+        <!--</div>-->
+
+        <!--<div  class="param_input col-xs-12 col-sm-6 col-md-5 col-lg-5">-->
+            <!--<textarea class="form-control" name="" ></textarea>-->
+        <!--</div>-->
+        <!--<div class="clearfix"></div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;end of hardcoded field&ndash;&gt;-->
+
+    <!--&lt;!&ndash;hardcoded field&ndash;&gt;-->
+    <!--<div class="jobPost_field">-->
+        <!--<div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >-->
+            <!--Would you like to post this job offer in other institutions<span ng-if="true">*</span>-->
+        <!--</div>-->
+
+        <!--<div  class="param_input col-xs-12 col-sm-6 col-md-5 col-lg-5">-->
+            <!--<select class="form-control" name="" ></select>-->
+        <!--</div>-->
+        <!--<div class="clearfix"></div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;end of hardcoded field&ndash;&gt;-->
+    <!--<div class="jobPost_field">-->
+        <!--<div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >-->
+
+        <!--</div>-->
+
+        <!--<a  class="param_input col-xs-12 col-sm-6 col-md-5 col-lg-5 waves-effect waves-light" ng-click="savePost(jobPost)">-->
+            <!--<img ng-src="../img/buttons/save_job.png" class="">-->
+        <!--</a>-->
+        <!--<div class="clearfix"></div>-->
+    <!--</div>-->
+
+
+
+<!--</div>-->
+<!--</form>-->
