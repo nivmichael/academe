@@ -11,7 +11,6 @@
 
 namespace Tymon\JWTAuth\Middleware;
 
-
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 

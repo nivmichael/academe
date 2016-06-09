@@ -143,7 +143,7 @@ var acadb = angular.module('acadb', [
                 params: {type: null,  sub_type : null},
                 views:{
                     'nav':{
-                        templateUrl: '../partials/tpl/navbar/jobseeker_register_steps_navbar.html',
+                        templateUrl: '../partials/tpl/navbar/register_navbar.html',
                     },
                     'sideNav':{
                         templateUrl: '../partials/tpl/sideNav/jobseeker_register_steps_sideNav.html',
@@ -606,7 +606,7 @@ var acadb = angular.module('acadb', [
 
                     views:{
                         'nav':{
-                            templateUrl: '../partials/tpl/navbar/jobseeker_register_steps_navbar.html',
+                            templateUrl: '../partials/tpl/navbar/register_navbar.html',
                         },
                         'sideNav':{
                             templateUrl: '../partials/tpl/sideNav/jobseeker_register_steps_sideNav.html',
@@ -683,7 +683,7 @@ var acadb = angular.module('acadb', [
 
                             views:{
                                 'nav':{
-                                    templateUrl: '../partials/tpl/navbar/jobseeker_register_steps_navbar.html',
+                                    templateUrl: '../partials/tpl/navbar/register_navbar.html',
                                 },
                                 'sideNav':{
                                     templateUrl: '../partials/tpl/sideNav/jobseeker_register_steps_sideNav.html',

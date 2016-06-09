@@ -2,6 +2,19 @@
 angular.module('acadb')
     .controller('SideNavController', function ($scope, $http, $state, $auth, Account, $stateParams, Tables, $rootScope, TableData) {
 
+        $scope.status = {
+            isopen: false
+        };
+
+
+
+        $scope.toggleDropdown = function($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.status.isopen = !$scope.status.isopen;
+        };
+
+
       TableData.list().$promise.then(function(tables){
       	$scope.tables = tables;
       });

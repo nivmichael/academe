@@ -10,7 +10,7 @@ console.log('ctrl');
         $scope.models = {
                     selected: null,
                     templates: [
-                        {type: "parameter", name: 'new parameter',modify:1,new:1},
+                        {type: "parameter", name: 'new parameter',modify:1,new:1,show:1},
                         {type: "category", name: 'new category',modify:1, columns: [[],[]]}
                     ],
                     dropzones:

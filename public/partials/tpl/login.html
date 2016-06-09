@@ -3,7 +3,7 @@
 
     <img ng-src="{{logo}}" style="width:200px;">
     <div class="" style="width:240px; margin:0 auto;">
-        <form name="loginForm" class="form-signin" ng-submit="login()"  novalidate>
+        <form name="loginForm" class="form-signin"   novalidate>
             <p class="bg-danger" >{{error}}</p>
 
             <div class="form-group" ng-class="{'has-error': errors.email}">
@@ -22,15 +22,12 @@
             <span style="float:right;">
                 <a ng-click="getPasswordEmail()"  >Forgot password?</a>
             </span>
-
-            <button type="submit" class="btn btn-lg  btn-block loginButton login-form"  ng-disabled="loginForm.$invalid">Login</button>
-            <a type="button" ui-sref=" {{ registeration_link }} "   class="btn btn-lg  btn-block registerButton login-form">New User</a>
-            <a type="button" href="" class="btn btn-lg  btn-block loginFacebook login-form" ng-disabled="true">Facebook</a>
-            <a type="button" href="" class="btn btn-lg  btn-block loginLinkedIn login-form" ng-disabled="true">LinkedIn</a>
+            <br>
+            <br>
+            <a type="button" class="btn btn-lg btn-block login-form"  ng-click="login()" ng-disabled="loginForm.$invalid">Login</a>
+            <a type="button" class="btn btn-lg btn-block login-form"  ui-sref=" {{ registeration_link }} ">New User</a>
+            <a type="button" class="btn btn-lg btn-block loginFacebook login-form" ng-disabled="true">Facebook</a>
+            <a type="button" class="btn btn-lg btn-block loginLinkedIn login-form" ng-disabled="true">LinkedIn</a>
         </form>
     </div>
 </div>
-<pre>{{$stateParams}}
-<br>
-{{redirectTo}}
-</pre>
