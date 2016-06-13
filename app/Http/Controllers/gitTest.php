@@ -10,6 +10,7 @@
 // 2
 $x = 2;
 // 3
-
+echo "coco puffs";
+print_r('are 4 kids');
 
 exit;
