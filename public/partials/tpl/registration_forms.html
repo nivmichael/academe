@@ -21,21 +21,19 @@
             {{errors}}
         </div>
 
-        <!--<div ng-if="docParam == 'personal_information'">-->
-        <!--<ng-include src="'partials/forms/registration/jobseeker_register_personal_information.html'"></ng-include>-->
-        <!--</div>-->
+        <div ng-if="docParam == 'personal_information'">
+        <ng-include src="'partials/forms/registration/jobseeker_register_personal_information.html'"></ng-include>
+        </div>
         <!--|| docParam == 'personal_information'-->
-        <div ng-form="registerForm" ng-repeat="( iteration_key, docParamValues ) in user[docParam] track by $index" ng-hide="docParam == 'files' ">
+        <div ng-form="registerForm" ng-repeat="( iteration_key, docParamValues ) in user[docParam] track by $index" ng-hide="docParam == 'files'|| docParam == 'personal_information' ">
 
             <div ng-repeat="(param_id, param) in docParamValues | toArray:false | orderBy:'position':false" class="form_field" ng-if="param.inputType">
 
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
                     <b>{{param.paramName | underscoreless | capitalize }}</b>
                 </div>
 
                 <div ng-switch="param.inputType">
-                    {{ registerForm[param.paramName].$dirty }}
-                    {{ registerForm[param.paramName].$touched }}
 
                     <div ng-switch-when="text">
                         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -66,59 +64,15 @@
                     </div>
 
                     <div ng-switch-when="date">
-                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                    <input  input-date
-                    type="text"
-                    name="created"
-                    id=""
-                    class="datepicker form-control"
-                    ng-model="param.paramValue"
-                    container="body"
-                    format="mm/dd/yyyy"
-                    months-full="{{ month }}"
-                    months-short="{{ monthShort }}"
-                    weekdays-full="{{ weekdaysFull }}"
-                    weekdays-short="{{ weekdaysShort }}"
-                    weekdays-letter="{{ weekdaysLetter }}"
-                    min="{{ minDate }}"
-                    max="{{ maxDate }}"
-                    today="today"
-                    clear="clear"
-                    close="close"
-                    select-years="15"
-                    on-start="onStart()"
-                    on-render="onRender()"
-                    on-open="onOpen()"
-                    on-close="onClose()"
-                    on-set="onSet()"
-                    on-stop="onStop()" />
-                    </div>
-                    </div>
-                    <!--<div ng-switch-when="files">-->
-                    <!--<div  ng-controller="MyCtrl">-->
-                    <!--<form name="myForm">-->
-                    <!--<div>Crop Image and Upload</div>-->
-                    <!--<button ngf-select ng-model="picFile" accept="image/*">-->
-                    <!--Select Picture</button>-->
-                    <!--<div ngf-drop ng-model="picFile" ngf-pattern="image/*"-->
-                    <!--class="cropArea">-->
-                    <!--<img-crop image="picFile  | ngfDataUrl"-->
-                    <!--result-image="croppedDataUrl" ng-init="croppedDataUrl=''">-->
-                    <!--</img-crop>-->
-                    <!--</div>-->
-                    <!--<div>-->
-                    <!--<img ng-src="{{croppedDataUrl}}" />-->
-                    <!--</div>-->
-                    <!--<button ng-click="upload(croppedDataUrl, picFile.name)">Submit</button>-->
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                            <select class="form-control date_month" ng-init="date.month = months[0].value" ng-model="date.month" ng-options="m.value as m.text for m in months">
 
-                    <!--<span class="progress" ng-show="progress >= 0">-->
-                    <!--<div style="width:{{progress}}%" ng-bind="progress + '%'"></div>-->
-                    <!--</span>-->
-                    <!--<span ng-show="result">Upload Successful</span>-->
-                    <!--<span class="err" ng-show="errorMsg">{{errorMsg}}</span>-->
-                    <!--</form>-->
-                    <!--</div>-->
-                    <!--</div>-->
+                            </select>
+                            <select class="form-control date_year" ng-init="date.year = years[0].value"   ng-model="date.year" ng-options="y.value as y.text for y in years">
+
+                            </select>
+                        </div>
+                    </div>
 
 
                     <div ng-switch-default>

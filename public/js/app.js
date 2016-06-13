@@ -132,6 +132,30 @@ var acadb = angular.module('acadb', [
                     }
                 }
             })
+            .state('form', {
+                url: '/form',
+                templateUrl: 'partials/forms/registration/jobseeker/form.html',
+                controller: 'FormCtrl'
+            })
+            // nested states
+            // each of these sections will have their own view
+            // url will be nested (/form/profile)
+            .state('form.profile', {
+                url: '/profile',
+                templateUrl: 'partials/forms/registration/jobseeker/form-profile.html'
+            })
+
+            // url will be /form/interests
+            .state('form.education', {
+                url: '/education',
+                templateUrl: 'partials/forms/registration/jobseeker/form-education.html'
+            })
+
+            // url will be /form/payment
+            .state('form.employment', {
+                url: '/employment',
+                templateUrl: 'partials/forms/registration/jobseeker/form-employment.html'
+            })
             .state('register', {
                 url: '^/register',
                 abstract:true,
@@ -613,7 +637,7 @@ var acadb = angular.module('acadb', [
                             controller:  'SideNavController',
                         },
                         'main@register':{
-                            "templateUrl":'../../partials/tpl/signup.html'  ,
+                            "templateUrl":'../../partials/tpl/registration_forms.html'  ,
                             "controller":function($scope, docParam, Form, $stateParams){
                                //this is for the ng-repeat in the html example: "(docParamName, iteration) in user[docParam]".
                                $scope.docParam = docParam.docParam;

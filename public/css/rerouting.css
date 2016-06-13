@@ -565,6 +565,16 @@ img-crop{
     right:0;
     width:520px;
 }
+.date_month, .date_year{
+    width:49%;
+    display:inline-block;
+}
+.date_month{
+    margin-left:0;
+}
+.date_year{
+    margin-right:0;
+}
 /*.editable-buttons > button[type=button], input[type=reset]{*/
     /*background-color:white;*/
 /*}*/
