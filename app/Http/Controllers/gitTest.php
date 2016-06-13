@@ -1,4 +1,6 @@
 <?php
+$jojo = 567;
+
 /**
  * Created by PhpStorm.
  * User: michael
@@ -13,6 +15,7 @@ echo $greet;
 // 2
 $x = 2;
 // 3
-
+echo "coco puffs";
+print_r('are 4 kids');
 
 exit;
