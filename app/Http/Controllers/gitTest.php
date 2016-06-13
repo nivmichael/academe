@@ -17,5 +17,7 @@ $x = 2;
 // 3
 echo "coco puffs";
 print_r('are 4 kids');
+// 4
 
+$sefimsopimnopsiefm;
 exit;
