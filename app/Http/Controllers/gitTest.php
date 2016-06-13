@@ -1,4 +1,6 @@
 <?php
+$jojo = 567;
+
 /**
  * Created by PhpStorm.
  * User: michael
