@@ -15,6 +15,7 @@ class PostRepository
 
     public function index($user)
     {
+        //a change
         $user_type = $user['personal_information']['subtype'];
         if($user_type == 'employer'){
             return $this->forUser($user);
@@ -25,6 +26,7 @@ class PostRepository
 
     public function getAllPosts($user)
     {
+
         $posts    = [];
         $postsArr = [];
         $params   = DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_post.*,
