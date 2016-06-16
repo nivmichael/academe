@@ -51,28 +51,14 @@ class PostController extends Controller
     {
 
 
-
-//        $all = request()->all($request);
-//
-//
-//
-//
-//        $allPostInfo = $all['post']['postInfo'];
-//        unset($all['post']['files']);
-//
-//        unset($all['post']['personal_information']);
-//        unset($all['post']['company']);
-//        $id = $allPostInfo['id'];
-
-
         $all = request()->all($request);
 
-        $allPostInfo = $all['postInfo'];
-        unset($all['files']);
-
-        unset($all['personal_information']);
-        unset($all['company']);
-        $id = $allPostInfo['id'];
+        $allPostInfo = $all['general'];
+//        unset($all['files']);
+//
+//        unset($all['personal_information']);
+//        unset($all['company']);
+//        $id = $allPostInfo['id'];
 
         $userId = Auth::user()->id;
 
@@ -143,21 +129,22 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-//      $postInfo = $request->get('postInfo');
-//      dd($postInfo['title']);
-        $rules = [
-            'title' => 'required|min:3',
-        ];
-        $messages = [
-            'title.required' => 'This is the Title, it`s important'
-        ];
-
-        $validator = Validator::make( $request->get('postInfo'), $rules, $messages);
-
-        if ($validator->fails()) {
-            $messages = $validator->messages();
-            return response()->json($messages, 422);
-        }
+//        dd(request()->all());
+//      $general = $request->get('general');
+//
+//        $rules = [
+//            'job_description' => 'required|min:3',
+//        ];
+//        $messages = [
+//            'job_description.required' => 'This is the Title, it`s important'
+//        ];
+//
+//        $validator = Validator::make( $general, $rules, $messages);
+//
+//        if ($validator->fails()) {
+//            $messages = $validator->messages();
+//            return response()->json($messages, 422);
+//        }
         $this->savePost($request);
 
 //        $request->user()->posts()->create([

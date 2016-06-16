@@ -161,17 +161,24 @@ and (min-width : 990px) {
     box-shadow: none;
     -webkit-box-shadow: none;
 }
-.panel-default > .panel-heading + .panel-collapse > .panel-body {
-    border: none;
+a.accordion-toggle{
+    outline:none!important;
 }
-
+/*.panel-default > .panel-heading + .panel-collapse > .panel-body , {*/
+    /*border: none!important;*/
+/*}*/
+.panel-default > .panel-heading{
+    border: none!important;
+}
 .cyan{
-    background-color:#C1DBF7;
-    padding: 10px 15px
+    background-color:#C1DBF7!important;
+    padding: 10px 15px;
+
 }
 .grey{
-    background-color:#F3F3F5;
-    padding: 10px 15px
+    background-color:#F3F3F5!important;
+    padding: 10px 15px;
+
 }
 
 .profile-picture-card{
@@ -309,19 +316,19 @@ and (min-width : 990px) {
 
 /*images uplaod*/
 
-form .progress {
-    line-height: 15px;
+/*form .progress {*/
+    /*line-height: 15px;*/
+/*}*/
+.progress_bar {
+
+    padding: 0 15px;
+
 }
-.progress {
-    display: inline-block;
-    width: 100px;
-    border: 3px groove #CCC;
-}
-.progress div {
-    font-size: smaller;
-    background: orange;
-    width: 0;
-}
+/*.progress div {*/
+    /*font-size: smaller;*/
+    /*background: orange;*/
+    /*width: 0;*/
+/*}*/
 .drop-box{
     border: 5px dashed gray;
 
@@ -565,6 +572,12 @@ img-crop{
     right:0;
     width:520px;
 }
+span.input-group-btn>button{
+    padding: 9px 14px;
+    box-shadow: none!important;
+    outline:none!important;
+}
+
 .date_month, .date_year{
     width:49%;
     display:inline-block;

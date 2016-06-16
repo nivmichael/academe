@@ -10,6 +10,7 @@ angular.module('acadb')
       //maybe steps can be loaded with Form service..?
       $scope.steps          = $rootScope.steps;
       //get the form
+
       $scope.getForms = function() {
           Form.getForms().then(function(form){
               $scope.form = angular.copy(form);
@@ -21,9 +22,7 @@ angular.module('acadb')
           })
 
       }
-      $scope.categorize = function(){
 
-      }
       // called in the form tag ng-init
       $scope.groups = {};
       $scope.loadGroups = function() {
@@ -78,7 +77,7 @@ angular.module('acadb')
       // save and sign up
       $scope.signup = function() {
         $scope.sent  = true;
-        $scope.user.personal_information[0]['date_of_birth'] = date($scope.date.month, $scope.date.year);
+        //$scope.user.personal_information[0]['date_of_birth'] = date($scope.date.month, $scope.date.year);
         $auth.signup($scope.user)
             .success(function(response) {
               $auth.setToken(response.token);

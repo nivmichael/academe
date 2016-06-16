@@ -8,7 +8,7 @@
                class="form-control "
                name="first_name"
                placeholder="First Name"
-               ng-model="user.personal_information[0][42]['paramValue']"
+               ng-model="formData.first_name"
                ng-blur="validate('first_name')"
                required>
 
@@ -26,7 +26,7 @@
     <div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3"> Last Name* </div>
     <div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3 form-group"
          ng-class="{'has-error' : errors['last_name'] && registerForm.last_name.$touched || errors['last_name'] && sent}" >
-        <input type='text' class="form-control " name="last_name" placeholder="Last Name" ng-blur="validate('last_name')"  ng-model="user.personal_information[0][43]['paramValue']"  required>
+        <input type='text' class="form-control " name="last_name" placeholder="Last Name" ng-blur="validate('last_name')"  ng-model="formData.last_name"  required>
     </div>
     <ul  ng-if="registerForm['last_name'].$touched">
         <li>{{errors['last_name']}}</li>
@@ -37,7 +37,7 @@
 <div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
     <div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3"> Phone/Cell* </div>
     <div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3 form-group">
-        <input type='text' class="form-control " name="phone_1"    placeholder="Phone/Cell" ng-model="user.personal_information.phone_1" >
+        <input type='text' class="form-control " name="phone_1"    placeholder="Phone/Cell" ng-model="formData.phone_1" >
     </div>
 
 </div>
@@ -45,7 +45,7 @@
 <div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
     <div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3"> *E-mail </div>
     <div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3 form-group"  ng-class="{'has-error': errors.email && registerForm.email.$touched  || errors['email'] && sent}">
-        <input type='email' class="form-control " name="email" placeholder="email"  ng-blur="validate('email')"  ng-model="user.personal_information.email" required>
+        <input type='email' class="form-control " name="email" placeholder="email"  ng-blur="validate('email')"  ng-model="formDataemail" required>
     </div>
     <ul  ng-if="registerForm['email'].$touched">
         <li>{{errors['email']}}</li>
@@ -55,7 +55,7 @@
 <div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
     <div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3"> Password* </div>
     <div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3 form-group" ng-class="{'has-error': errors.password && registerForm.password.$touched  || errors['password'] && sent}">
-        <input type='password' class="form-control " name="password" placeholder="Password"  ng-blur="validate('password')" ng-model="user.personal_information.password"  required>
+        <input type='password' class="form-control " name="password" placeholder="Password"  ng-blur="validate('password')" ng-model="formData.password"  required>
     </div>
     <ul  ng-if="registerForm['password'].$touched">
         <li>{{errors['password']}}</li>
@@ -67,7 +67,7 @@
 
     <div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3"> Gender* </div>
     <div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3 form-group" show-errors>
-        <select class="form-control " name="gender" ng-model="user.personal_information.gender" >
+        <select class="form-control " name="gender" ng-model="formData.gender" >
 
             <option value="male" >Male</option>
             <option value="female" >Female</option>
@@ -75,23 +75,23 @@
     </div>
 </div>
 
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3">Birth Date</div>
+<!--<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
+    <!--<div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3">Birth Date</div>-->
 
-    <div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3 form-group">
-        <select class="form-control date_month " ng-init="date.month = months[0].value" ng-model="date.month" ng-options="m.value as m.text for m in months">
-        </select>
+    <!--<div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3 form-group">-->
+        <!--<select class="form-control date_month " ng-init="formData.date.month = months[0].value" ng-model="formData.date.month" ng-options="m.value as m.text for m in months">-->
+        <!--</select>-->
 
-        <select class="form-control date_year" ng-init="date.year = years[0].value"   ng-model="date.year" ng-options="y.value as y.text for y in years">
-        </select>
-    </div>
-</div>
+        <!--<select class="form-control date_year" ng-init="formData.date.year = years[0].value"   ng-model="formData.date.year" ng-options="y.value as y.text for y in years">-->
+        <!--</select>-->
+    <!--</div>-->
+<!--</div>-->
 
 <div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
 
     <div class=" col-xs-12 col-sm-3 col-md-3 col-lg-3"> Marital Status </div>
     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 form-group">
-        <select class="form-control  " name="martial_status" ng-model="user.personal_information.martial_status" >
+        <select class="form-control  " name="martial_status" ng-model="formData.martial_status" >
             <option value="" selected></option>
             <option value="single" >Single</option>
             <option value="married" >Married</option>
@@ -107,10 +107,9 @@
     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 form-group">
         <select class="form-control"
                 name="education_status"
-                ng-init="user.personal_information.education_status = jobseeker_type"
-                ng-model="user.personal_information.education_status"
-                ng-options="s.value as s.text for s in educationStatuses"
-                ng-selected="user.personal_information.education_status" >
+                ng-init="formData.education_status = jobseeker_type"
+                ng-model="formData.education_status"
+                ng-options="s.value as s.text for s in educationStatuses">
         </select>
     </div>
 </div>

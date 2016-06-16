@@ -2,20 +2,36 @@
 angular.module('acadb')
   .controller('LoginCtrl', function($scope, $location, $auth, $stateParams, $state, $http) {
 
-      var type                    = $stateParams.type;
-      var sub_type                = $stateParams.sub_type;
+
+        // need encapsulation/make a service storing user type in localStorage.
+        $scope.saved = JSON.parse(localStorage.getItem('user'));
+
+        if($stateParams.type !== null){
+            $scope.saved = {type: $stateParams.type, sub_type: $stateParams.sub_type};
+        }else if( $scope.saved === null){
+            $state.go('welcome');
+        }
+        localStorage.setItem('user', JSON.stringify( $scope.saved ));
+        $scope.jobseeker_type = $scope.saved.sub_type;
+
+
+
+
+
+      var type                    = $scope.saved.type;
+      var sub_type                = $scope.saved.sub_type;
 
       if($stateParams.type == 'employer'){
 
         $scope.type               = $stateParams.type;
-        $scope.registeration_link = 'register.company({type: "'+ type +'"})';
+        $scope.registeration_link = 'form.company({type: "'+ type +'"})';
         /*this has to be resolved before state loads*/
         $scope.userHomepage       ="employer.company"
 
       }else{
-        $scope.type               =  $stateParams.type;
-        $scope.sub_type           = $stateParams.sub_type;
-        $scope.registeration_link = 'register.personal_information({type: "'+ type  +'" ,sub_type : "'+ sub_type  +'" })';
+        $scope.type               =  $scope.saved.type;
+        $scope.sub_type           =  $scope.saved.sub_type;
+        $scope.registeration_link = 'form.personal_information({type: "'+ type  +'" ,sub_type : "'+ sub_type  +'" })';
         /*this has to be resolved before state loads*/
         $scope.userHomepage       = "jobseeker.profile";
       }

@@ -112,6 +112,7 @@
 {!! Html::script('js/controllers/sidenav.js') !!}
 {!! Html::script('js/controllers/findajob.js') !!}
 {!! Html::script('js/controllers/editForm.js') !!}
+{!! Html::script('js/controllers/welcome.js') !!}
 {!! Html::script('js/controllers/form.js') !!}
 {!! Html::script('lib/angular-filter.js') !!}
 

@@ -134,25 +134,45 @@ angular.module('acadb.services', []).
 	})
 .factory('Steps', function($http, $rootScope ) {
 
-	var steps;
-	return {
-		getAllSteps: function() {
-			if ( !steps ) {
-				// $http returns a promise, which has a then function, which also returns a promise
-				steps = $http.get('api/steps').then(function (response) {
-					// The then function here is an opportunity to modify the response
+		var steps;
+		return {
+			getAllSteps: function() {
+				if ( !steps ) {
+					// $http returns a promise, which has a then function, which also returns a promise
+					steps = $http.get('api/steps').then(function (response) {
+						// The then function here is an opportunity to modify the response
 
-					// The return value gets picked up by the then in the controller.
-					return response.data;
-				});
+						// The return value gets picked up by the then in the controller.
+						return response.data;
+					});
+				}
+				// Return the promise to the controller
+				return steps;
 			}
-			// Return the promise to the controller
-			return steps;
-		}
 
-	};
+		};
 
-})
+	})
+
+
+
+	//// need encapsulation/make a service storing user type in localStorage.
+	//$scope.saved = JSON.parse(localStorage.getItem('user'));
+	//
+	//if($stateParams.type !== null){
+	//    $scope.saved = {type: $stateParams.type, sub_type: $stateParams.sub_type};
+	//}else if( $scope.saved === null){
+	//    $state.go('welcome');
+	//}
+	//localStorage.setItem('user', JSON.stringify( $scope.saved ));
+	//$scope.jobseeker_type = $scope.saved.sub_type;
+
+
+
+
+
+
+
 .factory('Account', function($http, $rootScope ) {
 
 	var promise;
@@ -277,9 +297,11 @@ angular.module('acadb.services', []).
 .factory('Form', function($http, $q, $rootScope, $stateParams) {
 
 	var forms     = [];
+	var form      = [];
 	var	next_keys = [];
 	var prev_key  = false;
-	var form, getJobPostForm, options, new_iteration;
+	var  getJobPostForm, options, new_iteration;
+	var steps     = [];
 
 	return {
 		getAdminForm: function(form){
@@ -326,17 +348,24 @@ angular.module('acadb.services', []).
 			// Return the promise to the controller
 			return getJobPostForm;
 		},
-		getForms: function() {
-			if ( !form ) {
+
+		getForms: function(type) {
+			if ( !form[type] ) {
 				// $http returns a promise, which has a then function, which also returns a promise
-				form = $http.get('api/forms/register_' + $stateParams.type).then(function (response) {
+				form[type] = $http.get('api/forms/'+type).then(function (response) {
 					// The then function here is an opportunity to modify the response
 					// The return value gets picked up by the then in the controller.
 					return response.data;
 				});
 			}
-			// Return the promise to the controller
-			return form;
+
+			console.log(form[type]);
+			return form[type];
+		},
+		next_step: function(){
+
+
+
 		},
 		next_form: function(){
 				for (var key in $rootScope.steps) {

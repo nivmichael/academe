@@ -1,12 +1,19 @@
-<a ui-sref-active="active" ui-sref=".profile"><span>1</span> Profile</a>
-<a ui-sref-active="active" ui-sref=".education"><span>2</span> Education</a>
-<a ui-sref-active="active" ui-sref=".employment"><span>3</span> Employment</a>
 
 
-<form id="signup-form" ng-submit="processForm()" class="container">
-    <div ui-view></div>
-</form>
 
-<pre>
-    {{ formData }}
-</pre>
+<div ui-view="sideNav"></div>
+<div ui-view="navbar"></div>
+<main >
+    <form id="signup-form" ng-submit="processForm()">
+        <div ui-view></div>
+    </form>
+
+
+    <pre class="container">
+        {{ formData | json }}
+    </pre>
+    <pre class="container">
+        {{ user | json }}
+    </pre>
+</main>
+

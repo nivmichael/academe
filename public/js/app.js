@@ -36,7 +36,7 @@ var acadb = angular.module('acadb', [
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
         acadb.theme = 'bs3';
-            console.log( acadb.theme);
+
 }])
 .config(function($authProvider) {
     $authProvider.httpInterceptor = function() { return true; },
@@ -68,6 +68,7 @@ var acadb = angular.module('acadb', [
 
             .state('welcome', {
                 url: '/',
+                controller:'WelcomeCtrl',
                 views:{
                     'main':{
                         templateUrl: '../partials/tpl/welcome.html',
@@ -133,28 +134,84 @@ var acadb = angular.module('acadb', [
                 }
             })
             .state('form', {
-                url: '/form',
-                templateUrl: 'partials/forms/registration/jobseeker/form.html',
-                controller: 'FormCtrl'
-            })
-            // nested states
-            // each of these sections will have their own view
-            // url will be nested (/form/profile)
-            .state('form.profile', {
-                url: '/profile',
-                templateUrl: 'partials/forms/registration/jobseeker/form-profile.html'
-            })
+                url: '/signup',
+                resolve: {
+                    skipIfLoggedIn: skipIfLoggedIn,
+                },
+                params: {type: null,  sub_type : null},
+                views:{
+                    'navbar@form':{
+                        templateUrl: 'partials/forms/registration/jobseeker/form-navbar.html',
 
-            // url will be /form/interests
+                    },
+                    'sideNav@form':{
+                        templateUrl: 'partials/forms/registration/jobseeker/form-steps-sidenav.html',
+
+                    },
+                    '':{
+                        templateUrl: 'partials/forms/registration/jobseeker/form.html',
+                        controller: 'FormCtrl',
+                    }
+                }
+            })
+            .state('form.personal_information', {
+                url: '/personal_information',
+                params: {docParam: 'personal_information'},
+                templateUrl: 'partials/tpl/registration_forms.html',
+                controller:function($scope, $state, Form){
+                    //this is for the ng-repeat in the html example: "(docParamName, iteration) in user[docParam]".
+                    $scope.docParam = $state.current.params.docParam;
+                    //$scope.next_keys = Form.next_form();
+                    $scope.nextDoc  = Form.nextDoc();
+                }
+            })
             .state('form.education', {
                 url: '/education',
-                templateUrl: 'partials/forms/registration/jobseeker/form-education.html'
+                params: {docParam: 'education'},
+                templateUrl: 'partials/tpl/registration_forms.html',
+                controller:function($scope, $state, Form){
+                    //this is for the ng-repeat in the html example: "(docParamName, iteration) in user[docParam]".
+                    $scope.docParam = $state.current.params.docParam;
+                    //$scope.next_keys = Form.next_form();
+                    $scope.nextDoc  = Form.nextDoc();
+                }
             })
-
-            // url will be /form/payment
             .state('form.employment', {
                 url: '/employment',
+                params: {docParam: 'employment'},
+                templateUrl: 'partials/tpl/registration_forms.html',
+                controller:function($scope, $state, Form){
+                    //this is for the ng-repeat in the html example: "(docParamName, iteration) in user[docParam]".
+                    $scope.docParam = $state.current.params.docParam;
+                    //$scope.next_keys = Form.next_form();
+                    $scope.nextDoc  = Form.nextDoc();
+                }
+            })
+            .state('form.career_goals', {
+                url: '/career_goals',
+                params: {docParam: 'career_goals'},
+                templateUrl: 'partials/tpl/registration_forms.html',
+                controller:function($scope, $state, Form){
+                    //this is for the ng-repeat in the html example: "(docParamName, iteration) in user[docParam]".
+                    $scope.docParam = $state.current.params.docParam;
+                    //$scope.next_keys = Form.next_form();
+                    $scope.nextDoc  = Form.nextDoc();
+                }
+            })
+            .state('form.files', {
+                url: '/files',
                 templateUrl: 'partials/forms/registration/jobseeker/form-employment.html'
+            })
+            .state('form.company', {
+                url: '/company',
+                params: {docParam: 'company'},
+                templateUrl: 'partials/tpl/employer_registration_forms.html',
+                controller:function($scope, $state, Form){
+                    //this is for the ng-repeat in the html example: "(docParamName, iteration) in user[docParam]".
+                    $scope.docParam = $state.current.params.docParam;
+                    //$scope.next_keys = Form.next_form();
+                    $scope.nextDoc  = Form.nextDoc();
+                }
             })
             .state('register', {
                 url: '^/register',
