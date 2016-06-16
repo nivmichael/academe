@@ -22,11 +22,7 @@
         </div>
 
         <div ng-if="docParam == 'personal_information'">
-<<<<<<< Updated upstream
             <ng-include src="'partials/forms/registration/jobseeker/form-profile.html'"></ng-include>
-=======
-        <ng-include src="'partials/forms/registration/jobseeker_register_personal_information.html'"></ng-include>
->>>>>>> Stashed changes
         </div>
         <!--|| docParam == 'personal_information'-->
         <div ng-form="registerForm" ng-repeat="( iteration_key, docParamValues ) in user[docParam] track by $index" ng-hide="docParam == 'files'|| docParam == 'personal_information' ">
@@ -74,17 +70,10 @@
 
                     <div ng-switch-when="date">
                         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-<<<<<<< Updated upstream
                             <select class="form-control date_month" ng-init="param.paramValue.month = months[0].value" ng-model="param.paramValue.month" ng-options="m.value as m.text for m in months">
 
                             </select>
                             <select class="form-control date_year" ng-init="param.paramValue.year = years[0].value"   ng-model="param.paramValue.year" ng-options="y.value as y.text for y in years">
-=======
-                            <select class="form-control date_month" ng-init="date.month = months[0].value" ng-model="date.month" ng-options="m.value as m.text for m in months">
-
-                            </select>
-                            <select class="form-control date_year" ng-init="date.year = years[0].value"   ng-model="date.year" ng-options="y.value as y.text for y in years">
->>>>>>> Stashed changes
 
                             </select>
                         </div>

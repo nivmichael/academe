@@ -112,10 +112,7 @@
 {!! Html::script('js/controllers/sidenav.js') !!}
 {!! Html::script('js/controllers/findajob.js') !!}
 {!! Html::script('js/controllers/editForm.js') !!}
-<<<<<<< Updated upstream
 {!! Html::script('js/controllers/welcome.js') !!}
-=======
->>>>>>> Stashed changes
 {!! Html::script('js/controllers/form.js') !!}
 {!! Html::script('lib/angular-filter.js') !!}
 

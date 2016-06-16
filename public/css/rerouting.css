@@ -572,15 +572,12 @@ img-crop{
     right:0;
     width:520px;
 }
-<<<<<<< Updated upstream
 span.input-group-btn>button{
     padding: 9px 14px;
     box-shadow: none!important;
     outline:none!important;
 }
 
-=======
->>>>>>> Stashed changes
 .date_month, .date_year{
     width:49%;
     display:inline-block;
