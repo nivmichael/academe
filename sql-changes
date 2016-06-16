@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `--type_user_params` (
 --
 -- Table structure for table `an_search`
 --
-
+---
 CREATE TABLE IF NOT EXISTS `an_search` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `u_id` mediumint(8) unsigned NOT NULL,
