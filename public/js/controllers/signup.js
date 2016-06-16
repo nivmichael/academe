@@ -22,7 +22,13 @@ angular.module('acadb')
           })
 
       }
+<<<<<<< Updated upstream
 
+=======
+      $scope.categorize = function(){
+
+      }
+>>>>>>> Stashed changes
       // called in the form tag ng-init
       $scope.groups = {};
       $scope.loadGroups = function() {
@@ -77,7 +83,11 @@ angular.module('acadb')
       // save and sign up
       $scope.signup = function() {
         $scope.sent  = true;
+<<<<<<< Updated upstream
         //$scope.user.personal_information[0]['date_of_birth'] = date($scope.date.month, $scope.date.year);
+=======
+        $scope.user.personal_information[0]['date_of_birth'] = date($scope.date.month, $scope.date.year);
+>>>>>>> Stashed changes
         $auth.signup($scope.user)
             .success(function(response) {
               $auth.setToken(response.token);

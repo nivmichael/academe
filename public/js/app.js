@@ -134,6 +134,7 @@ var acadb = angular.module('acadb', [
                 }
             })
             .state('form', {
+<<<<<<< Updated upstream
                 url: '/signup',
                 resolve: {
                     skipIfLoggedIn: skipIfLoggedIn,
@@ -213,6 +214,31 @@ var acadb = angular.module('acadb', [
                     $scope.nextDoc  = Form.nextDoc();
                 }
             })
+=======
+                url: '/form',
+                templateUrl: 'partials/forms/registration/jobseeker/form.html',
+                controller: 'FormCtrl'
+            })
+            // nested states
+            // each of these sections will have their own view
+            // url will be nested (/form/profile)
+            .state('form.profile', {
+                url: '/profile',
+                templateUrl: 'partials/forms/registration/jobseeker/form-profile.html'
+            })
+
+            // url will be /form/interests
+            .state('form.education', {
+                url: '/education',
+                templateUrl: 'partials/forms/registration/jobseeker/form-education.html'
+            })
+
+            // url will be /form/payment
+            .state('form.employment', {
+                url: '/employment',
+                templateUrl: 'partials/forms/registration/jobseeker/form-employment.html'
+            })
+>>>>>>> Stashed changes
             .state('register', {
                 url: '^/register',
                 abstract:true,
