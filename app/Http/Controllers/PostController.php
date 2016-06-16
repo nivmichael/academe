@@ -53,7 +53,7 @@ class PostController extends Controller
 
         $all = request()->all($request);
 
-        $allPostInfo = $all['general'];
+        $general = $all['general'];
 //        unset($all['files']);
 //
 //        unset($all['personal_information']);
@@ -62,21 +62,24 @@ class PostController extends Controller
 
         $userId = Auth::user()->id;
 
-        $post = Post::find($id);
-        if($post){
-            $post->id = $id;
-        }else{
-            $post = new Post();
-        }
-        $post->title = $all['postInfo']['title'];
+
+
+//        $post = Post::find($id);
+//        if($post){
+//            $post->id = $id;
+//        }else{
+//            $post = new Post();
+//        }
+
+        $post = new Post();
+        $post->title = 'title';
         $post->user_id = $userId;
-        //	$post->description_short =$allPostInfo['description_short'];
-        $post->description = $all['postInfo']['description'];
+        $post->description = 'description';
         $post->authorized = 1;
         $post->save();
 
 
-        unset($all['postInfo']);
+//        unset($all['postInfo']);
         foreach($all as $doc_param => $param_object){
             unset($param_object['docParamId']);
             foreach ($param_object as $param_key => $param_value) {

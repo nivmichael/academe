@@ -382,7 +382,6 @@ class TypePostController extends Controller {
 		$postInfo = Post::find($id);
 		$params =  DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_post.*,
 										   param.name AS paramName, 
-										   param.slug AS slug,
 										   param_type.name AS paramType,
 										   param_value.value AS paramValue,
 										   doc_param.name AS docParamName,
@@ -405,7 +404,7 @@ class TypePostController extends Controller {
 			$inputType    = $v->paramType;
 			$paramValue   = $v->paramValue;
 			$docParamId   = $v->docParamId;
-			$slug = $v->slug;
+//			$slug = $v->slug;
 			$logo_param_id = DB::table('param')->where('name','company_logo')->value('id');
 			$ref_id = DB::table('type_post')->where('id',$id)->value('user_id');
 			$postUserId = $ref_id;
@@ -425,7 +424,7 @@ class TypePostController extends Controller {
 			if($iteration !== NULL) {
 				$post[$docParamName][$iteration]['docParamId'] = $docParamId;
 				$post[$docParamName][$iteration][$paramName]['paramName'] = $paramName;
-				$post[$docParamName][$iteration][$paramName]['slug'] = $slug;
+//				$post[$docParamName][$iteration][$paramName]['slug'] = $slug;
 				$post[$docParamName][$iteration][$paramName]['paramValue'] = $value;
 				$post[$docParamName][$iteration][$paramName]['inputType'] = $inputType;
 
@@ -435,7 +434,7 @@ class TypePostController extends Controller {
 			}elseif($iteration == NULL) {
 				$post[$docParamName]['docParamId'] = $docParamId;
 				$post[$docParamName][$paramName]['paramName'] = $paramName;
-				$post[$docParamName][$paramName]['slug'] = $slug;
+//				$post[$docParamName][$paramName]['slug'] = $slug;
 				$post[$docParamName][$paramName]['paramValue'] = $value;
 				$post[$docParamName][$paramName]['inputType'] = $inputType;
 
