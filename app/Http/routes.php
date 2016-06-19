@@ -38,8 +38,11 @@ Route::group(['middleware' => ['web','domain']], function () {
         Route::get('/jobseekerSteps', 'DocParamController@jobseekerSteps');
         Route::get('/employerSteps', 'DocParamController@employerSteps');
 
-        Route::get('/forms/register_jobseeker', 'TypeUserController@columnIndexJobSeeker');
-        Route::get('/forms/register_employer', 'TypeUserController@columnIndexEmployer');
+        Route::get('/forms/jobseeker', 'TypeUserController@columnIndexJobSeeker');
+        Route::get('/forms/employer', 'TypeUserController@columnIndexEmployer');
+//
+//        Route::get('/forms/jobseeker', 'FormController@jobseeker');
+//        Route::get('/forms/employer',  'FormController@employer');
 
 
         Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
@@ -56,15 +59,21 @@ Route::group(['middleware' => ['web','domain']], function () {
         //get my account
         Route::get('/me', 'TypeUserController@getAccount');
         Route::post('/me', 'TypeUserController@updateUser');
-        Route::get('/forms/jobPost', 'TypePostController@jobPostColumnIndex');
         Route::post('/deleteIterable', 'docParamController@deleteIterable');
         Route::get('/getAllPosts', 'PostController@index');
         Route::get('/getAllOptionValues', 'ParamValueController@getAllOptionValues');
 
         //job post
         Route::get('/columns/jobPost' ,'TypePostController@jobPostColumnIndex');
+
+        //get the post
         Route::get('/job/{id}', 'TypePostController@show');
-        Route::post('savePost', 'PostController@savePost');
+
+        //get the form for new
+        Route::get('/forms/jobPost', 'TypePostController@jobPostColumnIndex');
+
+        //save
+        Route::post('savePost', 'PostController@store');
 
         //Steps
         Route::get('/steps' ,'StepController@index');

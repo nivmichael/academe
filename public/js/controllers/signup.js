@@ -10,10 +10,10 @@ angular.module('acadb')
       //maybe steps can be loaded with Form service..?
       $scope.steps          = $rootScope.steps;
       //get the form
+
       $scope.getForms = function() {
           Form.getForms().then(function(form){
               $scope.form = angular.copy(form);
-
               $scope.user = $scope.form;
               //$scope.user['personal_information']['education_status'] = $stateParams.sub_type;
               //$scope.user['personal_information']['subtype']          = $stateParams.type;
@@ -22,6 +22,7 @@ angular.module('acadb')
           })
 
       }
+
       // called in the form tag ng-init
       $scope.groups = {};
       $scope.loadGroups = function() {
@@ -29,12 +30,26 @@ angular.module('acadb')
           $scope.groups = options.data;
       });
       };
+
       // manual options
-      $scope.educationStatuses = [
-        {value: 'student',  text: 'Student'},
-        {value: 'graduate', text: 'Graduate'},
-        {value: 'intern',   text: 'Intern'},
-      ];
+        $scope.months = [
+            {value: 'Month',  text: 'Month'},
+            {value: '1',  text: '1'},
+            {value: '2',  text: '2'},
+            {value: '3',  text: '3'},
+        ];
+        $scope.years = [
+            {value: 'Year',  text: 'Year'},
+            {value: '1980', text: '1980'},
+            {value: '1981', text: '1981'},
+            {value: '1982', text: '1982'},
+        ];
+        $scope.educationStatuses = [
+            {value: 'student',  text: 'Student'},
+            {value: 'graduate', text: 'Graduate'},
+            {value: 'intern',   text: 'Intern'},
+        ];
+
       //validating on ng-change -- maybe blur is better?
       $scope.validate = function(param) {
           Form.validate($scope.user['personal_information'], param).then(function(response){
@@ -53,9 +68,16 @@ angular.module('acadb')
             Form.remove(array,index,user_id);
             array.splice(index,1);
       };
+      var date = function(month, year){
+          console.log(month + '/' + year);
+          return month + '/' + year;
+      };
+
+
       // save and sign up
       $scope.signup = function() {
-        $scope.sent=true;
+        $scope.sent  = true;
+        //$scope.user.personal_information[0]['date_of_birth'] = date($scope.date.month, $scope.date.year);
         $auth.signup($scope.user)
             .success(function(response) {
               $auth.setToken(response.token);

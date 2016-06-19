@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Schema;
 use App\DocParam;
 use App\Param;
 use App\ParamValue;
@@ -21,6 +22,69 @@ class FormController extends Controller
     public function index()
     {
 
+    }
+
+    public function jobseeker()
+    {
+        $all = DB::table('doc_param as dp')->orderBy('dp.position', 'ASC')
+            ->leftJoin('param as p', DB::raw('p.doc_param_id'), '=', DB::raw('dp.id'))
+            ->where('dp.doc_sub_type', '=', 'jobseeker')->orderBy('p.position', 'ASC')
+            ->leftJoin('param_type as pt', DB::raw('pt.id'), '=', DB::raw('p.type_id'))
+            ->select(DB::raw('dp.id as docParamId, dp.name as docParamName, dp.position as docParamPosition, p.position as paramPosition, p.*, pt.name as inputTypeName'))
+            ->get();
+        $form            = new stdClass();
+        $form->formName = [];
+        foreach ($all as $key => $param) {
+
+
+
+            $parameter               = new stdClass();
+            $parameter->type         = "parameter";
+            $parameter->paramId      = $param->id;
+            $parameter->name         = $param->name;
+            $parameter->position     = $param->paramPosition;
+            $parameter->docParamName = $param->docParamName;
+            $parameter->docParamId   = $param->docParamId;
+            $parameter->inputType    = $param->type_id;
+            $parameter->inputTypeName= $param->inputTypeName;
+            $parameter->modify       = $param->modify;
+            $parameter->show         = $param->authorized;
+            $parameter->paramValue   = '';
+
+
+            if(isset($doc_param) && property_exists ($doc_param , 'name' ) ){
+                if($doc_param->name == $param->docParamName){
+                    $doc_param->params[0][]  = $parameter;
+                }else{
+//                    var_dump($doc_param);
+                    $doc_param = new stdClass();
+                    $doc_param->type     = "doc_param";
+                    $doc_param->docParamId       = $param->docParamId;
+                    $doc_param->name             = $param->docParamName;
+                    $doc_param->position = $param->docParamPosition;
+
+
+                    $doc_param->params       = [];
+                    $doc_param->params[]     = [];
+                    $doc_param->params[0][]  = $parameter;
+                }
+            }else{
+                $doc_param = new stdClass();
+                $doc_param->type     = "doc_param";
+                $doc_param->docParamId       = $param->docParamId;
+                $doc_param->name             = $param->docParamName;
+                $doc_param->position = $param->docParamPosition;
+
+
+                $doc_param->params       = [];
+                $doc_param->params[]     = [];
+                $doc_param->params[0][]  = $parameter;
+            }
+            if(!in_array($doc_param, $form->formName)){
+                $form->formName[] = $doc_param;
+            }
+        }
+        return response()->json($form->formName);
     }
 
 
@@ -348,6 +412,16 @@ class FormController extends Controller
             $post[$docParamName][0][$paramId]['required']   = $required;
 
 
+        }
+
+        if($form == 'job'){
+            $postInfo = Schema::getColumnListing('type_post');
+
+            $postInfoKeys = array_flip($postInfo);
+            foreach ($postInfoKeys as $key => $value) {
+                $postInfoKeys[$key] = '';
+            }
+            $post['postInfo'] = $postInfoKeys;
         }
 
         return response()->json($post);

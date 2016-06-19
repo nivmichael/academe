@@ -129,11 +129,11 @@ class AuthenticateController extends Controller
     public function validateThis(Request $request)
     {
         $all   = $request->get('all');
-        $validateObj = [];
-        unset($all[0]['docParamId']);
-        foreach($all[0] as $param_id => $param){
-            $validateObj[$param['paramName']] = $param['paramValue'];
-        }
+//        $validateObj = [];
+//        unset($all[0]['docParamId']);
+//        foreach($all[0] as $param_id => $param){
+//            $validateObj[$param['paramName']] = $param['paramValue'];
+//        }
 
         $param = $request->get('param');
         $rules = [
@@ -145,7 +145,7 @@ class AuthenticateController extends Controller
         $messages = [
             'regex' => 'Please insert only english characters.'
         ];
-        $validator = Validator::make( $validateObj, $rules, $messages);
+        $validator = Validator::make( $all, $rules, $messages);
 
         if ($validator->fails()) {
             $messages = $validator->messages();
@@ -169,12 +169,12 @@ class AuthenticateController extends Controller
 
         $AuthedUser = $this->getAuthenticatedUser();
         $all = $request->all();
-
-        unset($all['personal_information'][0]['docParamId']);
-
         foreach($all['personal_information'][0] as $param_id => $param){
-            $validateObj[$param['paramName']] = $param['paramValue'];
+            if(isset($param['paramId'])){
+                $validateObj[$param['paramName']] = $param['paramValue'];
+            }
         }
+
 
         $rules = [
             'first_name' => 'required|min:3|regex:/^[a-zA-Z- ]*$/',
@@ -190,6 +190,9 @@ class AuthenticateController extends Controller
             $validator = Validator::make($validateObj, $rules, $messages);
             if ($validator->fails()) {
                 return response()->json( $validator->messages() , 422);
+            }else{
+                $validateObj['password'] = Hash::make($validateObj['password']);
+                $validateObj['active']   = 'inactive';
             }
 
 //            $personal_information = [
@@ -215,39 +218,52 @@ class AuthenticateController extends Controller
 //                'remember_token' => $request['personal_information']['remember_token'],
 //            ];
             // dd($personal_information);
-            $user = User::create($personal_information);
+            $user = User::create($validateObj);
             $token = JWTAuth::fromUser($user);
             $authId = $user->id;
 
-            unset($all['personal_information']);
+//            unset($all['personal_information']);
         }else{
             $authId = Auth::user()->id;
             $User   = User::find($authId);
             $token  = JWTAuth::fromUser($User);
 
         }
-        foreach($all as $doc_param => $param_object){
-            foreach ($param_object as $param_key => $param_value) {
-                $obj[$doc_param][$param_key] = $param_value;
+        //removes if its not a real param input.
+        foreach($all as $doc_param => $iteration){
+            foreach ($iteration as $iteration_key => $docParamValues) {
+                foreach ($docParamValues as $param_id => $param) {
+                    if(is_array($param)){
+                        $obj[$doc_param][$iteration_key][$param_id] = $param;
+                    }
+
+                }
+
             }
         }
-        unset($obj['personal_information']);
+
+
+
+//        unset($obj['personal_information']);
 //        unset($obj['files']);
 
         foreach($obj as $docParamName => $docParamValues) {
-
+            //we allreasdy had docParamId..get it from above instead of this query..
             $doc_param_id = DB::table('doc_param')->where('name', $docParamName)->where('doc_type_id', 1)->value('id');
 
             foreach($docParamValues as $iteration_count => $params) {
 
                 foreach ($params as $param_id => $param_values) {
-//                    var_dump($param_values);
+
                     $paramValue = $param_values['paramValue'];
                     $paramName  = $param_values['paramName'];
                     $iterable   = $iteration_count;
 
                     if (is_array($paramValue)) {
                         $paramValue = implode('|', $paramValue);
+                    }
+                    if($paramName == 'password'){
+                        $paramValue = Hash::make($paramValue);
                     }
 
                     if ($param_id) {

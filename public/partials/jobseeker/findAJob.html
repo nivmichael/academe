@@ -4,7 +4,7 @@
 
 
 <main class="">
-
+{{$stateParams}}
 	<div class="" >
 		<!--<button type="button" class="btn btn-default btn-lg openMenu" ng-click="openAside('left')"><i class="glyphicon glyphicon-align-justify"></i></button>-->
 
@@ -59,8 +59,8 @@
 			<hr>
 			<div class="">
 				<div  class=" text-center col-xs-12 col-sm-6 col-lg-6 col-lg-6" ng-repeat="(key,job) in allPosts | toArray:true | filter:searchText | orderBy:orderByFilter:reverse " repeat-done="initModals()">
-					<div class='modal-trigger' href='#demoModal' ng-click="getPost(job.postInfo.id)" modal>
-						<div  class="job-card card text-center">
+					<!--<div class='modal-trigger' href='#demoModal' ng-click="getPost(job.postInfo.id)" modal>-->
+						<div  class="job-card card text-center" ui-sref=".job({jobId:job.postInfo.id})">
 							<div class="col-xs-3 col-sm-3 col-lg-3 col-lg-3 job-card-inner"><img ng-src="/{{job.postInfo.company_logo || '../../img/icons/academelogo.jpg' }}" style="width:100px"  class=""></div>
 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
 									<!--<p></p>-->
@@ -68,12 +68,12 @@
 									<!--<rate-yo   ng-model="job.match / 20 " read-only="options.readOnly" options="options" style="width:100%;"></rate-yo>-->
 									<h4 class="" style="font-size:1.5em; font-weight:200;">{{ job.postInfo.title || job.title || 'Job Title' }} </h4>
 									<hr style="margin:0;">
-									<label class="left" style="font-size:10px;"> View Job Info - {{job.postInfo.id|| job.id || 'Job Id'}} </label>
+									<label class="left" style="font-size:10px;"> View Job Info - {{job.postInfo.id}} </label>
 									<label class="right" style="font-size:10px;"> Posted in 12 Institution </label>
 								</div>
 							<div class="col-xs-3 col-sm-3 col-lg-3 col-lg-3"></div>
 						</div>
-					</div>
+					<!--</div>-->
 				</div>
 			</div>
 
@@ -227,63 +227,63 @@
 
 <!-- Modal Trigger -->
 
-<div id="demoModal" class="modal modal-fixed-footer">
-	<!--<div class="">-->
-		<!--<div>-->
-			<!--<h3>{{post.postInfo.title || 'Job Title'}}</h3>-->
-			<!--<small>Job no' {{post.postInfo.id }}</small>-->
-		<!--</div>-->
-		<!--<div>-->
-			<!--<button class="btn"><i class="glyphicon glyphicon-envelope"></i></button>-->
-			<!--<span><i class="glyphicon glyphicon-heart"></i></span>-->
-			<!--<span><i class="glyphicon glyphicon-fire"></i></span>-->
-		<!--</div>-->
+<!--<div id="demoModal" class="modal modal-fixed-footer">-->
+	<!--&lt;!&ndash;<div class="">&ndash;&gt;-->
+		<!--&lt;!&ndash;<div>&ndash;&gt;-->
+			<!--&lt;!&ndash;<h3>{{post.postInfo.title || 'Job Title'}}</h3>&ndash;&gt;-->
+			<!--&lt;!&ndash;<small>Job no' {{post.postInfo.id }}</small>&ndash;&gt;-->
+		<!--&lt;!&ndash;</div>&ndash;&gt;-->
+		<!--&lt;!&ndash;<div>&ndash;&gt;-->
+			<!--&lt;!&ndash;<button class="btn"><i class="glyphicon glyphicon-envelope"></i></button>&ndash;&gt;-->
+			<!--&lt;!&ndash;<span><i class="glyphicon glyphicon-heart"></i></span>&ndash;&gt;-->
+			<!--&lt;!&ndash;<span><i class="glyphicon glyphicon-fire"></i></span>&ndash;&gt;-->
+		<!--&lt;!&ndash;</div>&ndash;&gt;-->
 
+	<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+	<!--<div class="modal-header">-->
+		<!--{{post.postInfo.title || 'Job Title'}} <small>Job no' {{post.postInfo.id }}</small>-->
+		<!--<div style="float:right;">-->
+			<!--<ul >-->
+				<!--<li style="display:inline;"><a class='dropdown-button' href='javascript:void(0);' data-activates='options' dropdown data-hover="true"><i class="glyphicon glyphicon-option-vertical"></i></a></li>-->
+				<!--&lt;!&ndash;<li style="display:inline;"><a class="menu navbar-toggle button-collapse modalSideNav" data-activates="post-modal-nav" data-sidenav="left"  data-closeonclick="true"><i class="glyphicon glyphicon-th-list"></i></a></li>&ndash;&gt;-->
+			<!--</ul>-->
+			<!--&lt;!&ndash; Dropdown Structure &ndash;&gt;-->
+			<!--<ul id='options' class='dropdown-content'>-->
+				<!--<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-share"></i> Share</a></li>-->
+				<!--<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-save"></i> Save</a></li>-->
+
+			<!--</ul>-->
+		<!--</div>-->
 	<!--</div>-->
 
-	<div class="modal-header">
-		{{post.postInfo.title || 'Job Title'}} <small>Job no' {{post.postInfo.id }}</small>
-		<div style="float:right;">
-			<ul >
-				<li style="display:inline;"><a class='dropdown-button' href='javascript:void(0);' data-activates='options' dropdown data-hover="true"><i class="glyphicon glyphicon-option-vertical"></i></a></li>
-				<!--<li style="display:inline;"><a class="menu navbar-toggle button-collapse modalSideNav" data-activates="post-modal-nav" data-sidenav="left"  data-closeonclick="true"><i class="glyphicon glyphicon-th-list"></i></a></li>-->
-			</ul>
-			<!-- Dropdown Structure -->
-			<ul id='options' class='dropdown-content'>
-				<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-share"></i> Share</a></li>
-				<li><a href="javascript:void(0);"><i class="glyphicon glyphicon-save"></i> Save</a></li>
+	<!--<div class="modal-content">-->
 
-			</ul>
-		</div>
-	</div>
+		<!--<ul id="post-modal-nav" class="side-nav fixed post-side-nav col-md-1 ">-->
+			<!--<a ui-sref="general" ui-sref-active="active" class="postLi">-->
+				<!--General-->
+			<!--</a>-->
+			<!--<a ui-sref="the_company" ui-sref-active="active" class="postLi">-->
+				<!--The Company-->
+			<!--</a>-->
+			<!--<a ui-sref="company_video" ui-sref-active="active" class="postLi">-->
+				<!--Company Video-->
+			<!--</a>-->
+			<!--<a ui-sref="company_site" ui-sref-active="active" class="postLi">-->
+				<!--Company Site-->
+			<!--</a>-->
+		<!--</ul>-->
 
-	<div class="modal-content">
-
-		<ul id="post-modal-nav" class="side-nav fixed post-side-nav col-md-2 ">
-			<a ui-sref="general" class="postLi">
-				General
-			</a>
-			<a ui-sref="the_company" class="postLi">
-				The Company
-			</a>
-			<a ui-sref="company_video" class="postLi">
-				Company Video
-			</a>
-			<a ui-sref="company_site" class="postLi">
-				Company Site
-			</a>
-		</ul>
-
-		<main>
-			<ui-view />
-			<div ui-view="job"></div>
-		</main>
-	</div>
-	<div class="modal-footer">
-		<a  class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
-		<a  class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-	</div>
-</div>
+		<!--<main>-->
+			<!--<div ui-view=""></div>-->
+			<!--&lt;!&ndash;<div ui-view="job"></div>&ndash;&gt;-->
+		<!--</main>-->
+	<!--</div>-->
+	<!--<div class="modal-footer">-->
+		<!--<a  class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>-->
+		<!--<a  class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>-->
+	<!--</div>-->
+<!--</div>-->
 
 <script>
 

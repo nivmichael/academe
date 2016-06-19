@@ -15,6 +15,7 @@ class PostRepository
 
     public function index($user)
     {
+        //a change
         $user_type = $user['personal_information']['subtype'];
         if($user_type == 'employer'){
             return $this->forUser($user);
@@ -25,6 +26,7 @@ class PostRepository
 
     public function getAllPosts($user)
     {
+        $post_id;
         $posts    = [];
         $postsArr = [];
         $params   = DB::select( DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_post.*,
@@ -44,7 +46,7 @@ class PostRepository
 										   LEFT JOIN type_post ON sys_param_values.ref_id = type_post.id
 										   LEFT JOIN param_type ON param.type_id = param_type.id"));
 										//   WHERE  type_post.id = ".$id));
-//        dd($params);
+
         foreach($params as $k=>$v) {
 
             $iteration    = $v->iteration;
@@ -57,28 +59,30 @@ class PostRepository
             $paramId      = $v->paramId;
             $postId       = $v->postId;
 
+//dd($postId);
 
             if($v->value_ref == null) {
                 $value = $v->value_short;
             } else {
                 $value = $v->value;
             }
-
+            // i thing i changed all of the param keys to id instead of name
             $posts[$postId][$docParamName][$iteration]['docParamId'] = $docParamId;
             $posts[$postId][$docParamName][$iteration][$paramName]['paramValue'] = $value;
             $posts[$postId][$docParamName][$iteration][$paramName]['paramName']  = $paramName;
             $posts[$postId][$docParamName][$iteration][$paramName]['inputType'] = $inputType;
             $posts[$postId][$docParamName][$iteration][$paramName]['paramParentId'] = $paramParentId;
-//            $posts[$postId]['postInfo']['id'] = $postId;
+//          $posts[$postId]['postInfo']['id'] = $postId;
 
             }
 
         unset( $posts['']);
-        foreach($posts as $post) {
+        foreach($posts as $postId => $post) {
 
 //            $match = $this->calcMatchPercentage($post, $user);
 //            $post['match'] = $match;
-
+            $info = Post::find($postId);
+            $post['postInfo'] = $info;
             $postsArr[] = $post;
 
         }
@@ -97,8 +101,8 @@ class PostRepository
 
         $posts = [];
         foreach($user_posts as $post) {
-            $match = $this->calcMatchPercentage($post, $user);
-            $post['match'] = $match;
+//            $match = $this->calcMatchPercentage($post, $user);
+//            $post['match'] = $match;
             $posts[] = $post;
         }
         //sorted on client side

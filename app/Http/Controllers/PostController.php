@@ -82,22 +82,24 @@ class PostController extends Controller
         }else{
             $post = new Post();
         }
-        $post->title = $all['postInfo']['title'];
+        $post->title = $allPostInfo['title'];
         $post->user_id = $userId;
         //	$post->description_short =$allPostInfo['description_short'];
-        $post->description = $all['postInfo']['description'];
+        $post->description =  $allPostInfo['description'];
         $post->authorized = 1;
         $post->save();
+        $id = $post->id;
 
 
-        unset($all['postInfo']);
+
+        unset( $all['postInfo'] );
         foreach($all as $doc_param => $param_object){
-            unset($param_object['docParamId']);
             foreach ($param_object as $param_key => $param_value) {
+                unset($param_value['docParamId']);
                 $obj[$doc_param][$param_key] = $param_value;
             }
         }
-        //dd($obj);
+
         foreach($obj as $docParamName => $docParamValues) {
 
             $doc_param_id = DB::table('doc_param')->where('name', $docParamName)->where('doc_type_id', 2)->value('id');
@@ -105,7 +107,7 @@ class PostController extends Controller
             foreach($docParamValues as $iteration_count => $params) {
 
                 foreach ($params as $param_id => $param_values) {
-
+//                    var_dump($params);
                     $paramValue = $param_values['paramValue'];
                     $paramName  = $param_values['paramName'];
                     $iterable   = $iteration_count;
@@ -117,19 +119,19 @@ class PostController extends Controller
                     if ($param_id) {
                         //checking where the values come from? from param_value? or from short/long?
                         $value_ref = DB::table('param_value')->where('id', $paramValue)->value('id');
-                        $existsId  = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_id', $post->id)->where('iteration', $iteration_count)->value('id');
+                        $existsId  = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_id', $id)->where('iteration', $iteration_count)->value('id');
 
                         if ($existsId) {
                             if (!$value_ref) {
-                                DB::table('sys_param_values')->where('id', $existsId)->update(['doc_type' => 2, 'ref_id' => $post->id, 'param_id' => $param_id, 'iteration' => $iteration_count, 'value_ref' => NULL, 'value_short' => $paramValue, 'value_long' => NULL]);
+                                DB::table('sys_param_values')->where('id', $existsId)->update(['doc_type' => 2, 'ref_id' => $id, 'param_id' => $param_id, 'iteration' => $iteration_count, 'value_ref' => NULL, 'value_short' => $paramValue, 'value_long' => NULL]);
                             } else {
-                                DB::table('sys_param_values')->where('id', $existsId)->update(['doc_type' => 2, 'ref_id' => $post->id, 'param_id' => $param_id, 'iteration' => $iteration_count, 'value_ref' => $value_ref, 'value_short' => NULL, 'value_long' => NULL]);
+                                DB::table('sys_param_values')->where('id', $existsId)->update(['doc_type' => 2, 'ref_id' => $id, 'param_id' => $param_id, 'iteration' => $iteration_count, 'value_ref' => $value_ref, 'value_short' => NULL, 'value_long' => NULL]);
                             }
                         } else {
                             if (!$value_ref) {
-                                DB::table('sys_param_values')->insert(['doc_type' => 2, 'ref_id' => $post->id, 'param_id' => $param_id, 'iteration' => $iteration_count, 'value_ref' => NULL, 'value_short' => $paramValue, 'value_long' => NULL]);
+                                DB::table('sys_param_values')->insert(['doc_type' => 2, 'ref_id' => $id, 'param_id' => $param_id, 'iteration' => $iteration_count, 'value_ref' => NULL, 'value_short' => $paramValue, 'value_long' => NULL]);
                             } else {
-                                DB::table('sys_param_values')->insert(['doc_type' => 2, 'ref_id' => $post->id, 'param_id' => $param_id, 'iteration' => $iteration_count, 'value_ref' => $value_ref, 'value_short' => NULL, 'value_long' => NULL]);
+                                DB::table('sys_param_values')->insert(['doc_type' => 2, 'ref_id' => $id, 'param_id' => $param_id, 'iteration' => $iteration_count, 'value_ref' => $value_ref, 'value_short' => NULL, 'value_long' => NULL]);
                             }
                         }
                     }
@@ -143,21 +145,22 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-//      $postInfo = $request->get('postInfo');
-//      dd($postInfo['title']);
-        $rules = [
-            'title' => 'required|min:3',
-        ];
-        $messages = [
-            'title.required' => 'This is the Title, it`s important'
-        ];
-
-        $validator = Validator::make( $request->get('postInfo'), $rules, $messages);
-
-        if ($validator->fails()) {
-            $messages = $validator->messages();
-            return response()->json($messages, 422);
-        }
+//        dd(request()->all());
+//      $general = $request->get('general');
+//
+//        $rules = [
+//            'job_description' => 'required|min:3',
+//        ];
+//        $messages = [
+//            'job_description.required' => 'This is the Title, it`s important'
+//        ];
+//
+//        $validator = Validator::make( $general, $rules, $messages);
+//
+//        if ($validator->fails()) {
+//            $messages = $validator->messages();
+//            return response()->json($messages, 422);
+//        }
         $this->savePost($request);
 
 //        $request->user()->posts()->create([

@@ -1,8 +1,9 @@
 
 <main>
-
+{{$stateParams}}
+		<br>
 		<div>
-			<p>View {{user.personal_information.first_name + user.personal_information.last_name}}'s Profile &nbsp;&nbsp;   | &nbsp;&nbsp;   Your Profile Views: 157	times</p>
+			<p>View {{user.personal_information.first_name + ' ' +user.personal_information.last_name}}'s Profile &nbsp;&nbsp;   | &nbsp;&nbsp;   Your Profile Views: <span class="">56</span>	times</p>
 		</div>
 
 		<uib-accordion close-others="oneAtATime">
@@ -27,20 +28,18 @@
 							<div ng-switch="param.inputType" class="col-md-3" style="padding-right:15px;margin-bottom:10px; ">
 
 								<div ng-switch-when="text">
-
+									<div editable-text="param.paramValue" e-class="form-control">
+										{{param.paramValue}}
+									</div>
 
 								</div>
 
 								<div ng-switch-when="select">
-									<div editable-select="user[docParamName][key][param_id]['paramValue']"
-
-										 e-form="rowform"
+									<div editable-select="param.paramValue"
 										 name="user[docParamName][key][param_id]['paramName']"
 										 e-name="user[docParamName][key][param_id]['paramName']"
-										 ng-model="user[docParamName][key][param_id]['paramValue']"
-										 e-ng-model="user[docParamName][key][param_id]['paramValue']"
 										 e-class="form-control"
-										 e-ng-options="o.value as o.text for o in groups[param.paramName] | toArray:true "										>
+										 e-ng-options="o.value as o.text for o in groups[param.paramName] | toArray:true ">
 
 										{{ user[docParamName][key][param_id]['paramValue'] }}
 									</div>
@@ -111,5 +110,5 @@
 
 
 
-
+<pre>{{user | json}}</pre>
 </main>

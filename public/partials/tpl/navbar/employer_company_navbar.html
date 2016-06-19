@@ -46,10 +46,16 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.company[0][32].paramValue | capitalize}}<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a ui-sref="employer.company">My Company</a></li>
+                            <li><a ui-sref="employer.company">My Schools</a></li>
+                            <li><a ui-sref="employer.jobs">Job Offers</a></li>
+                            <li><a ui-sref="employer.company">Find Schools</a></li>
+                            <li><a ui-sref="employer.company">School Events</a></li>
+
+
+                            <li role="separator" class="divider"></li>
+                            <li><a ui-sref="employer.company_preview">Company Preview</a></li>
                             <li><a ui-sref="employer.edit">Edit Profile</a></li>
                             <li><a ui-sref="admin.steps">Admin</a></li>
-
                             <li role="separator" class="divider"></li>
                             <li ng-controller="LogoutCtrl"><a ng-click="logout()">Logout</a></li>
                         </ul>

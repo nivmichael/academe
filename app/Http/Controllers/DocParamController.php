@@ -38,7 +38,6 @@ class DocParamController extends Controller {
 			$docParam['belongsTo'] = 'jobseeker';
 			$docParams[$result->position] = $docParam;
 		}
-
 		return Response::json($docParams);
 	}
 	public function employerSteps(){
@@ -50,8 +49,6 @@ class DocParamController extends Controller {
 			$docParam['belongsTo'] = 'employer';
 			$docParams[$result->position] = $docParam;
 		}
-
-
 		return Response::json($docParams);
 	}
 
@@ -156,6 +153,9 @@ class DocParamController extends Controller {
 	public function deleteIterable(Request $request)
 	{
 		$all = $request->all();
+		if(count($all['docParam'] <= 1)){
+			return ;
+		}
 		$user_id    = $all['user_id'];
 		$iteration_key   = $all['index'];
 		$docParamId = $all['docParam'][0]['docParamId'];

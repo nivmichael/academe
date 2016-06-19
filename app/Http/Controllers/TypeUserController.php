@@ -58,7 +58,6 @@ class TypeUserController extends Controller
 	 */
 	public function getAccount(Request $request)
 	{
-//		//dd($this->user->all($request->user()));
 		$user  = $this->user->all(    $request->user() );
 		$posts = $this->posts->index( $user );
 
@@ -205,124 +204,68 @@ class TypeUserController extends Controller
 		$param->country = $allpersonal_information['country'];
 		$param->phone_1 = $allpersonal_information['phone_1'];
 		$param->mobile = $allpersonal_information['mobile'];
-//		$param->date_of_birth = new DateTime($allpersonal_information['date_of_birth']);
+		$param->date_of_birth = new DateTime($allpersonal_information['date_of_birth']);
 //		$param->date_of_birth->format('Y-m-d');
 		$param->last_login = new DateTime('now');
 		$param->registration = $allpersonal_information['registration'];
 		$param->send_newsletters = $allpersonal_information['send_newsletters'];
 		$param->save();
 
-		unset($all['user']['personal_information']);
+//		unset($all['user']['personal_information']);
 		if ($funcFromAdmin) {
 			return Response::json('function from admin');
 			die;
 		}
 		$update = null;
 		$authId = $param->id;
-		foreach($all as $doc_param => $param_object){
+		foreach($all as $doc_param => $iteration){
+			foreach ($iteration as $iteration_key => $docParamValues) {
+				foreach ($docParamValues as $param_id => $param) {
+					if(is_array($param)){
+						$obj[$doc_param][$iteration_key][$param_id] = $param;
+					}
 
-			foreach ($param_object as $param_key => $param_value) {
-				$obj[$doc_param][$param_key] = $param_value;
+				}
+
 			}
 		}
 
-		foreach($obj as $docParamName => $docParamVals) {
-			$doc_param_id = DB::table('doc_param')->where('name', $docParamName)->where('doc_type_id', 1)->pluck('id');
-			$iterableCount = 0;
-			foreach($docParamVals as $param => $props) {
-				//dd(array_key_exists ( 'docParamId' , $docParamVals ));
-				//dd($docParamVals);
-				if(!array_key_exists ( 'docParamId' , $docParamVals )) {
-					//print_r('array');
-					foreach($props as $propKey => $propVal) {
-						if(isset($propVal['paramValue'])){
+		foreach($obj as $docParamName => $docParamValues) {
+			//we allreasdy had docParamId..get it from above instead of this query..
+			$doc_param_id = DB::table('doc_param')->where('name', $docParamName)->where('doc_type_id', 1)->value('id');
 
-						}else{
-							//print_r($propKey);
-						}
-						if($propVal['paramValue']){
+			foreach($docParamValues as $iteration_count => $params) {
 
+				foreach ($params as $param_id => $param_values) {
 
-							$paramValue = $propVal['paramValue'];
-							if(is_array($paramValue)) {
-								$paramValue = implode('|',$paramValue);
-								//print_r($paramValue);
+					$paramValue = $param_values['paramValue'];
+					$paramName  = $param_values['paramName'];
+					$iterable   = $iteration_count;
+
+					if (is_array($paramValue)) {
+						$paramValue = implode('|', $paramValue);
+					}
+
+					if ($param_id) {
+						//checking where the values come from? from param_value? or from short/long?
+						$value_ref = DB::table('param_value')->where('id', $paramValue)->value('id');
+						$existsId  = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_id', $authId)->where('iteration', $iteration_count)->value('id');
+
+						if ($existsId) {
+							if (!$value_ref) {
+								DB::table('sys_param_values')->where('id', $existsId)->update(['doc_type' => 1, 'ref_id' => $authId, 'param_id' => $param_id, 'iteration' => $iteration_count, 'value_ref' => NULL, 'value_short' => $paramValue, 'value_long' => NULL]);
+							} else {
+								DB::table('sys_param_values')->where('id', $existsId)->update(['doc_type' => 1, 'ref_id' => $authId, 'param_id' => $param_id, 'iteration' => $iteration_count, 'value_ref' => $value_ref, 'value_short' => NULL, 'value_long' => NULL]);
 							}
-
-						}else{
-							$paramValue='';
-						};
-						$paramName  = $propVal['paramName'];
-						$iterable = $param;
-
-						$param_id = DB::table('param')->where('name', $paramName)->where('doc_param_id', $doc_param_id)->value('id');
-
-						if ($param_id) {
-							//checking where the values come from? from param_value? or from short/long?
-							$value_ref = DB::table('param_value')->where('value', $paramValue)->value('id');
-
-							$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',null)->where('ref_id',$authId)->value('id');
-							if(!$existsId) {
-								$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',$iterableCount)->where('ref_id',$authId)->value('id');
-							}
-
-
-
-							if($existsId) {
-
-								if(!$value_ref) {
-									DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);
-								} else {
-									DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);
-								}
-							}else {
-								if(!$value_ref) {
-									DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);
-								} else {
-									DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>$iterableCount,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);
-								}
-							}
-						}
-
-					}
-				}else if(array_key_exists ( 'docParamId' , $docParamVals )){
-
-					//print_r('single');
-					if(isset($props['paramValue'])){
-						$paramValue = $props['paramValue'];
-					}else{
-						//print_r('here');
-						$paramValue= '';
-					}
-
-
-					if(is_array($paramValue)) {
-						$paramValue = implode('|',$paramValue);
-
-					}
-					$param_id = $param;
-					//$param_id = DB::table('param')->where('id',  $param)->where('doc_param_id', $doc_param_id)->value('id');
-					if($param_id == null) {
-						dd('some thing wrong with param: '.$param);
-					}
-
-					$value_ref = DB::table('param_value')->where('value', $paramValue)->value('id');
-					$existsId = DB::table('sys_param_values')->where('param_id',$param_id)->where('ref_id',$authId)->value('id');
-					if($existsId) {
-						if(!$value_ref) {
-							DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);
 						} else {
-							DB::table('sys_param_values')->where('id',$existsId)->update(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);
-						}
-					} else {
-						if(!$value_ref) {
-							DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>NULL,'value_short'=>$paramValue,'value_long'=>NULL]);
-						} else {
-							DB::table('sys_param_values')->insert(['doc_type'=>1,'ref_id'=>$authId,'param_id'=>$param_id,'iteration'=>null,'value_ref'=>$value_ref,'value_short'=>NULL,'value_long'=>NULL]);
+							if (!$value_ref) {
+								DB::table('sys_param_values')->insert(['doc_type' => 1, 'ref_id' => $authId, 'param_id' => $param_id, 'iteration' => $iteration_count, 'value_ref' => NULL, 'value_short' => $paramValue, 'value_long' => NULL]);
+							} else {
+								DB::table('sys_param_values')->insert(['doc_type' => 1, 'ref_id' => $authId, 'param_id' => $param_id, 'iteration' => $iteration_count, 'value_ref' => $value_ref, 'value_short' => NULL, 'value_long' => NULL]);
+							}
 						}
 					}
 				}
-				$iterableCount ++;
 			}
 		}
 		$obj = array('personal_information' => $userPI) + $obj;
@@ -522,6 +465,7 @@ class TypeUserController extends Controller
 											   param.position AS paramPosition,
 											   param.param_parent_id AS paramParent,
 											   doc_param.name AS docParamName,
+											   doc_param.position As docParamPosition,
 											   param_type.name AS paramType,
 											   doc_param.id AS docParamId
 											   FROM	param
@@ -534,46 +478,35 @@ class TypeUserController extends Controller
 
 											   AND doc_param.doc_sub_type = 'jobSeeker'
 											   AND authorized = 1
-											   ORDER BY paramPosition ASC;"));
+											   ORDER BY docParamPosition ASC, paramPosition ASC "));
 
-//		if (!Auth::user()) {
-//			$userpersonal_information = Schema::getColumnListing('type_user');
-//			$userpersonal_information = (object)$userpersonal_information;
-//			foreach ($userpersonal_information as $key => $value) {
-//				$personal_information->$value = '';
-//			}
-//		} else {
-//			$id = Auth::user()->id;
-//			$personal_information = User::find($id);
-//		}
-//		$user['personal_information'] = $personal_information;
-//		// $user['personal_information']->password_confirmation = '';
-//		$idx = 0;
 		foreach ($params as $k => $v) {
 
 
 			$iteration = $v->iteration;
 			$docParamId = $v->docParamId;
 			$docParamName = $v->docParamName;
+			$docParamPosition = $v->docParamPosition;
 			$paramName = $v->paramName;
 			$inputType = $v->paramType;
 			$position = $v->position;
 			$paramId = $v->paramId;
 			$paramParent = $v->paramParent;
 
+//
+			$user[$docParamName][0]['docParamName']     = $docParamName;
+			$user[$docParamName][0]['docParamId']       = $docParamId;
+			$user[$docParamName][0]['docParamPosition'] = $docParamPosition;
 
-
-			$user[$docParamName][0]['docParamId'] = $docParamId;
-			$user[$docParamName][0][$paramId]['paramName'] = $paramName;
-			$user[$docParamName][0][$paramId]['paramId'] = $paramId;
+			$user[$docParamName][0][$paramId]['paramName'] 	   = $paramName;
+			$user[$docParamName][0][$paramId]['paramId']       = $paramId;
 			$user[$docParamName][0][$paramId]['paramParentId'] = $paramParent;
-			$user[$docParamName][0][$paramId]['position'] = $position;
-			$user[$docParamName][0][$paramId]['paramValue'] = '';
-			$user[$docParamName][0][$paramId]['inputType'] = $inputType;
+			$user[$docParamName][0][$paramId]['position']	   = $position;
+			$user[$docParamName][0][$paramId]['paramValue']    = '';
+			$user[$docParamName][0][$paramId]['inputType']	   = $inputType;
 
 		}
-//		dd($user);
-//var_dump($user);
+
 		return Response::json($user);
 	}
 
@@ -581,19 +514,6 @@ class TypeUserController extends Controller
 	{
 		$personal_information = new stdClass();
 		$user = array();
-//		$params = DB::select(DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
-//											   param.name AS paramName,
-//											   doc_param.name AS docParamName ,
-//											   param_type.name AS paramType
-//											   FROM	param
-//											   LEFT JOIN doc_param ON param.doc_param_id = doc_param.id
-//											   LEFT JOIN sys_param_values ON param.id = sys_param_values.param_id
-//											   LEFT JOIN param_value ON sys_param_values.value_ref = param_value.id
-//											   LEFT JOIN type_user ON sys_param_values.ref_id = type_user.id
-//											   LEFT JOIN param_type ON param.type_id = param_type.id
-//											   WHERE doc_type_id = 1
-//											   AND doc_param.doc_sub_type = 'employer'
-//											   AND authorized = 1"));
 		$params = DB::select(DB::raw("SELECT param.*, sys_param_values.*,param_value.*,type_user.*,
 
 											   param.id AS paramId,
@@ -614,17 +534,6 @@ class TypeUserController extends Controller
 											   AND doc_param.doc_sub_type = 'employer'
 											   AND authorized = 1"));
 
-//		if (!Auth::user()) {
-//			$userpersonal_information = Schema::getColumnListing('type_user');
-//			$userpersonal_information = (object)$userpersonal_information;
-//			foreach ($userpersonal_information as $key => $value) {
-//				$personal_information->$value = '';
-//			}
-//		} else {
-//			$id = Auth::user()->id;
-//			$personal_information = User::find($id);
-//		}
-//		$user['personal_information'] = $personal_information;        // $user['personal_information']->password_confirmation = '';
 		foreach ($params as $k => $v) {
 
 			//$user[$v->docParamName][$paramName] = $v->value = '';

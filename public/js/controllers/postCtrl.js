@@ -30,7 +30,8 @@ angular.module('acadb')
         };
         // save the job post
         $scope.savePost = function(post) {
-            PostData.save(post).$promise
+            console.log(post);
+            PostData.save( $scope.jobPost ).$promise
                 .then(function(res) {
 
                 })

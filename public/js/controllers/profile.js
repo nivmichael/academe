@@ -2,6 +2,9 @@
 angular.module('acadb')
   .controller('ProfileCtrl', function($scope, $auth, Account, $http, $rootScope, $filter, Form) {
 
+
+
+
       $scope.user    = {};
       $scope.groups  = {};
       $scope.isArray = angular.isArray;
@@ -14,6 +17,9 @@ angular.module('acadb')
                    $scope.posts = response.posts;
                    $scope.status  = $scope.user.personal_information.status;
                    Account.broadcast(response);
+                   Form.getForms($scope.user.personal_information.subtype).then(function(form){
+                       $scope.form = angular.copy(form);
+                   })
 
                })
                .catch(function(response) {
@@ -22,13 +28,16 @@ angular.module('acadb')
       };
 
 
+
       $scope.$on('handleBroadcast', function(event, user) {
-         // $scope.user = user.user;
+         //$scope.user = user.user;
          // $scope.form = user.user;
          //$scope.allPosts = user.posts;
       });
 
       $scope.saveUser = function() {
+          var date = $scope.user.personal_information.date_of_birth;
+          $scope.user.personal_information.date_of_birth = $filter('date')(date,'yyyy-MM-dd');
           Account.updateProfile($scope.user)
             .then(function(response) {
               Account.broadcast(response.data);
@@ -42,17 +51,17 @@ angular.module('acadb')
            });
       };
 
-      //$scope.add = function(docParam,$index) {
-      //     $scope.inserted = angular.copy($scope.form[docParam][0]);
-      //     $scope.user[docParam].push($scope.inserted);
-      //};
-
       $scope.add = function(docParam,$index) {
-           Form.add().then(function(data){
-               $scope.inserted = data[docParam][0];
-               $scope.user[docParam].push($scope.inserted);
-           })
+           $scope.inserted = angular.copy($scope.form[docParam][0]);
+           $scope.user[docParam].push($scope.inserted);
       };
+
+      //$scope.add = function(docParam,$index) {
+      //     Form.add().then(function(data){
+      //         $scope.inserted = data[docParam][0];
+      //         $scope.user[docParam].push($scope.inserted);
+      //     })
+      //};
 
       $scope.move = function(array, fromIndex, toIndex){
             array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] )
@@ -142,39 +151,13 @@ angular.module('acadb')
 
 
 
-        //materialize datepicker
-        var currentTime = new Date();
-        $scope.currentTime = currentTime;
-        $scope.month = ['Januar', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        $scope.monthShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        $scope.weekdaysFull = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        $scope.weekdaysLetter = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-        $scope.disable = [false, 1, 7];
-        $scope.today = 'Today';
-        $scope.clear = 'Clear';
-        $scope.close = 'Close';
-        var days = 15;
-        $scope.minDate = (new Date($scope.currentTime.getTime() - ( 1000 * 60 * 60 *24 * days ))).toISOString();
-        $scope.maxDate = (new Date($scope.currentTime.getTime() + ( 1000 * 60 * 60 *24 * days ))).toISOString();
-        $scope.onStart = function () {
-
+        $scope.opened = {};
+        $scope.open = function($event, elementOpened) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.opened[elementOpened] = !$scope.opened[elementOpened];
         };
-        $scope.onRender = function () {
 
-        };
-        $scope.onOpen = function () {
-
-        };
-        $scope.onClose = function () {
-
-        };
-        $scope.onSet = function () {
-
-        };
-        $scope.onStop = function () {
-
-        };
-        //end materialize datepicker
 
         $scope.genders = [
         {value: 'male', text: 'Male'},
@@ -217,26 +200,6 @@ angular.module('acadb')
     //    });
     //};
 
-    $scope.link = function(provider) {
-      $auth.link(provider)
-        .then(function() {
-          //toastr.success('You have successfully linked a ' + provider + ' account');
-          $scope.getProfile();
-        })
-        .catch(function(response) {
-          //toastr.error(response.data.message, response.status);
-        });
-    };
-    $scope.unlink = function(provider) {
-      $auth.unlink(provider)
-        .then(function() {
-          //toastr.info('You have unlinked a ' + provider + ' account');
-          $scope.getProfile();
-        })
-        .catch(function(response) {
-          //toastr.error(response.data ? response.data.message : 'Could not unlink ' + provider + ' account', response.status);
-        });
-    };
 
     $scope.getProfile();
   });

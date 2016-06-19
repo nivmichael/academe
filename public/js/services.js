@@ -134,25 +134,45 @@ angular.module('acadb.services', []).
 	})
 .factory('Steps', function($http, $rootScope ) {
 
-	var steps;
-	return {
-		getAllSteps: function() {
-			if ( !steps ) {
-				// $http returns a promise, which has a then function, which also returns a promise
-				steps = $http.get('api/steps').then(function (response) {
-					// The then function here is an opportunity to modify the response
+		var steps;
+		return {
+			getAllSteps: function() {
+				if ( !steps ) {
+					// $http returns a promise, which has a then function, which also returns a promise
+					steps = $http.get('api/steps').then(function (response) {
+						// The then function here is an opportunity to modify the response
 
-					// The return value gets picked up by the then in the controller.
-					return response.data;
-				});
+						// The return value gets picked up by the then in the controller.
+						return response.data;
+					});
+				}
+				// Return the promise to the controller
+				return steps;
 			}
-			// Return the promise to the controller
-			return steps;
-		}
 
-	};
+		};
 
-})
+	})
+
+
+
+	//// need encapsulation/make a service storing user type in localStorage.
+	//$scope.saved = JSON.parse(localStorage.getItem('user'));
+	//
+	//if($stateParams.type !== null){
+	//    $scope.saved = {type: $stateParams.type, sub_type: $stateParams.sub_type};
+	//}else if( $scope.saved === null){
+	//    $state.go('welcome');
+	//}
+	//localStorage.setItem('user', JSON.stringify( $scope.saved ));
+	//$scope.jobseeker_type = $scope.saved.sub_type;
+
+
+
+
+
+
+
 .factory('Account', function($http, $rootScope ) {
 
 	var promise;
@@ -183,7 +203,55 @@ angular.module('acadb.services', []).
 	};
 
 })
-	.factory('ModalService', function($uibModal, $state, $http, $stateParams, Account, Form) {
+	.factory('JobseekerPost', function($uibModal, $state, $http, $stateParams, Account, Form) {
+
+		return {
+			openTextEditModal: function(id, post, $stateParams) {
+
+				var modalInstance = $uibModal.open({
+					templateUrl: '../partials/jobseeker/jobseekerPost.html',
+					//backdrop: 'static',
+					controller: function($scope, $uibModalInstance, $sce, post, $http, $stateParams) {
+
+						$scope.jobPost = post;
+						Form.getAllOptionValues().then(function(options){
+							$scope.groups = options.data;
+						});
+						Form.getJobPostForm().then(function(form){
+							$scope.jobPostForm = angular.copy(form);
+						})
+						$scope.add = function(docParam,$index) {
+							$scope.inserted = angular.copy($scope.jobPost[docParam][0]);
+							$scope.jobPost[docParam].push($scope.inserted);
+						};
+						$scope.close = function() {
+							$uibModalInstance.dismiss('cancel');
+                            $state.go('jobseeker.findajob');
+						};
+						$scope.ok = function() {
+							$uibModalInstance.dismiss('cancel');
+							$state.go('jobseeker.findajob');
+						};
+					},
+					size: 'lg',
+					resolve: {
+						//should return $promise? so if something failed then dont open modal..or is it like that already?!
+						post: function($http) {
+							var post = $http.get('api/job/'+ id ).then(function(response){
+								return response.data;
+							})
+							return post;
+						}
+					}
+				});
+
+			},
+			close:function(){
+				$uibModal.close();
+			}
+		};
+	})
+	.factory('ModalService', function($uibModal, $state, $http, $stateParams, Account, Form, PostData) {
 
 		return {
 			openTextEditModal: function(id, post, $stateParams) {
@@ -215,30 +283,42 @@ angular.module('acadb.services', []).
 						$scope.clone = clone;
 						$scope.close = function() {
 							$uibModalInstance.dismiss('cancel');
-							$state.go('employer.company');
+							$state.go('employer.jobs');
 						};
 						$scope.save = function() {
 							angular.extend(post, clone);
 							$uibModalInstance.close();
+                            $state.go('^');
 						};
-						$scope.savePost = function() {
-
-							$http.post('api/savePost', {
-								post:$scope.jobPost,
-							}).success(function(errors){
-								//Account.broadcast(errors);
-								console.log(errors);
-
-
-							}).error(function(err) {
-
-							}).then(function(){
-								$state.go('employer.company');
-							});
-						};
+                        $scope.savePost = function(post) {
+                            console.log(post);
+                            PostData.save( $scope.jobPost ).$promise
+                                .then(function(res) {
+                                    $state.go('employer.jobs');
+                                })
+                                .catch(function(err) {
+                                    $scope.errors = err.data;
+                                    Account.broadcast(err.data);
+                                })
+                        };
+						//$scope.savePost = function() {
+                        //
+						//	$http.post('api/savePost', {
+						//		post:$scope.jobPost,
+						//	}).success(function(errors){
+						//		//Account.broadcast(errors);
+						//		console.log(errors);
+                        //
+                        //
+						//	}).error(function(err) {
+                        //
+						//	}).then(function(){
+						//		$state.go('employer.company');
+						//	});
+						//};
 
 					},
-					size: '',
+					size: 'lg',
 					resolve: {
 						post: function($http) {
 
@@ -277,9 +357,11 @@ angular.module('acadb.services', []).
 .factory('Form', function($http, $q, $rootScope, $stateParams) {
 
 	var forms     = [];
+	var form      = [];
 	var	next_keys = [];
 	var prev_key  = false;
-	var form, getJobPostForm, options, new_iteration;
+	var  getJobPostForm, options, new_iteration;
+	var steps     = [];
 
 	return {
 		getAdminForm: function(form){
@@ -326,17 +408,24 @@ angular.module('acadb.services', []).
 			// Return the promise to the controller
 			return getJobPostForm;
 		},
-		getForms: function() {
-			if ( !form ) {
+
+		getForms: function(type) {
+			if ( !form[type] ) {
 				// $http returns a promise, which has a then function, which also returns a promise
-				form = $http.get('api/forms/register_' + $stateParams.type).then(function (response) {
+				form[type] = $http.get('api/forms/'+type).then(function (response) {
 					// The then function here is an opportunity to modify the response
 					// The return value gets picked up by the then in the controller.
 					return response.data;
 				});
 			}
-			// Return the promise to the controller
-			return form;
+
+			console.log(form[type]);
+			return form[type];
+		},
+		next_step: function(){
+
+
+
 		},
 		next_form: function(){
 				for (var key in $rootScope.steps) {

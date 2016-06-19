@@ -92,7 +92,7 @@ angular.module('acadb')
     //};
     //$scope.getAllPosts();
     $scope.getPost = function(id){
-        $http.get('/job/'+id ).
+        $http.get('api/job/'+id ).
             success(function(data, status, headers, config) {
 
 

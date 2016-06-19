@@ -9,12 +9,12 @@
 		</div>
 	</div>
 
-	<form editable-form name="jobPost" id="" role="form" ng-model="post"  >
+	<form editable-form name="jobPost" id="" role="form" ng-model="jobPost"  >
 
-		<div ng-repeat="(docParamName, docParamValues) in jobPost ">
+		<div ng-form="jobPostForm" ng-repeat="(docParamName, docParamValues) in jobPost ">
 			<div ng-repeat="(iteration, params) in docParamValues" >
 				{{docParamName}}
-				<div ng-repeat="(paramId, param) in params  | toArray:false | orderBy : 'position': false" class="jobPost_field" ng-if="param.inputType">
+				<div ng-repeat="(paramId, param) in params  | toArray:false | orderBy : 'paramPosition': false" class="jobPost_field" ng-if="param.inputType">
 
 					<div class="param_label col-xs-12 col-sm-12 col-md-3 col-lg-3" >
 						{{param.paramName}}<span ng-if="param.required">*</span>
@@ -23,7 +23,7 @@
 					<div ng-switch="param.inputType" class="col-xs-12 col-sm-6 col-md-5 col-lg-5 ">
 
 						<div ng-switch-when="text">
-							<div  class="param_input" >
+							<div  class="param_input form-group" ng-class="{'has-error' : errors[param.paramName] && registerForm.param.paramName.$touched || errors[param.paramName] && sent }" >
 								<input type='text' class="form-control" name="{{param.paramName}}" ng-model="param.paramValue">
 							</div>
 						</div>
@@ -32,7 +32,7 @@
 							<div  class="param_input" >
 								<select class="form-control param_input" name="{{param.paramName}}"
 										ng-model="param.paramValue"
-										ng-options="o.id as o.text for o in groups[param.paramName] | toArray:true   ">
+										ng-options="o.id as o.text for o in groups[param.paramName] | toArray:false   ">
 								</select>
 							</div>
 						</div>
@@ -58,7 +58,14 @@
 			</div>
 		</div>
 
+		<div class="">
 
+
+			<a  class="param_input col-xs-12 col-sm-6 col-md-5 col-lg-5 waves-effect waves-light" ng-click="savePost(jobPost)">
+				<img ng-src="../img/buttons/save_job.png" class="">
+			</a>
+			<div class="clearfix"></div>
+		</div>
 	</form>
 
 

@@ -1,5 +1,23 @@
 angular.module('acadb.filters', [])
 
+.filter("filterTree",function(){
+		return function(items,id){
+			console.log(id);
+			var filtered = [];
+			var recursiveFilter = function(items,id){
+				angular.forEach(items,function(item){
+					if(item.id === id){
+						filtered.push(item);
+					}
+					if(angular.isArray(item.items) && item.items.length > 0){
+						recursiveFilter(item.items,id);
+					}
+				});
+			};
+			recursiveFilter(items,id);
+			return filtered;
+		};
+	})
 
 .filter('checkDate', [function() {
     return function(input) {

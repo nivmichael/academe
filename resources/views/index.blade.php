@@ -19,7 +19,7 @@
     {!! Html::style('css/angular-responsive-tables.min.css') !!}
     {!! Html::style('css/ng-img-crop.css') !!}
     {!! Html::style('css/materialize.css') !!}
-    {!! Html::style('css/angular-materialize.css') !!}
+    {{--{!! Html::style('css/angular-materialize.css') !!}--}}
     {!! Html::style('lib/xeditable/css/xeditable.css') !!}
     <!--Custom CSS-->
 
@@ -112,6 +112,8 @@
 {!! Html::script('js/controllers/sidenav.js') !!}
 {!! Html::script('js/controllers/findajob.js') !!}
 {!! Html::script('js/controllers/editForm.js') !!}
+{!! Html::script('js/controllers/welcome.js') !!}
+{!! Html::script('js/controllers/form.js') !!}
 {!! Html::script('lib/angular-filter.js') !!}
 
 
