@@ -1,0 +1,19 @@
+
+
+
+<div ui-view="sideNav"></div>
+<div ui-view="navbar"></div>
+<main >
+    <form id="signup-form" ng-submit="processForm()">
+        <div ui-view></div>
+    </form>
+
+
+    <pre class="container">
+        {{ formData | json }}
+    </pre>
+    <pre class="container">
+        {{ user | json }}
+    </pre>
+</main>
+

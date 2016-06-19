@@ -1,0 +1,39 @@
+<ul id="employer_company_sideNav" class="side-nav fixed">
+    <div class="" style="height: 34px; line-height: 34px;padding-left:15px;" >
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="padding-left:0;">
+            <select class="form-control" ng-model="currentStatus" ng-options="status.value as status.text for status in userStatuses" ng-change="changeStatus(status)"></select>
+        </div>
+    </div>
+    <div class="" style="padding-left:15px;margin:10px 0;">Last Updated -  {{ user.personal_information.last_login | amDateFormat: 'MM/DD/YYYY' }}</div>
+    <div class="" style="padding: 0 25px;">
+        <h5 class="text-center">{{user.company[0][32].paramValue | capitalize}}</h5>
+        <div ng-repeat="file in user.files" ng-if="$first">
+            <img class="profile-picture-card card" ng-src="/	{{file['paramValue'] || '../../img/profile-ph.gif'  }}" alt="Generic placeholder image">
+        </div>
+    </div>
+    <ul>
+        <li>
+            <a href="#"
+               ui-sref="employer.company_preview"
+               class="docParamLi waves-effect waves-light"
+               ng-class="{ active: $state.includes('company.preview') }">
+                <span class="play"><span>▶</span></span> Company Preview
+            </a>
+        </li>
+    </ul>
+    <div class="text-center" style="position: relative;top: 50px;width: 100%;left: 0;">
+        <div  class="postAJob" ui_sref="employer.postajob" >
+            <img ng-src="https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/post_job.png">
+        </div>
+        <!--<div ui-sref="jobseeker.findajob" class=" col-xs-12 col-sm-12 col-md-12 waves-effect waves-light" >-->
+            <!--post a job-->
+            <!--&lt;!&ndash;<img ng-src="https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/search_job.png" >&ndash;&gt;-->
+        <!--</div>-->
+    </div>
+
+
+    <style>.affix{top: 0!important;}</style>
+    <script>$('#employer_company_sideNav').affix({offset: {top: 64}});</script>
+
+
+</ul>
