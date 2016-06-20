@@ -263,6 +263,10 @@ angular.module('acadb.services', []).
 
 						$scope.jobPost = post;
 
+						var user = post['postInfo'];
+
+
+
 						Form.getAllOptionValues().then(function(options){
 							$scope.groups = options.data;
 						});
@@ -273,7 +277,7 @@ angular.module('acadb.services', []).
 						})
 
 						$scope.add = function(docParam,$index) {
-							$scope.inserted = angular.copy($scope.jobPost[docParam][0]);
+							$scope.inserted = angular.copy($scope.jobPostForm[docParam][0]);
 							$scope.jobPost[docParam].push($scope.inserted);
 						};
 						var clone = {};
@@ -301,6 +305,19 @@ angular.module('acadb.services', []).
                                     Account.broadcast(err.data);
                                 })
                         };
+						$scope.move = function(array, fromIndex, toIndex){
+							array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] )
+						};
+						$scope.remove = function(array,index,user_id) {
+							Form.remove(array,index,user_id);
+							array.splice(index,1);
+						};
+
+						//$scope.set_an_search = function(){
+						//	$.post('api/set_an_search', {user:user}).success(function(callBack){
+                        //
+						//	})
+						//};
 						//$scope.savePost = function() {
                         //
 						//	$http.post('api/savePost', {

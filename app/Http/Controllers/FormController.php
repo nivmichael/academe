@@ -61,8 +61,8 @@ class FormController extends Controller
                     $doc_param->type     = "doc_param";
                     $doc_param->docParamId       = $param->docParamId;
                     $doc_param->name             = $param->docParamName;
-                    $doc_param->position = $param->docParamPosition;
-
+                    $doc_param->position     = $param->docParamPosition;
+                    $doc_param->show         = $param->displayed;
 
                     $doc_param->params       = [];
                     $doc_param->params[]     = [];
@@ -74,7 +74,7 @@ class FormController extends Controller
                 $doc_param->docParamId       = $param->docParamId;
                 $doc_param->name             = $param->docParamName;
                 $doc_param->position = $param->docParamPosition;
-
+                $doc_param->show         = $param->displayed;
 
                 $doc_param->params       = [];
                 $doc_param->params[]     = [];
@@ -92,11 +92,13 @@ class FormController extends Controller
 
     public function form($form){
 
-
-        if($form === 'job'){
+//        dd(strval($form));
+        if($form == 'job'){
             $form = null;
-        }else{
-            $form = request()->form;
+        }else if($form == 'jobseeker'){
+            $form = 'jobseeker';
+        }else if($form == 'employer'){
+            $form = 'employer';
         }
 
 
@@ -107,7 +109,7 @@ class FormController extends Controller
             ->leftJoin( 'param as p', DB::raw( 'p.doc_param_id' ), '=', DB::raw( 'dp.id' ) )
             ->where('dp.doc_sub_type', '=', $form)->orderBy('p.position', 'ASC')
             ->leftJoin( 'param_type as pt', DB::raw( 'pt.id' ), '=', DB::raw( 'p.type_id' ) )
-            ->select( DB::raw( 'dp.id as docParamId, dp.name as docParamName, dp.position as docParamPosition, p.position as paramPosition, p.*, pt.name as inputTypeName' ) )
+            ->select( DB::raw( 'dp.id as docParamId, dp.name as docParamName, dp.position as docParamPosition, dp.modify as docParamModify,dp.displayed as displayed,  p.position as paramPosition, p.*, pt.name as inputTypeName' ) )
             ->get();
 
         $form            = new stdClass();
@@ -132,14 +134,19 @@ class FormController extends Controller
 
             if(isset($category) && property_exists ($category , 'name' ) ){
                 if($category->name == $param->docParamName){
-                    $category->columns[0][]  = $parameter;
+                    if(isset( $param->id)){
+                        $category->columns[0][]  = $parameter;
+                    }
+
                 }else{
-//                    var_dump($category);
+//                  var_dump($category);
                     $category = new stdClass();
                     $category->type     = "category";
+                    $category->modify          = $param->docParamModify;
                     $category->docParamId       = $param->docParamId;
                     $category->name             = $param->docParamName;
                     $category->docParamPosition = $param->docParamPosition;
+                    $category->show         = $param->displayed;
                     $category->allowedTypes = Array($param->docParamName);
 
                     $category->columns       = [];
@@ -149,14 +156,18 @@ class FormController extends Controller
             }else{
                 $category = new stdClass();
                 $category->type     = "category";
+                $category->modify           = $param->docParamModify;
                 $category->docParamId       = $param->docParamId;
                 $category->name             = $param->docParamName;
                 $category->docParamPosition = $param->docParamPosition;
+                $category->show             = $param->displayed;
                 $category->allowedTypes = Array($param->docParamName);
 
                 $category->columns       = [];
                 $category->columns[]     = [];
-                $category->columns[0][]  = $parameter;
+                if(isset( $param->id)){
+                    $category->columns[0][]  = $parameter;
+                }
             }
             if(!in_array($category, $form->formName)){
                 $form->formName[] = $category;
@@ -170,6 +181,7 @@ class FormController extends Controller
     public function reorder_obj($obj){
 
         foreach($obj as $docParam => $docParamValues){
+//            print_r($docParam);
             $obj[$docParam]['docParamPosition'] = $docParam;
 
 
@@ -178,27 +190,54 @@ class FormController extends Controller
                 $obj[$docParam]['columns'][0][$param]['position'] = $param;
             }
         }
+
         return $obj;
     }
-
+//    public function saveCat(){
+//
+//    }
+//    public function saveParam(){
+//
+//    }
+//    public function saveJobseekerForm(){
+//        $obj       = request();
+//        if($obj->type == 'category'){
+//            $this->saveCat($obj->obj);
+//        }else if($obj->type == 'parameter'){
+//            $this->saveParam($obj->obj);
+//        }
+//    }
 
     public function saveJobseekerForm(){
 
-        $obj = request()->formName;
+        $obj       = request()->form['formName'];
+        $user_type = request()->type;
+
+        if($user_type == 'jobseeker' || $user_type == 'employer' ){
+            $doc_type = 1;
+        }else{
+            $doc_type = 2;
+        }
+
         if($obj){
             $obj = $this->reorder_obj($obj);
         }
+
 
         foreach($obj as $docParam => $docParamValues){
 
             if(isset($docParamValues['docParamId'])){
                 $dp = DocParam::find($docParamValues['docParamId']);
             }else{
-                $dp = new DocParam;
-                $dp->name = $docParamValues['name'];
+//                dd($docParamValues);
+                $dp = new DocParam();
             }
-
-            $dp-> position = $docParamValues['docParamPosition'];
+            $dp->modify       = 1;
+            $dp->displayed    = $docParamValues['show'];
+            $dp->name         = $docParamValues['name'];
+            $dp->doc_sub_type = $user_type;
+            $dp->doc_type_id  = $doc_type;
+            $dp->position     = $docParamValues['docParamPosition'];
             $dp->save();
 
             foreach($docParamValues['columns'][0] as $param => $values){
@@ -206,25 +245,24 @@ class FormController extends Controller
                 if(isset($values['paramId'])){
                     $p = Param::find($values['paramId']);
                 }else{
-
                     $p = new Param;
-                    $p->name          = $values['name'];
-                    $p->doc_param_id    = $dp->id;
-
-
-                    $p->modify        = $values['modify'];
                 }
-
-                $p->position = $values['position'];
-                $p->type_id  = $values['inputType'];
-
+                $p->name          = $values['name'];
+                $p->doc_param_id  = $dp->id;
+                $p->modify        = $values['modify'];
+                $p->position      = $values['position'];
+                $p->type_id       = $values['inputType'];
+                $p->authorized          = $values['show'];
                 $p->save();
 
             }
 
-
         }
 
+
+
+
+        return $this->form($user_type);
     }
 
     public function saveOptions(){

@@ -2,16 +2,17 @@
  * The controller doesn't do much more than setting the initial data model
  */
 angular.module("acadb")
-    .controller("editFormCtrl", function($scope, Form, ParamData, $http, ParamTypeData, $state, formFor) {
+    .controller("editFormCtrl", function($scope, Form, ParamData, $http, ParamTypeData, $state, formFor, userType) {
 
-console.log('ctrl');
+
 
         $scope.form = formFor;
+
         $scope.models = {
                     selected: null,
                     templates: [
-                        {type: "parameter", name: 'new parameter',modify:1,new:1,show:1},
-                        {type: "category", name: 'new category',modify:1, columns: [[],[]]}
+                        {type: "parameter", name: 'new parameter',modify:1, new:1,show:1},
+                        {type: "category",  name: 'new category' ,modify:1,show:1, columns: [[],[]]}
                     ],
                     dropzones:
                         $scope.form
@@ -21,11 +22,17 @@ console.log('ctrl');
 
         $scope.$watch('models.dropzones', function(model) {
             $scope.model = model;
+            $scope.models.dropzones  = model;
             $scope.modelAsJson = angular.toJson( model, true );
         }, true);
 
         $scope.save =function(){
-            $http.post('api/admin/forms/jobseeker', $scope.model).success(function(response){
+            $http.post('api/admin/forms/jobseeker', {form:$scope.model, type:userType} ).success(function(response){
+
+                $scope.model = response;
+                $scope.models.dropzones  = response;
+                $scope.models.selected = null;
+
             })
         };
 
@@ -65,6 +72,12 @@ console.log('ctrl');
 
             })
         }
+
+        $scope.logEvent =function(index, event, parameter){
+            console.log(index);
+            console.log(event);
+            console.log(parameter);
+        };
 
 
 

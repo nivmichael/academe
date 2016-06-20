@@ -62,7 +62,7 @@ Route::group(['middleware' => ['web','domain']], function () {
         Route::post('/deleteIterable', 'docParamController@deleteIterable');
         Route::get('/getAllPosts', 'PostController@index');
         Route::get('/getAllOptionValues', 'ParamValueController@getAllOptionValues');
-
+        Route::post('/set_an_search', 'AnalyticsController@set_an_search');
         //job post
         Route::get('/columns/jobPost' ,'TypePostController@jobPostColumnIndex');
 

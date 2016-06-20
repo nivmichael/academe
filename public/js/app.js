@@ -293,7 +293,7 @@ var acadb = angular.module('acadb', [
                         controller:  'SideNavController as NC',
                     },
                     'findajob.sideNav@jobseeker':{
-                        templateUrl: '../partials/tpl/sideNav/jobseeker_profile_sideNav.html',
+                        templateUrl: '../partials/tpl/sideNav/jobseeker_findajob_sideNav.html',
                         controller:  'SideNavController as NC',
                     },
                     'findajob@jobseeker': {
@@ -607,7 +607,7 @@ var acadb = angular.module('acadb', [
                 //params: {type: null,  sub_type : null},
                 views:{
                     'forms.nav@admin':{
-                        templateUrl: '../partials/admin/tpl/steps_navbar.html',
+                        templateUrl: '../partials/tpl/navbar/employer_company_navbar.html',
                         controller:  'SideNavController as NC',
                     },
                     'forms.sideNav@admin':{
@@ -626,6 +626,9 @@ var acadb = angular.module('acadb', [
                 resolve: {
                     formFor: function(Form,  $timeout){
                         return Form.getAdminForm('jobseeker');
+                    },
+                    userType: function(){
+                        return 'jobseeker';
                     },
                     loginRequired: loginRequired,
                 },
@@ -646,6 +649,9 @@ var acadb = angular.module('acadb', [
                     formFor: function(Form , $timeout){
                         return Form.getAdminForm('employer');
                     },
+                    userType: function(){
+                        return 'employer';
+                    },
                 },
 
                 sticky: true,
@@ -664,6 +670,9 @@ var acadb = angular.module('acadb', [
                     loginRequired: loginRequired,
                     formFor: function(Form,  $timeout){
                         return Form.getAdminForm('job');
+                    },
+                    userType: function(){
+                        return 'job';
                     },
                 },
                 sticky: true,

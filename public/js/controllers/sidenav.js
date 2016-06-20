@@ -66,6 +66,13 @@ angular.module('acadb')
             })
       };
 
+      $scope.set_an_search = function(){
+          $.post('api/set_an_search', {user:$scope.user}).success(function(callBack){
+
+          })
+      }
+
+
       $scope.userStatuses = [
         {value: 'active', text: 'Active'},
         {value: 'inactive', text: 'Inactive'}

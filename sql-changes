@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 16, 2016 at 09:26 AM
+-- Generation Time: Jun 20, 2016 at 01:42 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -23,32 +23,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `--type_user_params`
---
-
-CREATE TABLE IF NOT EXISTS `--type_user_params` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `p_name` varchar(255) NOT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `an_search`
 --
----
+
 CREATE TABLE IF NOT EXISTS `an_search` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `u_id` mediumint(8) unsigned NOT NULL,
-  `u_type` enum('job_seeker','alumni','employer') NOT NULL DEFAULT 'job_seeker',
+  `u_type` enum('jobseeker','alumni','employer') NOT NULL DEFAULT 'jobseeker',
   `post_id` mediumint(8) unsigned NOT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL,
   `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `an_search`
+--
+
+INSERT INTO `an_search` (`id`, `u_id`, `u_type`, `post_id`, `created_at`, `updated_at`, `creation_date`) VALUES
+(4, 25, 'jobseeker', 0, '2016-06-20 08:01:08', '2016-06-20 08:01:08', '2016-06-20 11:01:08'),
+(5, 25, 'jobseeker', 0, '2016-06-20 08:09:46', '2016-06-20 08:09:46', '2016-06-20 11:09:46');
 
 -- --------------------------------------------------------
 
@@ -81,6 +76,7 @@ CREATE TABLE IF NOT EXISTS `doc_param` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `position` int(11) DEFAULT NULL,
+  `modify` tinyint(1) NOT NULL,
   `doc_type_id` mediumint(9) NOT NULL,
   `doc_sub_type` varchar(255) DEFAULT NULL,
   `displayed` tinyint(1) NOT NULL DEFAULT '1',
@@ -88,25 +84,27 @@ CREATE TABLE IF NOT EXISTS `doc_param` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `doc_type_id` (`doc_type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=160 ;
 
 --
 -- Dumping data for table `doc_param`
 --
 
-INSERT INTO `doc_param` (`id`, `name`, `position`, `doc_type_id`, `doc_sub_type`, `displayed`, `created_at`, `updated_at`) VALUES
-(1, 'education', 1, 1, 'jobseeker', 1, NULL, NULL),
-(2, 'education', 1, 2, NULL, 1, NULL, '2016-06-08 05:44:20'),
-(3, 'employment', 2, 1, 'jobseeker', 1, NULL, NULL),
-(4, 'employment', 2, 2, NULL, 1, NULL, '2016-06-08 05:44:21'),
-(5, 'career_goals', 3, 1, 'jobseeker', 1, NULL, NULL),
-(6, 'career_goals', 3, 2, NULL, 1, NULL, '2016-06-08 05:44:21'),
-(7, 'company', 0, 1, 'employer', 1, NULL, '2016-06-06 11:37:52'),
-(8, 'files', 4, 1, 'jobseeker', 1, NULL, NULL),
-(9, 'files', 2, 1, 'employer', 1, NULL, '2016-06-06 11:37:52'),
-(10, 'personal_information', 0, 1, 'jobseeker', 1, NULL, NULL),
-(11, 'personal_information', 1, 1, 'employer', 1, NULL, '2016-06-06 11:37:52'),
-(12, 'general', 0, 2, NULL, 1, NULL, NULL);
+INSERT INTO `doc_param` (`id`, `name`, `position`, `modify`, `doc_type_id`, `doc_sub_type`, `displayed`, `created_at`, `updated_at`) VALUES
+(1, 'education', 2, 1, 1, 'jobseeker', 1, NULL, '2016-06-20 04:24:44'),
+(2, 'education', 1, 0, 2, NULL, 1, NULL, '2016-06-08 05:44:20'),
+(3, 'employment', 4, 1, 1, 'jobseeker', 1, NULL, '2016-06-20 04:24:44'),
+(4, 'employment', 2, 0, 2, NULL, 1, NULL, '2016-06-08 05:44:21'),
+(5, 'career_goals', 3, 1, 1, 'jobseeker', 1, NULL, '2016-06-20 04:24:44'),
+(6, 'career_goals', 3, 0, 2, NULL, 1, NULL, '2016-06-08 05:44:21'),
+(7, 'company', 1, 1, 1, 'employer', 1, NULL, '2016-06-20 08:24:14'),
+(8, 'files', 5, 1, 1, 'jobseeker', 1, NULL, '2016-06-20 04:24:44'),
+(9, 'files', 3, 1, 1, 'employer', 1, NULL, '2016-06-20 08:24:14'),
+(10, 'personal_information', 1, 1, 1, 'jobseeker', 1, NULL, '2016-06-20 04:24:44'),
+(11, 'personal_information', 2, 1, 1, 'employer', 1, NULL, '2016-06-20 08:24:14'),
+(19, 'general', 0, 0, 2, NULL, 1, NULL, NULL),
+(158, 'label', 0, 1, 1, 'jobseeker', 0, '2016-06-20 04:24:44', '2016-06-20 06:35:42'),
+(159, 'label', 0, 1, 1, 'employer', 1, '2016-06-20 08:24:14', '2016-06-20 08:24:14');
 
 -- --------------------------------------------------------
 
@@ -170,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `param` (
   PRIMARY KEY (`id`),
   KEY `doc_param_id` (`doc_param_id`),
   KEY `type_id` (`type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=159 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=155 ;
 
 --
 -- Dumping data for table `param`
@@ -180,29 +178,29 @@ INSERT INTO `param` (`id`, `authorized`, `modify`, `position`, `required`, `rule
 (1, 1, 0, 0, 0, NULL, 'degree', 2, 1, 0, NULL, '2016-05-29 06:54:33'),
 (2, 1, 0, 1, 0, NULL, 'major', 2, 1, 1, NULL, NULL),
 (3, 1, 0, 2, 0, NULL, 'minor', 2, 1, 2, NULL, NULL),
-(4, 1, 0, 3, 0, NULL, 'start_date', 7, 1, NULL, NULL, NULL),
-(5, 1, 0, 4, 0, NULL, 'end_date', 7, 1, NULL, NULL, NULL),
+(4, 1, 0, 3, 0, NULL, 'start_date', 7, 1, NULL, NULL, '2016-06-20 06:39:31'),
+(5, 1, 0, 4, 0, NULL, 'end_date', 7, 1, NULL, NULL, '2016-06-20 06:39:37'),
 (6, 1, 0, 0, 0, NULL, 'degree', 2, 2, NULL, NULL, NULL),
 (7, 1, 0, 1, 0, NULL, 'major', 2, 2, 6, NULL, NULL),
 (8, 1, 0, 2, 0, NULL, 'minor', 2, 2, 7, NULL, NULL),
-(9, 1, 0, 3, 0, NULL, 'start_date', 7, 2, NULL, NULL, NULL),
-(10, 1, 0, 4, 0, NULL, 'end_date', 7, 2, NULL, NULL, NULL),
+(9, 0, 0, 3, 0, NULL, 'start_date', 7, 2, NULL, NULL, NULL),
+(10, 0, 0, 4, 0, NULL, 'end_date', 7, 2, NULL, NULL, NULL),
 (11, 1, 0, 0, 0, NULL, 'main_field', 2, 3, NULL, NULL, NULL),
 (12, 1, 0, 1, 0, NULL, 'profession', 2, 3, 11, NULL, NULL),
 (13, 1, 0, 2, 0, NULL, 'start_date', 7, 3, NULL, NULL, NULL),
 (14, 1, 0, 3, 0, NULL, 'end_date', 7, 3, NULL, NULL, NULL),
 (15, 1, 0, 0, 0, NULL, 'main_field', 2, 4, NULL, NULL, NULL),
 (16, 1, 0, 1, 0, NULL, 'profession', 2, 4, 15, NULL, NULL),
-(17, 1, 0, 3, 0, NULL, 'start_date', 7, 4, NULL, NULL, '2016-06-07 05:09:12'),
-(18, 1, 0, 4, 0, NULL, 'end_date', 7, 4, NULL, NULL, '2016-06-07 05:09:12'),
+(17, 0, 0, 3, 0, NULL, 'start_date', 7, 4, NULL, NULL, '2016-06-07 05:09:12'),
+(18, 0, 0, 4, 0, NULL, 'end_date', 7, 4, NULL, NULL, '2016-06-07 05:09:12'),
 (19, 1, 0, 0, 0, NULL, 'main_field', 2, 5, NULL, NULL, NULL),
 (20, 1, 0, 1, 0, NULL, 'profession', 2, 5, 19, NULL, NULL),
 (21, 1, 0, 2, 0, NULL, 'job_title', 2, 5, NULL, NULL, NULL),
 (22, 1, 0, 3, 0, NULL, 'language', 2, 5, NULL, NULL, NULL),
 (23, 1, 0, 4, 0, NULL, 'location', 1, 5, NULL, NULL, NULL),
 (24, 1, 0, 5, 0, NULL, 'available_from', 7, 5, NULL, NULL, NULL),
-(25, 1, 0, 1, 0, NULL, 'main_field', 2, 6, NULL, NULL, '2016-06-08 04:07:51'),
-(26, 1, 0, 3, 0, NULL, 'profession', 2, 6, 25, NULL, '2016-06-08 05:44:21'),
+(25, 0, 0, 1, 0, NULL, 'main_field', 2, 6, NULL, NULL, '2016-06-08 04:07:51'),
+(26, 0, 0, 3, 0, NULL, 'profession', 2, 6, 25, NULL, '2016-06-08 05:44:21'),
 (27, 1, 0, 0, 0, NULL, 'job_title', 2, 6, NULL, NULL, '2016-06-08 04:07:51'),
 (28, 1, 0, 4, 0, NULL, 'language', 2, 6, NULL, NULL, '2016-06-08 05:44:21'),
 (29, 1, 0, 5, 0, NULL, 'location', 1, 6, NULL, NULL, '2016-06-08 05:44:21'),
@@ -218,8 +216,8 @@ INSERT INTO `param` (`id`, `authorized`, `modify`, `position`, `required`, `rule
 (39, 1, 0, 7, 0, NULL, 'status', 2, 10, NULL, NULL, '2016-06-08 10:27:08'),
 (40, 1, 0, 2, 0, NULL, 'email', 1, 10, NULL, NULL, '2016-06-08 10:27:08'),
 (41, 1, 0, 3, 0, NULL, 'password', 1, 10, NULL, NULL, '2016-06-08 10:27:08'),
-(42, 1, 0, 0, 0, NULL, 'first_name', 1, 10, NULL, NULL, '2016-06-07 09:07:13'),
-(43, 1, 0, 1, 0, NULL, 'last_name', 1, 10, NULL, NULL, '2016-06-07 09:07:13'),
+(42, 1, 0, 0, 0, NULL, 'first_name', 1, 10, NULL, NULL, '2016-06-20 05:52:56'),
+(43, 1, 0, 1, 0, NULL, 'last_name', 1, 10, NULL, NULL, '2016-06-20 05:52:47'),
 (44, 1, 0, 8, 0, NULL, 'gender', 2, 10, NULL, NULL, '2016-06-08 10:27:08'),
 (45, 1, 0, 9, 0, NULL, 'martial_status', 2, 10, NULL, NULL, '2016-06-08 10:27:08'),
 (46, 1, 0, 10, 0, NULL, 'education_status', 2, 10, NULL, NULL, '2016-06-08 10:27:08'),
@@ -262,11 +260,12 @@ INSERT INTO `param` (`id`, `authorized`, `modify`, `position`, `required`, `rule
 (131, 1, 0, 23, 0, NULL, 'remember_token', NULL, 11, NULL, NULL, '2016-06-06 11:37:01'),
 (132, 1, 0, 2, 0, NULL, 'user_id', NULL, 12, NULL, NULL, '2016-06-08 05:44:20'),
 (136, 1, 0, 1, 0, NULL, 'id', NULL, 12, NULL, NULL, '2016-06-08 05:44:20'),
-(140, 1, 0, 24, 0, NULL, 'disclaimer', 9, 10, NULL, NULL, '2016-06-08 10:27:08'),
+(140, 1, 0, 24, 0, NULL, 'disclaimer', 9, 10, NULL, NULL, '2016-06-20 05:52:56'),
 (143, 1, 1, 2, 0, NULL, 'employment type', 2, 4, NULL, '2016-06-07 05:09:26', '2016-06-07 05:09:26'),
 (148, 1, 1, 0, 0, NULL, 'job description', 1, 12, NULL, '2016-06-07 10:29:04', '2016-06-07 10:29:04'),
 (149, 1, 1, 2, 0, NULL, 'experience', 2, 6, NULL, '2016-06-08 04:11:22', '2016-06-08 04:11:22'),
-(158, 1, 1, 5, 0, NULL, 'new parameter', 1, 1, NULL, '2016-06-08 10:27:10', '2016-06-08 10:27:10');
+(153, 1, 1, 0, 0, NULL, 'applied', 5, 158, NULL, '2016-06-20 08:18:00', '2016-06-20 08:18:20'),
+(154, 1, 1, 0, 0, NULL, 'applied', 5, 159, NULL, '2016-06-20 08:24:27', '2016-06-20 08:24:27');
 
 -- --------------------------------------------------------
 
@@ -424,7 +423,7 @@ CREATE TABLE IF NOT EXISTS `sys_param_values` (
   KEY `ref_user_id_2` (`ref_id`),
   KEY `value_ref` (`value_ref`),
   KEY `doc_type_3` (`doc_type`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2287 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2408 ;
 
 --
 -- Dumping data for table `sys_param_values`
@@ -476,22 +475,22 @@ INSERT INTO `sys_param_values` (`id`, `doc_type`, `ref_id`, `param_id`, `iterati
 (52, 1, 7, 4, 1, '05/20/2016', NULL, NULL, NULL, NULL),
 (53, 1, 7, 5, 1, '', NULL, NULL, NULL, NULL),
 (54, 1, 7, 0, 1, NULL, NULL, NULL, NULL, NULL),
-(55, 1, 8, 1, 0, '', NULL, NULL, NULL, NULL),
-(56, 1, 8, 2, 0, '', NULL, NULL, NULL, NULL),
-(57, 1, 8, 3, 0, '', NULL, NULL, NULL, NULL),
-(58, 1, 8, 4, 0, '', NULL, NULL, NULL, NULL),
-(59, 1, 8, 5, 0, '', NULL, NULL, NULL, NULL),
+(55, 2, 8, 1, 0, '', NULL, NULL, NULL, NULL),
+(56, 2, 8, 2, 0, '', NULL, NULL, NULL, NULL),
+(57, 2, 8, 3, 0, '', NULL, NULL, NULL, NULL),
+(58, 2, 8, 4, 0, '', NULL, NULL, NULL, NULL),
+(59, 2, 8, 5, 0, '', NULL, NULL, NULL, NULL),
 (60, 2, 8, 0, 0, NULL, NULL, NULL, NULL, NULL),
-(61, 1, 8, 11, 0, '', NULL, NULL, NULL, NULL),
-(62, 1, 8, 12, 0, '', NULL, NULL, NULL, NULL),
-(63, 1, 8, 13, 0, '', NULL, NULL, NULL, NULL),
-(64, 1, 8, 14, 0, '', NULL, NULL, NULL, NULL),
-(65, 1, 8, 19, 0, '', NULL, NULL, NULL, NULL),
-(66, 1, 8, 20, 0, '', NULL, NULL, NULL, NULL),
-(67, 1, 8, 21, 0, '', NULL, NULL, NULL, NULL),
-(68, 1, 8, 22, 0, '', NULL, NULL, NULL, NULL),
-(69, 1, 8, 23, 0, '', NULL, NULL, NULL, NULL),
-(70, 1, 8, 24, 0, '', NULL, NULL, NULL, NULL),
+(61, 2, 8, 11, 0, '', NULL, NULL, NULL, NULL),
+(62, 2, 8, 12, 0, '', NULL, NULL, NULL, NULL),
+(63, 2, 8, 13, 0, '', NULL, NULL, NULL, NULL),
+(64, 2, 8, 14, 0, '', NULL, NULL, NULL, NULL),
+(65, 2, 8, 19, 0, '', NULL, NULL, NULL, NULL),
+(66, 2, 8, 20, 0, '', NULL, NULL, NULL, NULL),
+(67, 2, 8, 21, 0, '', NULL, NULL, NULL, NULL),
+(68, 2, 8, 22, 0, '', NULL, NULL, NULL, NULL),
+(69, 2, 8, 23, 0, '', NULL, NULL, NULL, NULL),
+(70, 2, 8, 24, 0, '', NULL, NULL, NULL, NULL),
 (71, 1, 8, 30, 0, '', NULL, NULL, NULL, NULL),
 (72, 1, 9, 1, 0, '', NULL, NULL, NULL, NULL),
 (73, 1, 9, 2, 0, '', NULL, NULL, NULL, NULL),
@@ -575,14 +574,14 @@ INSERT INTO `sys_param_values` (`id`, `doc_type`, `ref_id`, `param_id`, `iterati
 (151, 2, 4, 27, 0, '', NULL, NULL, NULL, NULL),
 (152, 2, 4, 28, 0, '', NULL, NULL, NULL, NULL),
 (153, 2, 4, 29, 0, '', NULL, NULL, NULL, NULL),
-(154, 2, 4, 0, 0, NULL, NULL, NULL, NULL, NULL),
+(154, 2, 4, 0, 0, 'jobjob', NULL, NULL, NULL, NULL),
 (155, 2, 4, 6, 0, '', NULL, NULL, NULL, NULL),
 (156, 2, 4, 7, 0, '', NULL, NULL, NULL, NULL),
 (157, 2, 4, 8, 0, '', NULL, NULL, NULL, NULL),
 (158, 2, 4, 9, 0, '', NULL, NULL, NULL, NULL),
 (159, 2, 4, 10, 0, '', NULL, NULL, NULL, NULL),
-(160, 2, 4, 15, 0, '', NULL, NULL, NULL, NULL),
-(161, 2, 4, 16, 0, '', NULL, NULL, NULL, NULL),
+(160, 2, 4, 15, 0, 'optics', NULL, NULL, NULL, NULL),
+(161, 2, 4, 16, 0, 'QA', NULL, NULL, NULL, NULL),
 (162, 2, 4, 17, 0, '', NULL, NULL, NULL, NULL),
 (163, 2, 4, 18, 0, '', NULL, NULL, NULL, NULL),
 (164, 2, 5, 25, 0, '', NULL, NULL, NULL, NULL),
@@ -877,18 +876,18 @@ INSERT INTO `sys_param_values` (`id`, `doc_type`, `ref_id`, `param_id`, `iterati
 (453, 1, 24, 35, 0, '', NULL, NULL, NULL, NULL),
 (454, 2, 24, 0, 0, NULL, NULL, NULL, NULL, NULL),
 (455, 1, 24, 31, 0, '', NULL, NULL, NULL, NULL),
-(456, 1, 25, 1, 0, '', NULL, NULL, NULL, NULL),
-(457, 1, 25, 2, 0, '', NULL, NULL, NULL, NULL),
-(458, 1, 25, 3, 0, '', NULL, NULL, NULL, NULL),
+(456, 1, 25, 1, 0, 'GSCE', NULL, NULL, NULL, NULL),
+(457, 1, 25, 2, 0, 'Business Administration', NULL, NULL, NULL, NULL),
+(458, 1, 25, 3, 0, 'Accounting', NULL, NULL, NULL, NULL),
 (459, 1, 25, 4, 0, '', NULL, NULL, NULL, NULL),
 (460, 1, 25, 5, 0, '', NULL, NULL, NULL, NULL),
 (461, 2, 25, 0, 0, NULL, NULL, NULL, NULL, NULL),
-(462, 1, 25, 11, 0, '', NULL, NULL, NULL, NULL),
-(463, 1, 25, 12, 0, '', NULL, NULL, NULL, NULL),
+(462, 1, 25, 11, 0, 'optics', NULL, NULL, NULL, NULL),
+(463, 1, 25, 12, 0, 'QA', NULL, NULL, NULL, NULL),
 (464, 1, 25, 13, 0, '', NULL, NULL, NULL, NULL),
 (465, 1, 25, 14, 0, '', NULL, NULL, NULL, NULL),
-(466, 1, 25, 19, 0, '', NULL, NULL, NULL, NULL),
-(467, 1, 25, 20, 0, '', NULL, NULL, NULL, NULL),
+(466, 1, 25, 19, 0, 'optics', NULL, NULL, NULL, NULL),
+(467, 1, 25, 20, 0, 'developer', NULL, NULL, NULL, NULL),
 (468, 1, 25, 21, 0, '', NULL, NULL, NULL, NULL),
 (469, 1, 25, 22, 0, '', NULL, NULL, NULL, NULL),
 (470, 1, 25, 23, 0, '', NULL, NULL, NULL, NULL),
@@ -1475,9 +1474,9 @@ INSERT INTO `sys_param_values` (`id`, `doc_type`, `ref_id`, `param_id`, `iterati
 (1051, 1, 54, 51, 0, '', NULL, NULL, NULL, NULL),
 (1052, 1, 54, 52, 0, '', NULL, NULL, NULL, NULL),
 (1053, 1, 54, 53, 0, '', NULL, NULL, NULL, NULL),
-(1054, 1, 54, 54, 0, 'Month-Year', NULL, NULL, NULL, NULL),
-(1055, 1, 54, 55, 0, '', NULL, NULL, NULL, NULL);
+(1054, 1, 54, 54, 0, 'Month-Year', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_param_values` (`id`, `doc_type`, `ref_id`, `param_id`, `iteration`, `value_short`, `value_long`, `value_ref`, `created_at`, `updated_at`) VALUES
+(1055, 1, 54, 55, 0, '', NULL, NULL, NULL, NULL),
 (1056, 1, 54, 56, 0, '', NULL, NULL, NULL, NULL),
 (1057, 1, 54, 57, 0, '', NULL, NULL, NULL, NULL),
 (1058, 1, 54, 58, 0, '', NULL, NULL, NULL, NULL),
@@ -2462,9 +2461,9 @@ INSERT INTO `sys_param_values` (`id`, `doc_type`, `ref_id`, `param_id`, `iterati
 (2037, 1, 100, 49, 0, '', NULL, NULL, NULL, NULL),
 (2038, 1, 100, 50, 0, '', NULL, NULL, NULL, NULL),
 (2039, 1, 100, 51, 0, '', NULL, NULL, NULL, NULL),
-(2040, 1, 100, 52, 0, '', NULL, NULL, NULL, NULL),
-(2041, 1, 100, 53, 0, '', NULL, NULL, NULL, NULL);
+(2040, 1, 100, 52, 0, '', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_param_values` (`id`, `doc_type`, `ref_id`, `param_id`, `iteration`, `value_short`, `value_long`, `value_ref`, `created_at`, `updated_at`) VALUES
+(2041, 1, 100, 53, 0, '', NULL, NULL, NULL, NULL),
 (2042, 1, 100, 54, 0, '2016-06-12T21:00:00.000Z', NULL, NULL, NULL, NULL),
 (2043, 1, 100, 55, 0, '', NULL, NULL, NULL, NULL),
 (2044, 1, 100, 56, 0, '', NULL, NULL, NULL, NULL),
@@ -2687,7 +2686,128 @@ INSERT INTO `sys_param_values` (`id`, `doc_type`, `ref_id`, `param_id`, `iterati
 (2283, 2, 2, 27, 0, '', NULL, NULL, NULL, NULL),
 (2284, 2, 2, 28, 0, '', NULL, NULL, NULL, NULL),
 (2285, 2, 2, 29, 0, '', NULL, NULL, NULL, NULL),
-(2286, 2, 2, 149, 0, '', NULL, NULL, NULL, NULL);
+(2286, 2, 2, 149, 0, '', NULL, NULL, NULL, NULL),
+(2287, 2, 3, 132, 0, '', NULL, NULL, NULL, NULL),
+(2288, 2, 3, 136, 0, '', NULL, NULL, NULL, NULL),
+(2289, 2, 3, 148, 0, 'dsasda', NULL, NULL, NULL, NULL),
+(2290, 2, 3, 143, 0, '', NULL, NULL, NULL, NULL),
+(2291, 2, 3, 149, 0, '', NULL, NULL, NULL, NULL),
+(2292, 1, 25, 1, 1, '', NULL, NULL, NULL, NULL),
+(2293, 1, 25, 2, 1, '', NULL, NULL, NULL, NULL),
+(2294, 1, 25, 3, 1, '', NULL, NULL, NULL, NULL),
+(2295, 1, 25, 4, 1, '', NULL, NULL, NULL, NULL),
+(2296, 1, 25, 5, 1, '', NULL, NULL, NULL, NULL),
+(2297, 1, 25, 158, 1, '', NULL, NULL, NULL, NULL),
+(2298, 1, 107, 32, 0, '', NULL, NULL, NULL, NULL),
+(2299, 1, 107, 33, 0, '', NULL, NULL, NULL, NULL),
+(2300, 1, 107, 34, 0, '', NULL, NULL, NULL, NULL),
+(2301, 1, 107, 35, 0, '', NULL, NULL, NULL, NULL),
+(2302, 1, 107, 31, 0, '', NULL, NULL, NULL, NULL),
+(2303, 1, 107, 108, 0, '', NULL, NULL, NULL, NULL),
+(2304, 1, 107, 109, 0, '', NULL, NULL, NULL, NULL),
+(2305, 1, 107, 110, 0, 'employer', NULL, NULL, NULL, NULL),
+(2306, 1, 107, 111, 0, '', NULL, NULL, NULL, NULL),
+(2307, 1, 107, 112, 0, 'dorshoham@hotmail.com', NULL, NULL, NULL, NULL),
+(2308, 1, 107, 113, 0, '$2y$10$KFdmOeU9jCngxK93KfmTZOREoCtwelTyNOZK/Fxc67KnefZHhnmlW', NULL, NULL, NULL, NULL),
+(2309, 1, 107, 114, 0, 'Dor', NULL, NULL, NULL, NULL),
+(2310, 1, 107, 115, 0, 'sHOHAM', NULL, NULL, NULL, NULL),
+(2311, 1, 107, 116, 0, '', NULL, NULL, NULL, NULL),
+(2312, 1, 107, 117, 0, '', NULL, NULL, NULL, NULL),
+(2313, 1, 107, 118, 0, '', NULL, NULL, NULL, NULL),
+(2314, 1, 107, 119, 0, '', NULL, NULL, NULL, NULL),
+(2315, 1, 107, 120, 0, 'alabama', NULL, NULL, NULL, NULL),
+(2316, 1, 107, 121, 0, 'Georgia', NULL, NULL, NULL, NULL),
+(2317, 1, 107, 122, 0, '48489995', NULL, NULL, NULL, NULL),
+(2318, 1, 107, 123, 0, '', NULL, NULL, NULL, NULL),
+(2319, 1, 107, 124, 0, '', NULL, NULL, NULL, NULL),
+(2320, 1, 107, 125, 0, '', NULL, NULL, NULL, NULL),
+(2321, 1, 107, 126, 0, '', NULL, NULL, NULL, NULL),
+(2322, 1, 107, 127, 0, '', NULL, NULL, NULL, NULL),
+(2323, 1, 107, 128, 0, '', NULL, NULL, NULL, NULL),
+(2324, 1, 107, 129, 0, '', NULL, NULL, NULL, NULL),
+(2325, 1, 107, 130, 0, '', NULL, NULL, NULL, NULL),
+(2326, 1, 107, 131, 0, '', NULL, NULL, NULL, NULL),
+(2327, 2, 4, 132, 0, '', NULL, NULL, NULL, NULL),
+(2328, 2, 4, 136, 0, '', NULL, NULL, NULL, NULL),
+(2329, 2, 4, 148, 0, 'jobjob', NULL, NULL, NULL, NULL),
+(2330, 2, 4, 143, 0, 'full time', NULL, NULL, NULL, NULL),
+(2331, 2, 4, 149, 0, '', NULL, NULL, NULL, NULL),
+(2332, 2, 4, 6, 1, 'GSCE', NULL, NULL, NULL, NULL),
+(2333, 2, 4, 7, 1, 'Business Administration', NULL, NULL, NULL, NULL),
+(2334, 2, 4, 8, 1, 'Accounting', NULL, NULL, NULL, NULL),
+(2335, 2, 4, 9, 1, '', NULL, NULL, NULL, NULL),
+(2336, 2, 4, 10, 1, '', NULL, NULL, NULL, NULL),
+(2337, 1, 25, 11, 1, '', NULL, NULL, NULL, NULL),
+(2338, 1, 25, 12, 1, '', NULL, NULL, NULL, NULL),
+(2339, 1, 25, 13, 1, '', NULL, NULL, NULL, NULL),
+(2340, 1, 25, 14, 1, '', NULL, NULL, NULL, NULL),
+(2341, 1, 108, 36, 0, '', NULL, NULL, NULL, NULL),
+(2342, 1, 108, 37, 0, '', NULL, NULL, NULL, NULL),
+(2343, 1, 108, 38, 0, 'jobseeker', NULL, NULL, NULL, NULL),
+(2344, 1, 108, 39, 0, '', NULL, NULL, NULL, NULL),
+(2345, 1, 108, 40, 0, 'dorshoham808@gmail.com', NULL, NULL, NULL, NULL),
+(2346, 1, 108, 41, 0, '$2y$10$62pIuMliVY4zS.BjfLpGzuBcP7P2xTvbKBnAHJ39vwJd/NBQ6dIq6', NULL, NULL, NULL, NULL),
+(2347, 1, 108, 42, 0, 'Dor', NULL, NULL, NULL, NULL),
+(2348, 1, 108, 43, 0, 'Shoham', NULL, NULL, NULL, NULL),
+(2349, 1, 108, 44, 0, 'male', NULL, NULL, NULL, NULL),
+(2350, 1, 108, 45, 0, 'single', NULL, NULL, NULL, NULL),
+(2351, 1, 108, 46, 0, 'student', NULL, NULL, NULL, NULL),
+(2352, 1, 108, 47, 0, '', NULL, NULL, NULL, NULL),
+(2353, 1, 108, 48, 0, '', NULL, NULL, NULL, NULL),
+(2354, 1, 108, 49, 0, '', NULL, NULL, NULL, NULL),
+(2355, 1, 108, 50, 0, '', NULL, NULL, NULL, NULL),
+(2356, 1, 108, 51, 0, '', NULL, NULL, NULL, NULL),
+(2357, 1, 108, 52, 0, '', NULL, NULL, NULL, NULL),
+(2358, 1, 108, 53, 0, '', NULL, NULL, NULL, NULL),
+(2359, 1, 108, 54, 0, '2016-06-13T21:00:00.000Z', NULL, NULL, NULL, NULL),
+(2360, 1, 108, 55, 0, '', NULL, NULL, NULL, NULL),
+(2361, 1, 108, 56, 0, '', NULL, NULL, NULL, NULL),
+(2362, 1, 108, 57, 0, '', NULL, NULL, NULL, NULL),
+(2363, 1, 108, 58, 0, '', NULL, NULL, NULL, NULL),
+(2364, 1, 108, 59, 0, '', NULL, NULL, NULL, NULL),
+(2365, 1, 108, 140, 0, '', NULL, NULL, NULL, NULL),
+(2366, 1, 108, 1, 0, 'A-Levels', NULL, NULL, NULL, NULL),
+(2367, 1, 108, 2, 0, 'Nursing', NULL, NULL, NULL, NULL),
+(2368, 1, 108, 3, 0, 'Accounting', NULL, NULL, NULL, NULL),
+(2369, 1, 108, 4, 0, '1|1980', NULL, NULL, NULL, NULL),
+(2370, 1, 108, 5, 0, '2|1981', NULL, NULL, NULL, NULL),
+(2371, 1, 108, 158, 0, '', NULL, NULL, NULL, NULL),
+(2372, 1, 108, 11, 0, 'administration', NULL, NULL, NULL, NULL),
+(2373, 1, 108, 12, 0, '', NULL, NULL, NULL, NULL),
+(2374, 1, 108, 13, 0, '1|1980', NULL, NULL, NULL, NULL),
+(2375, 1, 108, 14, 0, 'Month|Year', NULL, NULL, NULL, NULL),
+(2376, 1, 108, 19, 0, 'optics', NULL, NULL, NULL, NULL),
+(2377, 1, 108, 20, 0, '', NULL, NULL, NULL, NULL),
+(2378, 1, 108, 21, 0, '', NULL, NULL, NULL, NULL),
+(2379, 1, 108, 22, 0, '', NULL, NULL, NULL, NULL),
+(2380, 1, 108, 23, 0, '12', NULL, NULL, NULL, NULL),
+(2381, 1, 108, 24, 0, 'Month|Year', NULL, NULL, NULL, NULL),
+(2382, 1, 108, 30, 0, '', NULL, NULL, NULL, NULL),
+(2383, 1, 108, 11, 1, 'optics', NULL, NULL, NULL, NULL),
+(2384, 1, 108, 12, 1, '', NULL, NULL, NULL, NULL),
+(2385, 1, 108, 13, 1, '1|1982', NULL, NULL, NULL, NULL),
+(2386, 1, 108, 14, 1, '2|1982', NULL, NULL, NULL, NULL),
+(2387, 1, 108, 19, 1, '', NULL, NULL, NULL, NULL),
+(2388, 1, 108, 20, 1, '', NULL, NULL, NULL, NULL),
+(2389, 1, 108, 21, 1, '', NULL, NULL, NULL, NULL),
+(2390, 1, 108, 22, 1, '', NULL, NULL, NULL, NULL),
+(2391, 1, 108, 23, 1, '32', NULL, NULL, NULL, NULL),
+(2392, 1, 108, 24, 1, 'Month|Year', NULL, NULL, NULL, NULL),
+(2393, 1, 108, 19, 2, '', NULL, NULL, NULL, NULL),
+(2394, 1, 108, 20, 2, '', NULL, NULL, NULL, NULL),
+(2395, 1, 108, 21, 2, '', NULL, NULL, NULL, NULL),
+(2396, 1, 108, 22, 2, '', NULL, NULL, NULL, NULL),
+(2397, 1, 108, 23, 2, '54', NULL, NULL, NULL, NULL),
+(2398, 1, 108, 24, 2, 'Month|Year', NULL, NULL, NULL, NULL),
+(2399, 1, 108, 19, 3, 'optics', NULL, NULL, NULL, NULL),
+(2400, 1, 108, 20, 3, '', NULL, NULL, NULL, NULL),
+(2401, 1, 108, 21, 3, '', NULL, NULL, NULL, NULL),
+(2402, 1, 108, 22, 3, '', NULL, NULL, NULL, NULL),
+(2403, 1, 108, 23, 3, '', NULL, NULL, NULL, NULL),
+(2404, 1, 108, 24, 3, '', NULL, NULL, NULL, NULL),
+(2405, 2, 4, 6, 2, '', NULL, NULL, NULL, NULL),
+(2406, 2, 4, 7, 2, '', NULL, NULL, NULL, NULL),
+(2407, 2, 4, 8, 2, '', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2746,7 +2866,7 @@ CREATE TABLE IF NOT EXISTS `type_post` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `type_post`
@@ -2754,7 +2874,9 @@ CREATE TABLE IF NOT EXISTS `type_post` (
 
 INSERT INTO `type_post` (`id`, `user_id`, `title`, `description_short`, `description`, `authorized`, `created_at`, `updated_at`) VALUES
 (1, 106, 'title', '', 'description', 1, '2016-06-16 04:20:26', '2016-06-16 04:20:26'),
-(2, 106, 'title', '', 'description', 1, '2016-06-16 04:21:20', '2016-06-16 04:21:20');
+(2, 106, 'title', '', 'description', 1, '2016-06-16 04:21:20', '2016-06-16 04:21:20'),
+(4, 21, 'real title', '', 'description', 1, '2016-06-16 05:44:48', '2016-06-19 05:57:25'),
+(8, 108, 'title', '', 'description', 1, '2016-06-16 04:37:17', '2016-06-19 05:27:27');
 
 -- --------------------------------------------------------
 
@@ -2795,7 +2917,7 @@ CREATE TABLE IF NOT EXISTS `type_user` (
   UNIQUE KEY `email` (`email`),
   KEY `send_newsletters` (`send_newsletters`),
   KEY `send_notifications` (`send_notifications`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=107 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=109 ;
 
 --
 -- Dumping data for table `type_user`
@@ -2803,9 +2925,8 @@ CREATE TABLE IF NOT EXISTS `type_user` (
 
 INSERT INTO `type_user` (`id`, `role`, `type`, `subtype`, `status`, `email`, `password`, `password_new`, `first_name`, `last_name`, `gender`, `martial_status`, `education_status`, `street_1`, `city`, `state`, `zipcode`, `country`, `phone_1`, `mobile`, `date_of_birth`, `registration`, `last_login`, `send_newsletters`, `send_notifications`, `created_at`, `updated_at`, `remember_token`) VALUES
 (21, '', 'user', 'employer', 'active', 'dorshoham88@gmail.com', '$2y$10$hFOaRGi/DJi69dy6j6cm.eZx75IqiuWToxG3OuLNOFw/wX8ARNRs2', NULL, 'Dor', 'Shoham', '', '', NULL, 'hahashmonaim 84', '', 'Georgia', '48489995', '', '', '', '0000-00-00', NULL, '2016-06-09 10:58:29', 0, 0, '2016-05-08 10:08:45', '2016-06-09 10:58:29', ''),
-(25, '', 'user', 'jobseeker', 'inactive', 'dor@acade-me.co.il', '$2y$10$oILD96eADgiGA.bOApS3uu24Y/RQ8r5GDcqaXZYg9C88ZvP05mZUO', NULL, 'Dor', 'Shoham', 'male', 'single', 'student', '', 'atlanta', 'Georgia', '', 'USA', '', '0542037641', '0000-00-00', NULL, '2016-05-22 08:09:27', 0, 0, '2016-05-09 09:20:01', '2016-06-09 08:42:12', ''),
-(102, '', 'user', 'jobseeker', 'active', 'dorshoham808@gmail.com', '$2y$10$4gx.oanVVNpQLJMuwyWLleXV6N6gGuISsgP7kXMqVHzcL5nWpntyq', NULL, 'Dor', 'sHOHAM', '', '', 'student', NULL, '', '', '', '', NULL, '', '2016-06-19', '0000-00-00 00:00:00', '2016-06-15 15:36:30', 0, 0, '2016-06-15 15:22:52', '2016-06-15 15:36:53', ''),
-(106, '', 'user', 'employer', 'active', 'dorshoham@hotmail.com', '$2y$10$pC9/WJVzv7WfgHnplFFI0eWsw6YAbFGljQ2M.jZcDg3L5UjFeJDcO', NULL, 'Dor', 'sHOHAM', '', '', '', NULL, 'alabama', 'Georgia', '48489995', '', NULL, '', '0000-00-00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2016-06-15 17:09:10', '2016-06-16 03:29:44', '');
+(25, '', 'user', 'jobseeker', 'inactive', 'dor@acade-me.co.il', '$2y$10$oILD96eADgiGA.bOApS3uu24Y/RQ8r5GDcqaXZYg9C88ZvP05mZUO', NULL, 'Dor', 'Shoham', 'male', 'single', 'student', '', 'atlanta', 'Georgia', '', 'USA', '', '0542037641', '0000-00-00', NULL, '2016-06-19 04:33:53', 0, 0, '2016-05-09 09:20:01', '2016-06-20 07:51:44', ''),
+(108, '', 'user', 'jobseeker', 'active', 'dorshoham808@gmail.com', '$2y$10$unjQh/zvEpppO3Jir.MP0ONPwubZVht2qW.8uQ3gvzoJqykqD/AkS', NULL, 'Dor', 'Shoham', 'male', 'single', 'student', 'Hahashmonaim 84 tel-aviv last floor', 'Tel-aviv', 'Please select region, sta', '4725212', 'ישראל', NULL, '542037641', '2016-06-13', '0000-00-00 00:00:00', '2016-06-19 05:07:48', 0, 0, '2016-06-19 05:05:47', '2016-06-19 05:07:48', '');
 
 -- --------------------------------------------------------
 

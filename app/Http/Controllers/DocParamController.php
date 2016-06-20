@@ -156,11 +156,11 @@ class DocParamController extends Controller {
 		if(count($all['docParam'] <= 1)){
 			return ;
 		}
-		$user_id    = $all['user_id'];
+		$user_id    	 = $all['user_id'];
 		$iteration_key   = $all['index'];
-		$docParamId = $all['docParam'][0]['docParamId'];
+		$docParamId		 = $all['docParam'][0]['docParamId'];
 
-		DB::table('sys_param_values')
+		$res = DB::table('sys_param_values')
 			->leftJoin('param', 'sys_param_values.param_id', '=', 'param.id')
 			->where('ref_id', $user_id)
 			->where('doc_param_id', $docParamId)

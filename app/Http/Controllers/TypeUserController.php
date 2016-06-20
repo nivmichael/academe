@@ -478,6 +478,7 @@ class TypeUserController extends Controller
 
 											   AND doc_param.doc_sub_type = 'jobSeeker'
 											   AND authorized = 1
+											   AND displayed  = 1
 											   ORDER BY docParamPosition ASC, paramPosition ASC "));
 
 		foreach ($params as $k => $v) {
@@ -532,7 +533,8 @@ class TypeUserController extends Controller
 											   WHERE doc_type_id = 1
 
 											   AND doc_param.doc_sub_type = 'employer'
-											   AND authorized = 1"));
+											   AND authorized = 1
+											   AND displayed  = 1"));
 
 		foreach ($params as $k => $v) {
 

@@ -1,6 +1,6 @@
 
 <main id="forms">
-    <!--{{form}}-->
+
     <!-- Markup for lists inside the dropzone. It's inside a seperate template
        because it will be used recursively. The dnd-list directive enables
        to drop elements into the referenced array. The dnd-draggable directive
@@ -8,16 +8,14 @@
        assigned to it. If an element was dragged away, you have to remove
        it from the original list yourself using the dnd-moved attribute -->
     <script type="text/ng-template" id="list.html">
-        <ul dnd-list="list" dnd-inserted="logEvent(index, event, parameter)">
-            <li ng-repeat="parameter in list "
+        <ul dnd-list="list">
+            <li ng-repeat="parameter in list"
                 dnd-draggable="parameter"
                 dnd-effect-allowed="move"
                 dnd-moved="list.splice($index, 1);assign(parameter, $index)"
                 dnd-selected="models.selected = parameter"
-                ng-class="{selected: models.selected === parameter}"
+                ng-class="{selected: models.selected == parameter}"
                 ng-include="parameter.type + '.html'"
-
-
                 >
 
             </li>
@@ -27,7 +25,7 @@
          the above list template to render each category column -->
     <script type="text/ng-template" id="category.html">
         <div class="category-element box box-blue">
-            <h3>{{parameter.name}}</h3>
+            <h3>{{parameter.name}}<span ng-if="!parameter.show"> -  hidden in form</span></h3>
             <div class="column" ng-repeat="list in parameter.columns" ng-include="'list.html'"  ></div>
             <div class="clearfix"></div>
         </div>
@@ -35,7 +33,7 @@
 
     <!-- Template for a normal list parameter -->
     <script type="text/ng-template" id="parameter.html">
-        <div class="item" ng-if="parameter.inputType || parameter.new">{{parameter.name | underscoreless | capitalize }}<i ng-if="!parameter.show" class="glyphicon glyphicon-off right"></i><i class="glyphicon glyphicon-pencil right"></i></div>
+        <div class="item" ng-if="parameter.inputType || parameter.new">{{parameter.name | underscoreless | capitalize }} <span ng-if="!parameter.show"> -  hidden in form</span> <i ng-if="!parameter.show" class="glyphicon glyphicon-off right"></i><i class="glyphicon glyphicon-pencil right"></i></div>
     </script>
 
     <!-- Main area with dropzones and source code -->
@@ -80,10 +78,18 @@
 
         <div ng-if="models.selected" class="box box-grey box-padding" ng-cloak>
             <h3>Selected type:  {{models.selected.type}}</h3>
-            Parameter name:         <input type="text" ng-model="models.selected.name"  class="form-control" style="margin-top: 5px" ng-blur="save()" ng-disabled="!models.selected.modify"/>
-            Parameter input type:   <select class="form-control" ng-model="models.selected.inputType" ng-options="s.id as s.name for s in inputTypes" ng-change="save()" ng-disabled="!models.selected.modify">
-                                    </select>
-            Hide parameter in form: <input type="checkbox" ng-model="models.selected.show" ng-false-value="1" ng-true-value="0">
+
+           <div>
+               Parameter name:         <input type="text" ng-model="models.selected.name"  class="form-control" style="margin-top: 5px" ng-blur="save()" ng-disabled="!models.selected.modify"/>
+           </div>
+
+           <div ng-if="models.selected.type == 'parameter'">
+               Parameter input type:   <select  class="form-control" ng-model="models.selected.inputType" ng-options="s.id as s.name for s in inputTypes" ng-change="save()" ng-disabled="!models.selected.modify">
+                                       </select>
+           </div>
+           <div>
+                Hide {{models.selected.type}} in form: <input type="checkbox" ng-model="models.selected.show" ng-false-value="1" ng-true-value="0" ng-change="save()">
+           </div>
         </div>
 
         <div class="toolbox box box-grey box-padding" ng-if="models.selected.inputTypeName == 'select' || models.selected.inputTypeName == 'checklist' ">
