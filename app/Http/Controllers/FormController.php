@@ -217,6 +217,7 @@ class FormController extends Controller
             $doc_type = 1;
         }else{
             $doc_type = 2;
+            $user_type = null;
         }
 
         if($obj){

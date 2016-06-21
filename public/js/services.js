@@ -213,6 +213,11 @@ angular.module('acadb.services', []).
 					//backdrop: 'static',
 					controller: function($scope, $uibModalInstance, $sce, post, $http, $stateParams) {
 
+						Account.getProfile().then(function(data) {
+							$scope.user_id = data.user['personal_information']['id'];
+
+						});
+
 						$scope.jobPost = post;
 						Form.getAllOptionValues().then(function(options){
 							$scope.groups = options.data;
@@ -231,6 +236,12 @@ angular.module('acadb.services', []).
 						$scope.ok = function() {
 							$uibModalInstance.dismiss('cancel');
 							$state.go('jobseeker.findajob');
+						};
+
+						$scope.applyForJob = function() {
+							$http.post('api/job/apply/' + id, {user_id: $scope.user_id}).then(function(response){
+								return response.data;
+							})
 						};
 					},
 					size: 'lg',

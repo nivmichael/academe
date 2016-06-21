@@ -68,6 +68,7 @@ Route::group(['middleware' => ['web','domain']], function () {
 
         //get the post
         Route::get('/job/{id}', 'TypePostController@show');
+        Route::post('/job/apply/{id}', 'LabelController@apply');
 
         //get the form for new
         Route::get('/forms/jobPost', 'TypePostController@jobPostColumnIndex');

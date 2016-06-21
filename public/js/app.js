@@ -340,7 +340,7 @@ var acadb = angular.module('acadb', [
 
                 parent: 'jobseeker.findajob.job',
                 views: {
-                    '': {
+                    'job@jobseeker.findajob.job': {
                         templateUrl: '/partials/job/general.html',
                     }
                 }
