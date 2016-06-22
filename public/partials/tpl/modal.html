@@ -1,9 +1,9 @@
-<form editable-form name="editableForm" onaftersave="savePost()"  novalidate>
+<form editable-form name="editableForm"   novalidate>
 <div>
 
 
     <div class="modal-header">
-        <span class="modal-title">{{jobPost.postInfo.title | capitalize}}</span> <small>Job id: {{jobPost.postInfo.id}}</small> <button class="img-btn right"><i class="glyphicon glyphicon-remove"></i></button>
+        <span class="modal-title">{{jobPost.postInfo.title | capitalize}}</span> <small>Job id: {{jobPost.postInfo.id}}</small> <button class="img-btn right" ng-click="close()"><i class="glyphicon glyphicon-remove"></i></button>
     </div>
     <div class="modal-body" style="height:620px;overflow:auto;">
 
@@ -60,7 +60,7 @@
     e-form="rowform"
     e-name="v.paramValue"
     e-class="form-control"
-    e-ng-options="o.value as o.text for o in groups[v.paramName] | toArray:true "										>
+    e-ng-options="o.value as o.text for o in groups[v.paramName] | toArray:true ">
 
     {{v.paramValue}}
     </div>
@@ -375,14 +375,14 @@
 
 
 
-    <div class="buttons">
+    <!--<div class="buttons">-->
     <!-- button to show form -->
     <!--<button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">-->
     <!--Edit-->
     <!--</button>-->
     <!-- buttons to submit / cancel form -->
 
-    </div>
+    <!--</div>-->
     </div>
 
 
@@ -393,8 +393,7 @@
 
         <span ng-show="!editableForm.$visible">
 
-              <button  type="submit" class="img-btn" ng-click="set_an_search()">
-
+              <button ui-sref="employer.jobs.job.matches" class="img-btn" ng-click="set_an_search()">
                   <img ng-src="../img/buttons/employer_job_modal/1.png" class="">
               </button>
 
@@ -414,7 +413,7 @@
         </span>
         <span ng-show="editableForm.$visible">
 
-            <button  type="submit" class="img-btn waves-effect waves-light">
+            <button class="img-btn waves-effect waves-light" ng-click="savePost()">
                 <img ng-src="../img/buttons/employer_job_modal/save_job.png" class="">
             </button>
 

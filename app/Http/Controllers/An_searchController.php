@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\an_search;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -35,9 +35,24 @@ class An_searchController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+
+        if(isset(request()->post_id)){
+            $post_id = request()->post_id;
+        }else{
+            $post_id =null;
+        }
+        $u_id   = request()->user['personal_information']['id'];
+        $u_type = request()->user['personal_information']['subtype'];
+
+        $an_search = new An_search();
+        $an_search ->u_id   = $u_id;
+        $an_search ->u_type = $u_type;
+        $an_search->post_id = $post_id;
+        $an_search->save();
+
+        return response()->json($an_search);
     }
 
     /**

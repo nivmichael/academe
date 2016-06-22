@@ -1,20 +1,24 @@
 <div class="wrapper">
 
-    <div ui-view="portal.sideNav"  ng-show="$state.includes('employer.portal')"></div>
-    <div ui-view="portal.nav"      ng-show="$state.includes('employer.portal')"></div>
-    <div ui-view="portal"          ng-show="$state.includes('employer.portal')"></div>
+    <div ui-view="portal.sideNav"           ng-show="$state.includes('employer.portal')"></div>
+    <div ui-view="portal.nav"               ng-show="$state.includes('employer.portal')"></div>
+    <div ui-view="portal"                   ng-show="$state.includes('employer.portal')"></div>
 
-    <div ui-view="postajob.sideNav" ng-show="$state.includes('employer.postajob')"></div>
-    <div ui-view="postajob.nav"     ng-show="$state.includes('employer.postajob')"></div>
-    <div ui-view="postajob"         ng-show="$state.includes('employer.postajob')"></div>
+    <div ui-view="postajob.sideNav"         ng-show="$state.includes('employer.postajob')"></div>
+    <div ui-view="postajob.nav"             ng-show="$state.includes('employer.postajob')"></div>
+    <div ui-view="postajob"                 ng-show="$state.includes('employer.postajob')"></div>
 
-    <div ui-view="edit.sideNav"     ng-show="$state.includes('employer.edit')"></div>
-    <div ui-view="edit.nav"         ng-show="$state.includes('employer.edit')"></div>
-    <div ui-view="edit"             ng-show="$state.includes('employer.edit')"></div>
+    <div ui-view="edit.sideNav"             ng-show="$state.includes('employer.edit')"></div>
+    <div ui-view="edit.nav"                 ng-show="$state.includes('employer.edit')"></div>
+    <div ui-view="edit"                     ng-show="$state.includes('employer.edit')"></div>
 
-    <div ui-view="jobs.sideNav"  ng-show="$state.includes('employer.jobs')"></div>
-    <div ui-view="jobs.nav"      ng-show="$state.includes('employer.jobs')"></div>
-    <div ui-view="jobs"          ng-show="$state.includes('employer.jobs')"></div>
+    <div ui-view="jobs.sideNav"             ng-show="$state.includes('employer.jobs')"></div>
+    <div ui-view="jobs.nav"                 ng-show="$state.includes('employer.jobs')"></div>
+    <div ui-view="jobs"                     ng-show="$state.includes('employer.jobs')"></div>
+
+    <!--<div ui-view="matches.sideNav" ng-show="$state.includes('matches')"></div>-->
+    <!--<div ui-view="matches.nav"     ng-show="$state.includes('matches')"></div>-->
+    <!--<div ui-view="matches"         ng-show="$state.includes('matches')"></div>-->
 
     <div ui-view="company_preview.sideNav"  ng-show="$state.includes('employer.company_preview')"></div>
     <div ui-view="company_preview.nav"      ng-show="$state.includes('employer.company_preview')"></div>

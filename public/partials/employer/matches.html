@@ -1,0 +1,53 @@
+<main>
+
+
+    <div style="margin:5px;text-align:center;">
+        <label>Order by:</label>
+        <select ng-model="orderByFilter" class="">
+            <option value="user.created_at">Created At</option>
+            <option value="user.first_name">Title</option>
+
+            <option value="inStock">availability</option>
+
+        </select>
+
+        <select ng-model="reverse" class="">
+            <option value="false">desc</option>
+            <option value="true">asc</option>
+        </select>
+
+        <label>Search Candidate:</label>
+
+        <input type="text" ng-model="searchText" class=""/>
+
+        <!--<label>Max items:</label>-->
+
+        <!--<select ng-model="limit" ng-init="numbers=[1,2,3,4,5,6,7,8,9,10]">-->
+        <!--<option ng-repeat="number in numbers">{{number}}</option>-->
+        <!--</select>-->
+
+        <!--<label>Price range:</label>-->
+        <!--From-->
+        <!--<input type="number" ng-model="filter.minPrice"/>-->
+        <!--To-->
+        <!--<input type="number" ng-model="filter.maxPrice"/>-->
+    </div>
+
+    <div ng-repeat="user in users  | filter:searchText | orderBy:orderByFilter:reverse | limitTo:limit" class="postDiv text-center col-lg-6">
+
+        <div class="postDivChild" ui-sref="employer.jobs.job.matches.match({matchUserId:user.id})">
+            <div class="postImage ">
+                <img ng-src="https://secure.wanted.co.il/en.demo.wanted.co.il/images/global/cover_letter_icon_light.png" class=" col-md-2">
+            </div>
+            <span class="">
+             <h4>{{ user.first_name + ' ' + user.last_name }}</h4>
+             <hr>
+             <span class="text-muted"> View Job Info - {{user.id}} </span>
+            </span>
+        </div>
+
+
+
+    </div>
+
+</main>

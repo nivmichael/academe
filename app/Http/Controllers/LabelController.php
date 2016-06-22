@@ -16,7 +16,7 @@ class LabelController extends Controller
     }
 
     public function setPiped($values, $spv_id, $value){
-        print_r($values);
+//        print_r($values);
 
 
         $values = explode('|', $values);

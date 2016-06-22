@@ -30,6 +30,7 @@ class SysParamValuesController extends Controller  {
 	{
 		$params = DB::table('sys_param_values')
 		->get();
+
 		return Response::json($params);
 	}
 	

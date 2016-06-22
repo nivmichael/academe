@@ -312,7 +312,7 @@ var acadb = angular.module('acadb', [
                 },
                 //sticky: true,
                 deepStateRedirect: true,
-                onEnter: ["$state","JobseekerPost","$stateParams", function($state, JobseekerPost, $stateParams) {
+                onEnter: ["$state","JobseekerPost","$stateParams","Account", function($state, JobseekerPost, $stateParams,Account) {
                     modal =  JobseekerPost.openTextEditModal($stateParams.jobId);
                 }],
                 onExit: ["$state","ModalService", function($state) {
@@ -437,7 +437,7 @@ var acadb = angular.module('acadb', [
                 resolve: {
                     loginRequired: loginRequired,
                 },
-                //sticky: true,
+                sticky: true,
                 deepStateRedirect: true,
                 onEnter: ["$state","ModalService","$stateParams", function($state, ModalService, $stateParams) {
                     modal =  ModalService.openTextEditModal($stateParams.jobId);
@@ -462,6 +462,56 @@ var acadb = angular.module('acadb', [
                 //}
 
             })
+            .state('employer.jobs.job.matches', {
+                url: '/matches',
+                resolve: {
+                    loginRequired: loginRequired,
+                },
+                sticky: true,
+                deepStateRedirect: true,
+                params: {type: null,  sub_type : null},
+                views:{
+                    'jobs.nav@employer':{
+
+                        templateUrl: '../partials/tpl/navbar/employer_company_navbar.html',
+                        controller:  'SideNavController as NC',
+                    },
+                    'jobs.sideNav@employer':{
+                        templateUrl: '../partials/tpl/sideNav/employer_company_sideNav.html',
+                        controller:  'SideNavController as SNC',
+                    },
+                    'jobs@employer':{
+                        templateUrl: '../partials/employer/matches.html',
+                        controller: 'MatchesCtrl as MC'
+                    },
+
+                }
+            })
+            //.state('employer.jobs.job.matches.match', {
+            //    url: '/:matchUserId',
+            //    resolve: {
+            //        loginRequired: loginRequired,
+            //    },
+            //    //sticky: true,
+            //    deepStateRedirect: true,
+            //    //params: {type: null,  sub_type : null},
+            //    views:{
+            //        'jobs.nav@employer':{
+            //
+            //            templateUrl: '../partials/tpl/navbar/employer_company_navbar.html',
+            //            controller:  'SideNavController as NC',
+            //        },
+            //        'jobs.sideNav@employer':{
+            //            templateUrl: '../partials/tpl/sideNav/employer_company_sideNav.html',
+            //            controller:  'SideNavController as SNC',
+            //        },
+            //        'jobs@employer':{
+            //            templateUrl: '../partials/employer/matches.html',
+            //            controller: 'MatchesCtrl as MC'
+            //        },
+            //
+            //    }
+            //})
             .state('employer.edit', {
                 url: '^/edit',
                 resolve: {
@@ -478,11 +528,11 @@ var acadb = angular.module('acadb', [
                     },
                     'edit.sideNav@employer':{
                         templateUrl: '../partials/tpl/sideNav/employer_edit.html',
-                        controller:  'SideNavController as NC',
+                        controller:  'SideNavController as SNC',
                     },
                     'edit@employer':{
                         templateUrl: '../partials/tpl/edit.html',
-                        controller: 'CompanyCtrl as PC'
+                        controller: 'CompanyCtrl as CC'
                     },
 
                 }

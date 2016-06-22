@@ -62,7 +62,7 @@ Route::group(['middleware' => ['web','domain']], function () {
         Route::post('/deleteIterable', 'docParamController@deleteIterable');
         Route::get('/getAllPosts', 'PostController@index');
         Route::get('/getAllOptionValues', 'ParamValueController@getAllOptionValues');
-        Route::post('/set_an_search', 'AnalyticsController@set_an_search');
+//        Route::post('/set_an_search/{id}', 'AnalyticsController@set_an_search');
         //job post
         Route::get('/columns/jobPost' ,'TypePostController@jobPostColumnIndex');
 
@@ -95,6 +95,9 @@ Route::group(['middleware' => ['web','domain']], function () {
         Route::resource('/docParam', 'DocParamController');
         Route::resource('/users', 'TypeUserController');
         Route::resource('/db', 'DBController');
+        Route::resource('/an_search', 'An_searchController');
+        Route::resource('/an_apply',  'An_applyController');
+        Route::resource('/an_open_file',  'An_open_fileController');
 
         Route::resource('/form', 'FormController');
 

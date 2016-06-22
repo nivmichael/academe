@@ -1,6 +1,6 @@
 'use strict';
 angular.module('acadb')
-    .controller('SideNavController', function ($scope, $http, $state, $auth, Account, $stateParams, Tables, $rootScope, TableData) {
+    .controller('SideNavController', function ($scope, $http, $state, $auth, Account, $stateParams, Tables, $rootScope, TableData, An_searchData ) {
 
         $scope.status = {
             isopen: false
@@ -67,9 +67,10 @@ angular.module('acadb')
       };
 
       $scope.set_an_search = function(){
-          $.post('api/set_an_search', {user:$scope.user}).success(function(callBack){
-
-          })
+          An_searchData.save({user:$scope.user});
+          //$.post('api/set_an_search', {user:$scope.user}).success(function(callBack){
+          //
+          //})
       }
 
 

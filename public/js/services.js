@@ -1,109 +1,127 @@
 
 
 
-angular.module('acadb.services', []).
+angular.module('acadb.services', ['acadb.resources']).
   value('version', '0.1')
-
-.factory('ParamData', ['$resource',
-	function($resource) {
-		return $resource('api/param/:id', {id: '@id'}, {
-			 'update': { method:'PUT' },
-			 'insertNew': { method:'POST' },
-			 'delete':{method:'DELETE'},
-			 'list': {method: 'GET', isArray: true }
-
-
-			 
-		});
-}])
-.factory('UserData', ['$resource',
-	function($resource) {
-		return $resource('api/users/:id', {id: '@id'}, {
-			 'update': { method:'PUT' },
-			 'insertNew': { method:'POST' },
-			 'delete':{method:'DELETE'},
-			 'list': {method: 'GET', isArray: true }
-		});
-}])
-
-.factory('DocParamData', ['$resource',
-	function($resource) {
-		return $resource('api/docParam/:id', {id: '@id'}, {
-			 'update': { method:'PUT' },
-			 'insertNew': { method:'POST' },
-			 'delete':{method:'DELETE'},
-			'list': {method: 'GET', isArray: true }
-		});
-}])
-
-.factory('DocTypeData', ['$resource',
-	function($resource) {
-		return $resource('api/docType/:id', {id: '@id'}, {
-			 'update': { method:'PUT' },
-			 'insertNew': { method:'POST' },
-			 'delete':{method:'DELETE'},
-			'list': {method: 'GET', isArray: true }
-		});
-}])
-
-.factory('ParamTypeData', ['$resource',
-	function($resource) {
-		return $resource('api/paramType/:id', {id: '@id'}, {
-			 'update': { method:'PUT' },
-			 'insertNew': { method:'POST' },
-			 'delete':{method:'DELETE'},
-			'list': {method: 'GET', isArray: true }
-		});
-}])
-.factory('ColumnData', ['$resource',
-	function($resource) {
-		return $resource('api/columns/:name', {id: '@name'}, {
-			 'update': { method:'PUT' },
-			 'insertNew': { method:'POST' },
-			 'delete':{method:'DELETE'},
-			 'list':{method:'GET', transformRequest: function(data, headerFn){
-			 	return JSON.stringify(data);
-			 	}
-			 }
-		});
-	}])
-.factory('ParamValueData', ['$resource',
-	function($resource) {
-		return $resource('api/paramValue/:id', {id: '@id'}, {
-			 'update': { method:'PUT' },
-			 'insertNew': { method:'POST' },
-			 'delete':{method:'DELETE'},
-			'list': {method: 'GET', isArray: true }
-		});
-	}])
-.factory('SysParamValuesData', ['$resource',
-	function($resource) {
-		return $resource('api/sysParamValues/:id', {id: '@id'}, {
-			 'update': { method:'PUT' },
-			 'insertNew': { method:'POST' },
-			 'delete':{method:'DELETE'},
-			 'list': {method: 'GET', isArray: true }
-
-		});
-	}])
-.factory('PostData', ['$resource',
-	function($resource) {
-		return $resource('api/post/:id', {id: '@id'}, {
-			'save':   {method:'POST'},
-			'update': { method:'PUT' },
-			'delete':{method:'DELETE'},
-			'list': {method: 'GET', isArray: true }
-		});
-	 }])
-.factory('TableData', ['$resource',
-		function($resource) {
-			return $resource('api/db/:table', {table: '@table'}, {
-				'save':     {method:'POST'},
-				'update':   {method:'PUT' },
-				'delete':   {method:'DELETE'},
-				'list':     {method: 'GET', isArray: true },
-			});
-	}])
+//
+//.factory('ParamData', ['$resource',
+//	function($resource) {
+//		return $resource('api/param/:id', {id: '@id'}, {
+//			 'update': { method:'PUT' },
+//			 'insertNew': { method:'POST' },
+//			 'delete':{method:'DELETE'},
+//			 'list': {method: 'GET', isArray: true }
+//
+//
+//
+//		});
+//}])
+//.factory('UserData', ['$resource',
+//	function($resource) {
+//		return $resource('api/users/:id', {id: '@id'}, {
+//			 'update': { method:'PUT' },
+//			 'insertNew': { method:'POST' },
+//			 'delete':{method:'DELETE'},
+//			 'list': {method: 'GET', isArray: true }
+//		});
+//}])
+//
+//.factory('DocParamData', ['$resource',
+//	function($resource) {
+//		return $resource('api/docParam/:id', {id: '@id'}, {
+//			 'update': { method:'PUT' },
+//			 'insertNew': { method:'POST' },
+//			 'delete':{method:'DELETE'},
+//			'list': {method: 'GET', isArray: true }
+//		});
+//}])
+//
+//.factory('DocTypeData', ['$resource',
+//	function($resource) {
+//		return $resource('api/docType/:id', {id: '@id'}, {
+//			 'update': { method:'PUT' },
+//			 'insertNew': { method:'POST' },
+//			 'delete':{method:'DELETE'},
+//			'list': {method: 'GET', isArray: true }
+//		});
+//}])
+//
+//.factory('ParamTypeData', ['$resource',
+//	function($resource) {
+//		return $resource('api/paramType/:id', {id: '@id'}, {
+//			 'update': { method:'PUT' },
+//			 'insertNew': { method:'POST' },
+//			 'delete':{method:'DELETE'},
+//			'list': {method: 'GET', isArray: true }
+//		});
+//}])
+//.factory('ColumnData', ['$resource',
+//	function($resource) {
+//		return $resource('api/columns/:name', {id: '@name'}, {
+//			 'update': { method:'PUT' },
+//			 'insertNew': { method:'POST' },
+//			 'delete':{method:'DELETE'},
+//			 'list':{method:'GET', transformRequest: function(data, headerFn){
+//			 	return JSON.stringify(data);
+//			 	}
+//			 }
+//		});
+//	}])
+//.factory('ParamValueData', ['$resource',
+//	function($resource) {
+//		return $resource('api/paramValue/:id', {id: '@id'}, {
+//			 'update': { method:'PUT' },
+//			 'insertNew': { method:'POST' },
+//			 'delete':{method:'DELETE'},
+//			'list': {method: 'GET', isArray: true }
+//		});
+//	}])
+//.factory('SysParamValuesData', ['$resource',
+//	function($resource) {
+//		return $resource('api/sysParamValues/:id', {id: '@id'}, {
+//			 'update': { method:'PUT' },
+//			 'insertNew': { method:'POST' },
+//			 'delete':{method:'DELETE'},
+//			 'list': {method: 'GET', isArray: true }
+//
+//		});
+//	}])
+//.factory('PostData', ['$resource',
+//	function($resource) {
+//		return $resource('api/post/:id', {id: '@id'}, {
+//			'save':   {method:'POST'},
+//			'update': { method:'PUT' },
+//			'delete':{method:'DELETE'},
+//			'list': {method: 'GET', isArray: true }
+//		});
+//	 }])
+//.factory('An_searchData', ['$resource',
+//	function($resource) {
+//		return $resource('api/an_search/:id', {id: '@id'}, {
+//			'save':   {method:'POST'},
+//			'update': { method:'PUT' },
+//			'delete':{method:'DELETE'},
+//			'list': {method: 'GET', isArray: true }
+//		});
+//	}])
+//.factory('An_applyData', ['$resource',
+//	function($resource) {
+//		return $resource('api/an_apply/:id', {id: '@id'}, {
+//			'save':   {method:'POST'},
+//			'update': { method:'PUT' },
+//			'delete':{method:'DELETE'},
+//			'list': {method: 'GET', isArray: true }
+//		});
+//	}])
+//.factory('TableData', ['$resource',
+//		function($resource) {
+//			return $resource('api/db/:table', {table: '@table'}, {
+//				'save':     {method:'POST'},
+//				'update':   {method:'PUT' },
+//				'delete':   {method:'DELETE'},
+//				'list':     {method: 'GET', isArray: true },
+//			});
+//	}])
 .factory('Tables', function($http, TableData, $q, $rootScope ) {
 		var tables = [];
 		var table_name;
@@ -203,28 +221,28 @@ angular.module('acadb.services', []).
 	};
 
 })
-	.factory('JobseekerPost', function($uibModal, $state, $http, $stateParams, Account, Form) {
+	.factory('JobseekerPost', function($uibModal, $state, $http, $stateParams, Account, Form, PostData) {
 
 		return {
-			openTextEditModal: function(id, post, $stateParams) {
+			openTextEditModal: function(id) {
 
 				var modalInstance = $uibModal.open({
 					templateUrl: '../partials/jobseeker/jobseekerPost.html',
 					//backdrop: 'static',
-					controller: function($scope, $uibModalInstance, $sce, post, $http, $stateParams) {
+					controller: function($scope, $uibModalInstance, $sce, post, user, $http, $stateParams, An_applyData, An_openFileData) {
 
-						Account.getProfile().then(function(data) {
-							$scope.user_id = data.user['personal_information']['id'];
+						//console.log(user);;
+						//$scope.jobPost  = post;
+						//$scope.postedBy = post['postInfo']['user_id'];
+						//$scope.user    = user['personal_information'];
+						//$scope.user_id = user['personal_information']['id'];
 
-						});
-
-						$scope.jobPost = post;
 						Form.getAllOptionValues().then(function(options){
 							$scope.groups = options.data;
 						});
-						Form.getJobPostForm().then(function(form){
-							$scope.jobPostForm = angular.copy(form);
-						})
+						An_openFileData.save(
+							{post:post, user:user}
+						);
 						$scope.add = function(docParam,$index) {
 							$scope.inserted = angular.copy($scope.jobPost[docParam][0]);
 							$scope.jobPost[docParam].push($scope.inserted);
@@ -239,20 +257,30 @@ angular.module('acadb.services', []).
 						};
 
 						$scope.applyForJob = function() {
+								//$scope.user    = data.user['personal_information'];
+								//$scope.user_id = data.user['personal_information']['id'];
+							//this is a sysParamValue(s) -consider using resource?!
 							$http.post('api/job/apply/' + id, {user_id: $scope.user_id}).then(function(response){
 								return response.data;
-							})
+							});
+							//this is an_apply using an apply resource
+							An_applyData.save({user:$scope.user, post_id:id, postedBy:$scope.postedBy});
+
 						};
 					},
 					size: 'lg',
 					resolve: {
-						//should return $promise? so if something failed then dont open modal..or is it like that already?!
+						// post should use PostData Resource but cant get this to work..using a simple http instead..
 						post: function($http) {
 							var post = $http.get('api/job/'+ id ).then(function(response){
 								return response.data;
 							})
 							return post;
-						}
+						},
+						user:function(){
+							return 	Account.getProfile();
+						},
+
 					}
 				});
 
@@ -270,8 +298,11 @@ angular.module('acadb.services', []).
 				var modalInstance = $uibModal.open({
 					templateUrl: '../partials/tpl/modal.html',
 					//backdrop: 'static',
-					controller: function($scope, $uibModalInstance, $sce, post, $http, $stateParams) {
+					controller: function($scope, $uibModalInstance, $sce, post, $http, $stateParams,An_searchData) {
+						Account.getProfile().then(function(data) {
+							$scope.user = data.user;
 
+						});
 						$scope.jobPost = post;
 
 						var user = post['postInfo'];
@@ -294,8 +325,14 @@ angular.module('acadb.services', []).
 						var clone = {};
 						//angular.copy(post, clone);
 
+						$scope.set_an_search = function(){
+							An_searchData.save({user:$scope.user,post_id:id});
+							//$.post('api/set_an_search/'+id, {user:$scope.user}).success(function(callBack){
+                            //
+							//})
+						};
 
-						$scope.clone = clone;
+
 						$scope.close = function() {
 							$uibModalInstance.dismiss('cancel');
 							$state.go('employer.jobs');
@@ -305,7 +342,8 @@ angular.module('acadb.services', []).
 							$uibModalInstance.close();
                             $state.go('^');
 						};
-                        $scope.savePost = function(post) {
+
+                        $scope.savePost = function() {
                             console.log(post);
                             PostData.save( $scope.jobPost ).$promise
                                 .then(function(res) {
@@ -316,6 +354,7 @@ angular.module('acadb.services', []).
                                     Account.broadcast(err.data);
                                 })
                         };
+
 						$scope.move = function(array, fromIndex, toIndex){
 							array.splice(toIndex, 0, array.splice(fromIndex, 1)[0] )
 						};
