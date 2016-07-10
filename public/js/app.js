@@ -437,49 +437,27 @@ var acadb = angular.module('acadb', [
                 resolve: {
                     loginRequired: loginRequired,
                 },
-                sticky: true,
-                deepStateRedirect: true,
+
+                //sticky: true,
+                //deepStateRedirect: true,
                 onEnter: ["$state","ModalService","$stateParams", function($state, ModalService, $stateParams) {
+                    console.log('modal')
                     modal =  ModalService.openTextEditModal($stateParams.jobId);
+
                 }],
                 onExit: ["$state","ModalService", function($state) {
-
                 }],
-                //
-                //views:{
-                //    'company.nav@employer':{
-                //        templateUrl: '../partials/tpl/navbar/employer_company_navbar.html',
-                //        controller:  'SideNavController as NC',
-                //    },
-                //    'company.sideNav@employer':{
-                //        templateUrl: '../partials/tpl/sideNav/employer_company_sideNav.html',
-                //        controller:  'SideNavController as NC',
-                //    },
-                //    //'company@employer': {
-                //    //    templateUrl: '../partials/tpl/jobs.html',
-                //    //    controller: 'CompanyCtrl as PC',
-                //    //},
-                //}
-
             })
             .state('employer.jobs.job.matches', {
+                parent:'employer.jobs.job',
                 url: '/matches',
                 resolve: {
                     loginRequired: loginRequired,
                 },
-                sticky: true,
-                deepStateRedirect: true,
+                //sticky: true,
+                //deepStateRedirect: true,
                 params: {type: null,  sub_type : null},
                 views:{
-                    'jobs.nav@employer':{
-
-                        templateUrl: '../partials/tpl/navbar/employer_company_navbar.html',
-                        controller:  'SideNavController as NC',
-                    },
-                    'jobs.sideNav@employer':{
-                        templateUrl: '../partials/tpl/sideNav/employer_company_sideNav.html',
-                        controller:  'SideNavController as SNC',
-                    },
                     'jobs@employer':{
                         templateUrl: '../partials/employer/matches.html',
                         controller: 'MatchesCtrl as MC'

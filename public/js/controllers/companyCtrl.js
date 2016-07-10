@@ -2,7 +2,7 @@
 angular.module('acadb')
   .controller('CompanyCtrl', function($scope, $auth, Account, $http, $uibModal, $rootScope, $filter, Form, $stateParams,$log, ModalService, PostData) {
 
-        console.log($stateParams);
+        console.log('CompanyCtrl');
         //$scope.initModals = function() {
         //
         //    $('.modal-trigger').leanModal({
