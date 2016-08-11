@@ -1,0 +1,72 @@
+<main>
+
+
+	<div class="">
+
+			<div class="" style="margin-top:15px;">
+				<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+					<label>Main Field</label>
+					<select ng-model="reverse" class="form-control" style="margin-top:7px;">
+						<option value="false">desc</option>
+						<option value="true">asc</option>
+					</select>
+				</div>
+
+				<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+					<label>Employment Type</label>
+					<select ng-model="reverse" class="form-control" style="margin-top:7px;">
+						<option value="false">desc</option>
+						<option value="true">asc</option>
+					</select>
+				</div>
+
+				<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+					<label>Location</label>
+					<select ng-model="reverse" class="form-control" style="margin-top:7px;">
+						<option value="false">desc</option>
+						<option value="true">asc</option>
+					</select>
+				</div>
+
+				<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+					<label>Experience</label>
+					<select ng-model="reverse" class="form-control" style="margin-top:7px;">
+						<option value="false">desc</option>
+						<option value="true">asc</option>
+					</select>
+
+				</div>
+
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<label>Search Job:</label>
+					<input type="text" class="form-control" ng-model="searchText" placeholder="Free Query" style="margin-top:7px;"/>
+				</div>
+
+			</div>
+
+			</div>
+			<div class="clear"></div>
+
+			<div class="">
+				<div  class=" text-center col-xs-12 col-sm-6 col-lg-6 col-lg-6"  ng-repeat="(key,job) in allPosts  |  toArray:false  | labeled:label:this |  filter:searchText | orderBy:orderByFilter:reverse">
+
+						<div  class="job-card card text-center" ui-sref="general({jobId:job.postInfo.id})">
+							<div class="col-xs-3 col-sm-3 col-lg-3 col-lg-3 job-card-inner"><img ng-src="/{{job.postInfo.company_logo || '../../img/icons/academelogo.jpg' }}" style="width:100px"  class=""></div>
+
+								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">
+										<!--<rate-yo   ng-model="job.match / 20 " read-only="options.readOnly" options="options" style="width:100%;"></rate-yo>-->
+										<h4 class="" style="font-size:1.5em; font-weight:200;">{{ job.postInfo.title || job.title || 'Job Title' }} </h4>
+										<hr style="margin:0;">
+										<label class="left" style="font-size:10px;"> View Job Info - {{job.postInfo.id}} </label>
+										<label class="right" style="font-size:10px;"> Posted in 12 Institution </label>
+								</div>
+
+							<div class="col-xs-3 col-sm-3 col-lg-3 col-lg-3"></div>
+						</div>
+
+				</div>
+			</div>
+
+	</div>
+
+</main>

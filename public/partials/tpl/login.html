@@ -1,0 +1,35 @@
+<div class="container" style="text-align: center; margin-top:100px;">
+    <pre>
+        {{$stateParams}}
+    </pre>
+
+    <img ng-src="{{logo}}" style="width:200px;">
+    <div class="" style="width:240px; margin:0 auto;">
+        <form name="loginForm" class="form-signin"   novalidate>
+            <p class="bg-danger" >{{error}}</p>
+
+            <div class="form-group" ng-class="{'has-error': errors.email}">
+                <label class="control-label" for="email" style="float:left;font-size:18px;">Email</label>
+                <input type="email" class="form-control login-form" name="email" ng-model="user.email" id="email" ng-minlength="5" required autofocus>
+            </div>
+
+            <div class="form-group"  ng-class="{'has-error': errors.password}">
+                <label class="control-label" for="password" style="float:left;font-size:18px;">Password</label>
+                <input type="password" class="form-control login-form" name="password" ng-model="user.password" id="password" ng-minlength="5" required>
+            </div>
+
+            <span style="float:left;">
+                <input type="checkbox" name="remember" ng-model="user.remember" > Remember Me
+            </span>
+            <span style="float:right;">
+                <a ng-click="getPasswordEmail()"  >Forgot password?</a>
+            </span>
+            <br>
+            <br>
+            <a type="button" class="btn btn-lg btn-block login-form"  ng-click="login()" ng-disabled="loginForm.$invalid">Login</a>
+            <a type="button" class="btn btn-lg btn-block login-form"  ui-sref=" {{ registeration_link }} ">New User</a>
+            <a type="button" class="btn btn-lg btn-block loginFacebook login-form" ng-disabled="true">Facebook</a>
+            <a type="button" class="btn btn-lg btn-block loginLinkedIn login-form" ng-disabled="true">LinkedIn</a>
+        </form>
+    </div>
+</div>

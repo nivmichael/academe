@@ -1,0 +1,96 @@
+
+<main >
+    <div class="container-fluid">
+        <div class="" id="back">
+            <i class="glyphicon glyphicon-repeat" style="text-shadow: 0px 0px 9px rgba(110, 182, 254, 1);"></i><bold> Back </bold>
+        </div>
+
+        <div class="left">
+            <h5 style="margin:0">Steps Management</h5>
+        </div>
+
+        <form class="form-inline right" >
+            <div class="form-group">
+                <label for="from">From Date: </label>
+                <input type="text" class="form-control small-date" id="from" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="to">To Date:</label>
+                <input type="text" class="form-control small-date" id="to" placeholder="">
+            </div>
+            <div class="form-group has-feedback">
+                <label class="control-label">Candidate:</label>
+                <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                <input type="text" class="form-control" placeholder="Search" />
+
+            </div>
+            <!--<div class="form-group">-->
+                <!--<input type="text" class="form-control small-date"  placeholder="Search for a Candidate &#xe003;">-->
+            <!--</div>-->
+
+        </form>
+    </div>
+    <div class="container-fluid">
+        <div id="steps_man_profile_lab" class="card-panel">
+            <div>
+                <img ng-src="../img/icons/bookprofile.png" class="" >
+                <span class="steps_man_profile_name">Tim Kerry</span>
+                <span id="steps_man_profile_lab_opt">
+                    <i class="glyphicon glyphicon-list-alt"></i>
+                    <i class="glyphicon glyphicon-home"></i>
+                </span>
+
+            </div>
+            <hr>
+            <div>
+                <small>Career Steps Progress - Student Profile 165712</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div ng-repeat="(key, step) in admin_steps" >
+
+            <div class="step">
+                <div>
+                    <div>
+                       <h5 class="step_label center"> {{step.name | capitalize}} </h5>
+                    </div>
+                    <div class="card-panel" style="padding:0;">
+                        <div class="step_label_count center ">
+                            Step {{$index + 1}}
+                        </div>
+                        <div class="step_opt">
+                            <span>Write a comment</span>
+                            <span class="right">Date</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div  ng-repeat="(key, task) in step.tasks" class="task">
+
+                    <input type="checkbox">
+                    <label>{{task}}</label>
+
+                </div>
+            </div>
+            <!--<div class="forward"> > </div>-->
+        </div>
+    </div>
+
+
+
+
+    <div class="container-fluid">
+        <!-- looping through the steps that their tasks are done -->
+        <div ng-repeat="row in [1,2,3,4,5,6]" style="float: left;border-bottom:1px solid #efefef;">
+            <!--<div ng-repeat="cell in [1,2,3,4,5,6]" style="    width: 100px;    height: 30px;">-->
+                <!--value:)-->
+            <!--</div>-->
+        </div>
+    </div>
+
+
+
+
+</main>

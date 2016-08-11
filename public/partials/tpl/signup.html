@@ -1,0 +1,38 @@
+<main>
+    <form name="registerForm">
+        <ng-form name="registerForm" ng-init="loadGroups()">
+
+            <div ng-repeat="(iteration, docParamValues ) in form[docParam] track by $index">
+
+
+                <div ng-repeat="(param_id, param) in docParamValues | toArray:false | orderBy : 'position' : false" class="form_field" ng-if="param.inputType">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <b>{{param.paramName | underscoreless | capitalize }} :</b>
+                    </div>
+
+                    <div ng-switch="param.inputType">
+
+                        <div ng-switch-when="text">
+                             <input type="text" ng-model="param.paramValue" name="{{param.paramName}}" class="form-control">{{param.paramValue}}
+                        </div>
+
+                        <div ng-switch-when="select">
+                            <select class="form-control"
+                                    name="{{param.paramName}}"
+                                    ng-class="{'has-error' : errors[param.paramName] && registerForm.param.paramName.$touched || errors[param.paramName] && sent }"
+                                    ng-model="form[docParam][iteration_key][param_id]['paramValue']"
+                                    ng-options="s.id as s.value for s in groups[param.paramName]  | toArray:true |  filter:{parent_id: form[docParam][iteration_key][form[docParam][iteration_key][param_id]['paramParentId']]['paramValue'] }:true "
+                                    >
+                            </select>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+        </ng-form>
+    </form>
+</main>

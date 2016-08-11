@@ -1,0 +1,314 @@
+<div>
+    <img ng-src="img/icons/blue.png" style="padding-left: 25px;"><b>Personal Information</b>
+</div>
+<br><br>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <b class="col-xs-12 col-sm-3 col-md-3 col-lg-3 "> First Name* </b>
+    <div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3 form-group"
+         ng-class="{'has-error' : errors['first_name'] && registerForm.first_name.$touched || errors['first_name'] && sent }" >
+
+        <input type='text'
+               class="form-control "
+               name="first_name"
+               placeholder="First Name"
+               ng-model="formData.first_name"
+               ng-blur="validate('first_name')">
+    </div>
+
+    <ul ng-if="registerForm['first_name'].$touched">
+        <li>{{errors.first_name}}</li>
+    </ul>
+
+</div>
+
+
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <b class="col-xs-12 col-sm-3 col-lg-3 col-lg-3"> Last Name* </b>
+    <div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3 form-group"
+         ng-class="{'has-error' : errors['last_name'] && registerForm.last_name.$touched || errors['last_name'] && sent}" >
+        <input type='text' class="form-control " name="last_name" placeholder="Last Name" ng-blur="validate('last_name')"  ng-model="formData.last_name"  >
+    </div>
+    <ul  ng-if="registerForm['last_name'].$touched">
+        <li>{{errors['last_name']}}</li>
+    </ul>
+
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+    <b class="col-xs-12 col-sm-3 col-lg-3 col-lg-3"> Phone/Cell* </b>
+    <div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3 form-group"
+         ng-class="{'has-error' : errors['phone'] && registerForm.phone.$touched || errors['phone'] && sent}" >
+        <input type='text' class="form-control " name="phone" ng-blur="validate('phone')"   placeholder="Phone/Cell" ng-model="formData.phone" >
+    </div>
+    <ul  ng-if="registerForm['phone'].$touched">
+        <li>{{errors['phone']}}</li>
+    </ul>
+
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+    <b class="col-xs-12 col-sm-3 col-lg-3 col-lg-3"> E-mail* </b>
+    <div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3 form-group"  ng-class="{'has-error': errors.email && registerForm.email.$touched  || errors['email'] && sent}">
+        <input type='email' class="form-control " name="email" placeholder="email"  ng-blur="validate('email')"  ng-model="formData.email" >
+    </div>
+    <ul  ng-if="registerForm['email'].$touched">
+        <li>{{errors['email']}}</li>
+    </ul>
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+    <b class="col-xs-12 col-sm-3 col-lg-3 col-lg-3"> Password* </b>
+    <div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3 form-group"
+         ng-class="{'has-error': errors.password && registerForm.password.$touched  || errors['password'] && sent}">
+        <input type='password' class="form-control " name="password" placeholder="Password" ng-blur="validate('password')"  ng-model="formData.password"  >
+    </div>
+    <ul  ng-if="registerForm['password'].$touched">
+        <li>{{errors['password']}}</li>
+    </ul>
+
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+    <b class="col-xs-12 col-sm-3 col-lg-3 col-lg-3"> Confirm Password* </b>
+    <div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3 form-group"
+         ng-class="{'has-error': errors.password_confirmation && registerForm.password_confirmation.$touched  || errors['password_confirmation'] && sent}">
+        <input type='password'
+               class="form-control "
+               name="password_confirmation"
+               placeholder="Confirm Password"
+               ng-blur="validate('password_confirmation')"
+               ng-model="formData.password_confirmation"  >
+    </div>
+    <ul  ng-if="registerForm['password_confirmation'].$touched">
+        <li>{{errors['password_confirmation']}}</li>
+    </ul>
+
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <b class="col-xs-12 col-sm-3 col-lg-3 col-lg-3"> Gender* </b>
+    <div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3 form-group"
+         ng-class="{'has-error': errors.gender && registerForm.gender.$touched  || errors['gender'] && sent}">
+        <select class="form-control " name="gender" ng-model="formData.gender" ng-blur="validate('gender')">
+            <option value="male" >Male</option>
+            <option value="female" >Female</option>
+        </select>
+    </div>
+    <ul  ng-if="registerForm['gender'].$touched">
+        <li>{{errors['gender']}}</li>
+    </ul>
+</div>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <b class="col-xs-12 col-sm-3 col-lg-3 col-lg-3">Birthday</b>
+
+    <div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3 form-group input-group"
+         ng-class="{'has-error': errors.date_of_birth && registerForm.date_of_birth.$touched  || errors['date_of_birth'] && sent}"
+            style="padding: 0 15px;">
+        <input type="text" class="form-control"
+               uib-datepicker-popup ng-model="formData.date_of_birth"
+               ng-blur="validate('date_of_birth')"
+               is-open="popup2.opened"
+               datepicker-options="dateOptions"
+               close-text="Close" />
+        <!--ng-="true"-->
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+    </div>
+    <ul  ng-if="registerForm['date_of_birth'].$touched">
+        <li>{{errors['date_of_birth']}}</li>
+    </ul>
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <b class=" col-xs-12 col-sm-3 col-md-3 col-lg-3"> Marital Status </b>
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 form-group">
+        <select class="form-control  " name="martial_status" ng-model="formData.martial_status" >
+            <option value="" selected></option>
+            <option value="single" >Single</option>
+            <option value="married" >Married</option>
+            <option value="Divorced" >Divorced</option>
+            <option value="Widowed" >Widowed</option>
+        </select> </div>
+</div>
+
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <b class=" col-xs-12 col-sm-3 col-md-3 col-lg-3"> Education Status </b>
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 form-group">
+        <select class="form-control"
+                name="education_status"
+                ng-init="formData.education_status = jobseeker_type"
+                ng-model="formData.education_status"
+                ng-options="s.value as s.text for s in educationStatuses"
+                ng-selected="user.personal_information.education_status" >
+        </select>
+    </div>
+</div>
+
+<div class="col-xs-12  col-sm-12 col-md-12 col-lg-12">
+    <b class="col-xs-12 col-sm-3 col-md-3 col-lg-3"> Street Address 1 </b>
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 form-group" >
+        <input type='text' class="form-control " id="street_1" name="street_1" placeholder="" ng-model="formData.street" >
+    </div>
+</div>
+
+
+<div class="col-xs-12  col-sm-12 col-md-12 col-lg-12">
+    <b class="col-xs-12 col-sm-3 col-md-3 col-lg-3  "> country </b>
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 form-group" >
+        <input type="text" name="country" ng-model="formData.country" data-geo="country" class="form-control"  >
+    </div>
+</div>
+
+<div class="col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <b class="col-xs-12 col-sm-3 col-md-3 col-lg-3"> State* </b>
+
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 form-group"    ng-class="{'has-error': errors.state && registerForm.state.$touched  || errors['state'] && sent}">
+        <input type="text" name="state" ng-model="formData.state" placeholder="State" class="form-control " ng-blur="validate('state')" data-geo="administrative_area_level_1"  ng-model="formData.state" >
+    </div>
+    <ul  ng-if="registerForm['state'].$touched">
+        <li>{{errors['state']}}</li>
+    </ul>
+</div>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+    <b class="col-xs-12 col-sm-3 col-md-3 col-lg-3"> city* </b>
+
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 form-group"    ng-class="{'has-error': errors.city && registerForm.city.$touched  || errors['city'] && sent}">
+        <input type="text" name="city" class="form-control" ng-model="formData.city" placeholder="" ng-blur="validate('city')"  data-geo="locality" ng-model="formData.city" >
+    </div>
+    <ul  ng-if="registerForm['city'].$touched">
+        <li>{{errors['city']}}</li>
+    </ul>
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+    <b class=" col-xs-12 col-sm-3 col-md-3 col-lg-3"> Zip Code </b>
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 form-group" >
+        <input type="text" name="zipcode" class="form-control" data-geo="postal_code" ng-model="formData.zipcode">
+    </div>
+</div>
+
+
+
+
+
+
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12-">
+
+    <b class=" col-xs-12 col-sm-3 col-md-3 col-lg-3"> Facebook </b>
+
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 form-group">
+        <input type="text"  name="facebook" class="form-control " >
+    </div>
+
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <b class=" col-xs-12 col-sm-3 col-md-3 col-lg-3"> Twitter </b>
+
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 form-group">
+        <input type="text"  name="twitter" class="form-control " >
+    </div>
+
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <b class=" col-xs-12 col-sm-3 col-md-3 col-lg-3"> LinkedIn </b>
+
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 form-group">
+        <input type="text" name="linkedin" class="form-control " >
+    </div>
+
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <b class=" col-xs-12 col-sm-3 col-md-3 col-lg-3"> YouTube video </b>
+
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 form-group">
+        <input type="text" name="youtube" class="form-control" >
+    </div>
+
+</div>
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+
+    <div class="" style="float:left;cursor:pointer;">
+        <label style="cursor:pointer;padding-left:15px;">
+            <input type="checkbox" ng-init="formData.send_newsletters = 1"  ng-true-value="1"
+                   ng-false-value="null"  name="disclaimer" class="" ng-model="formData.send_newsletters" style="width:15px;">
+            I wish to receive newsletters with updates from time to time
+        </label>
+    </div>
+
+</div>
+
+<div class="" style="padding-left:30px;">
+    <div class="disclaimerDiv col-xs-12 col-sm-6 col-md-6 col-lg-6" href='#disclaimer'>
+        <ng-include class="" src="'../../../partials/disclaimer.html'"  ></ng-include>
+    </div>
+</div>
+
+
+
+
+
+<div class=" col-xs-12  col-sm-12 col-md-12 col-lg-12">
+    <div style="float:left;cursor:pointer;" class="form-group"
+          >
+        <label style="cursor:pointer;padding-left:15px;"
+               ng-class="{'has-error' : errors['disclaimer'] && registerForm.disclaimer.$touched || errors['disclaimer'] && sent }">
+            <input type="checkbox"
+                   ng-model="formData.disclaimer"
+                   name="disclaimer"
+                   class=""
+                   ng-true-value="1"
+                   ng-false-value="null"
+                 
+                   >
+            I have read and approved the disclaimer
+        </label>
+    </div>
+    <ul  ng-if="registerForm['disclaimer'].$touched">
+        <li>{{errors['disclaimer']}}</li>
+    </ul>
+</div>
+</div>
+
+<!--<div class="col-xs-12 col-sm-3 col-lg-3 col-lg-3 form-group"-->
+     <!--ng-class="{'has-error' : errors['disclaimer'] && registerForm.disclaimer.$touched || errors['disclaimer'] && sent }" >-->
+    <!--<input type="checkbox" ng-model="formData.disclaimer" name="disclaimer" class=""  ng-true-value="1"-->
+           <!--ng-false-value="0">-->
+    <!--I have read and approved the disclaimer-->
+    <!--&lt;!&ndash;<input type='text'&ndash;&gt;-->
+           <!--&lt;!&ndash;class="form-control "&ndash;&gt;-->
+           <!--&lt;!&ndash;name="first_name"&ndash;&gt;-->
+           <!--&lt;!&ndash;placeholder="First Name"&ndash;&gt;-->
+           <!--&lt;!&ndash;ng-model="formData.first_name"&ndash;&gt;-->
+           <!--&lt;!&ndash;ng-blur="validate('first_name')"&ndash;&gt;-->
+           <!--&lt;!&ndash;>&ndash;&gt;-->
+
+<!--</div>-->
+<!--<ul ng-if="registerForm['disclaimer'].$touched">-->
+    <!--<li>{{errors.disclaimer}}</li>-->
+<!--</ul>-->
+<!--<div class="form-group row">-->
+    <!--<div class="col-xs-3 col-xs-offset-3">-->
+        <!--<a ui-sref="form.education" class="btn btn-block btn-info">-->
+           <!--{{next_form}} <span class="glyphicon glyphicon-circle-arrow-right"></span>-->
+        <!--</a>-->
+    <!--</div>-->
+<!--</div>-->

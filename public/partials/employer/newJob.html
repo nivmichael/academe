@@ -1,0 +1,192 @@
+<!--New Job Modal-->
+<!--
+
+* postInfo params are saved in 'type_post' and as sys_param_values.
+* job description is the actual job title.
+* postInfo parameters are hardcoded - all other are dumped dynamically.
+
+ -->
+
+
+
+    <!-- postInfo   -->
+
+            <!--  Job Description -->
+
+    <!-- employment -->
+
+            <!--  main_field      -->
+
+            <!--  profession      -->
+
+            <!--  employment_type -->
+
+    <!-- education -->
+
+            <!--  degree          -->
+
+            <!--  major           -->
+
+            <!--  minor           -->
+
+    <!-- career_goals -->
+
+            <!--  job_title       -->
+
+            <!--  experience      -->
+
+            <!--  language        -->
+
+            <!--  salary          -->
+
+            <!--  location        -->
+
+    <!-- postInfo -->
+
+            <!--  description     -->
+
+            <!--  requirements    -->
+
+
+
+
+
+
+
+
+<div class="modal-header">
+    <span class="modal-title">
+        Post A New Job
+    </span>
+    <button class="img-btn right" ng-click="close()">
+        <i class="glyphicon glyphicon-remove"></i>
+    </button>
+</div>
+
+<div class="modal-body" style="height:800px;overflow:auto;" ng-form="newJobForm" ng-cloak>
+
+
+    <div ng-if="errors" class="errors alert alert-danger" >
+        <div ng-repeat="(key,error) in errors track by $index">
+            <span ng-if="$first">Please Check the following :<br><br></span>
+            - {{key | underscoreless | capitalize}}
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!--START of hardcoded parameter-->
+        <div class="form-group">
+            <div class="param_label col-md-2">
+                Job Description*
+            </div>
+            <div class="col-md-3 form-group" ng-class="{'has-error' : errors['job_description'] && newJobForm.job_description.$touched || errors['job_description'] }">
+                <input type="text"
+                       class="form-control"
+                       name="job_description"
+
+                       ng-model="formData.general.job_description">
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!--END of Hardcoded parameter-->
+
+        <!--START of dynamic parameters-->
+        <div ng-repeat="(docParam, iterations) in form" ng-if="docParam != 'general'">
+            <div ng-if="docParam == 'education'">
+                <br><br>
+            </div>
+            <div ng-repeat="(iteration, params) in iterations">
+                <div class="param_label col-md-2" ng-if="docParam == 'education'">
+                    <span ng-if="$first">{{ docParam | underscoreless | capitalize }}</span>
+                </div>
+
+                <div ng-repeat="(param_id, param) in params"  class="form-group" ng-if="param.inputType">
+
+                    <!--for indentation-->
+                    <div class="col-md-2" ng-if="docParam == 'education' && !$first">
+                    </div>
+                    <!--end for indentation-->
+                   <div class="param_label col-md-2">
+                       {{param.paramName | underscoreless | capitalize }}
+                   </div>
+
+                   <div ng-switch="param.inputType" class="col-md-3"  ng-class="{'has-error' : errors[param.paramName] && newJobForm.param.paramName.$touched || errors[param.paramName] }">
+                       <div ng-switch-when="text">
+                           <input type="text" class="form-control" ng-model="param.paramValue">
+                       </div>
+
+                       <div ng-switch-when="select">
+                           <select class="form-control" ng-model="param.paramValue" ng-options="o.text as o.value for o in groups[param.paramName]">
+                           </select>
+                       </div>
+                   </div>
+                   <div class="clearfix"></div>
+               </div>
+               <!-- iteration controls -->
+               <div ng-if="docParam == 'education'">
+
+                   <div ng-if="iterations.length > 1">
+                        <div class="col-md-2"></div>
+                        <div>
+                            <span class="iterationCtrl" ng-click="remove(form[docParam],docParam,$index)">
+                                <i class="glyphicon glyphicon-remove"></i>Delete
+                            </span>
+                            <span class="iterationCtrl" ng-if="!$first" ng-click="move(form[docParam],$index,$index-1)">Move Up  </span>
+                            <span class="iterationCtrl" ng-if="!$last"  ng-click="move(form[docParam],$index,$index+1)">Move Down</span>
+                        </div>
+                    </div>
+
+                    <br><br>
+                    <hr ng-if="!$last" class="container">
+
+                    <div ng-if="$last">
+                       <div class="col-md-2"></div>
+
+                       <div class="clearfix"></div>
+                       <div class="col-md-2"></div>
+                       <div class="col-md-10">
+                           <button class="btn" ng-click="add(docParam,$index)" >
+                               + Add a Record
+                           </button>
+                       </div>
+                    </div>
+                   <br><br>
+                   <br><br>
+               </div>
+            </div>
+        </div>
+        <!--END of dynamic parameters-->
+
+        <!--START of hardcoded parameters-->
+        <div class="form-group">
+            <div class="param_label col-md-2">
+                Description
+            </div>
+            <div class="col-md-7" ng-class="{'has-error' : errors['description'] && newJobForm.description.$touched || errors['description'] }">
+                <textarea class="form-control" rows="7" name="description" ng-model="formData.general.description"></textarea>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="param_label col-md-2">
+                Requirements
+            </div>
+            <div class="col-md-7" ng-class="{'has-error' : errors['requirements'] && newJobForm.requirements.$touched || errors['requirements'] }">
+                <textarea class="form-control" rows="7" name="requirements" ng-model="formData.general.requirements"></textarea>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!--END of Hardcoded parameters-->
+
+    </div>
+
+
+</div>
+
+<div class="modal-footer">
+    <button class="img-btn waves-effect waves-light" ng-click="proccessForm()">
+        <img ng-src="../img/buttons/employer_job_modal/save_job.png" class="">
+    </button>
+</div>

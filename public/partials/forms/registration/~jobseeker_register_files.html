@@ -1,0 +1,208 @@
+
+<div  ng-controller="MyCtrl" style="    padding: 10px;" >
+    {{files}}
+    <form name="myForm">
+        <div ngf-drop ng-change="open()" ng-model="files" ngf-pattern="image/*" class="cropArea card-panel" >
+            <div class="col-md-5">
+                <h3>Upload to gallery</h3>
+                <h5>Drag & Drop Images Here</h5>
+                <p class="center">OR</p>
+                <div class="clearfix"></div>
+                <div ngf-select ng-change="open()" class="btn select_files_btn" ng-model="files" accept="image/*" >Select Picture From Computer</div>
+            </div>
+
+            <div class="padded">
+
+
+                <!--<div class="croppedData col-md-3 " ng-hide="files">-->
+                <!--<img  class="" ng-src="../../img/profile-ph.gif " />-->
+                <!--</div>-->
+
+                <div class="croppedDataUrl  croppedData" ng-show="files">
+                    <ul class="imageUploadControls col-md-1">
+                        <li class="">
+                            <a class='' href='#demoModal' open="openModal" modal> <i class="glyphicon glyphicon-scissors"></i></a>
+                        </li>
+                        <li class="">
+                            <a class='' href='#demoModal' modal> <i class="glyphicon glyphicon glyphicon-refresh"></i></a>
+                        </li>
+                        <li class="">
+                            <a class='' href='#demoModal' modal> <i class="glyphicon glyphicon glyphicon-trash"></i></a>
+                        </li>
+                    </ul>
+                    <img  class="left" ng-src="{{  croppedDataUrl }}" />
+
+                    <div class="left" ng-show="files">
+
+                        <div ng-repeat="f in files" class="thumb col-md-4">
+                            <i class="glyphicon glyphicon-picture"></i>
+                            <img ngf-thumbnail="!f.$error &amp;&amp; f" class="thumb" src="{{f}}" ng-src="{{f}}" ngf-src="{{f}}">
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <div id="demoModal" class="modal" style="width: 37%;" >
+                <div class="modal-body" style="height:600px;text-align: center;" >
+                    <h3>Crop Image</h3>
+                    <img-crop image="files  | ngfDataUrl" result-image="croppedDataUrl" ng-init="croppedDataUrl=''" ng-show="files"></img-crop>
+                    <br>
+                    <img ngf-thumbnail="croppedDataUrl" class="thumb">
+                </div>
+
+                <div class="modal-footer">
+                    <a  class="modal-action modal-close waves-effect waves-green btn-flat">Save</a>
+                    <a  class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+                    <a  class="modal-action modal-close waves-effect waves-green btn-flat">Change</a>
+                    <a  class="modal-action modal-close waves-effect waves-green btn-flat">Remove</a>
+
+                </div>
+            </div>
+
+
+
+
+
+
+        </div>
+        <!--<button ng-click="upload(croppedDataUrl, picFile.name)">Submit</button>-->
+
+            <!--<span class="progress" ng-show="progress >= 0">-->
+              <!--<div style="width:{{progress}}%" ng-bind="progress + '%'"></div>-->
+            <!--</span>-->
+        <!--<span ng-show="result">Upload Successful</span>-->
+        <!--<span class="err" ng-show="errorMsg">{{errorMsg}}</span>-->
+    </form>
+
+    <form name="myForm">
+        <div ngf-drop ng-change="open()" ng-model="picFile" ngf-pattern="image/*" class="cropArea card-panel">
+            <div class="col-md-5">
+                <h3>Upload CV</h3>
+                <h5>Drag & Drop Documents Here</h5>
+                <p class="center">OR</p>
+                <div class="clearfix"></div>
+                <div ngf-select  ng-change="open()" class="btn select_files_btn" ng-model="picFile" accept="image/*">Select Docs From Computer</div>
+            </div>
+
+            <div class="padded">
+
+            </div>
+        </div>
+
+    </form>
+
+    <form name="myForm">
+        <div ngf-drop ng-change="open()" ng-model="picFile" ngf-pattern="image/*" class="cropArea card-panel">
+            <div class="col-md-5">
+                <h3>Upload Certificates</h3>
+                <h5>Drag & Drop Certificates Here</h5>
+                <p class="center">OR</p>
+                <div class="clearfix"></div>
+                <div ngf-select  ng-change="open()" class="btn select_files_btn" ng-model="picFile" accept="image/*">Select Docs From Computer</div>
+            </div>
+
+            <div class="padded">
+
+            </div>
+        </div>
+
+    </form>
+
+    <form name="myForm">
+        <div ngf-drop ng-change="open()" ng-model="picFile" ngf-pattern="image/*" class="cropArea card-panel">
+            <div class="col-md-5">
+                <h3>Upload Recommendations</h3>
+                <h5>Drag & Drop Recommendations Here</h5>
+                <p class="center">OR</p>
+                <div class="clearfix"></div>
+                <div ngf-select  ng-change="open()" class="btn select_files_btn" ng-model="picFile" accept="image/*">Select Docs From Computer</div>
+            </div>
+
+            <div class="padded">
+
+            </div>
+        </div>
+
+    </form>
+
+    <form name="myForm">
+        <div ngf-drop ng-change="open()" ng-model="picFile" ngf-pattern="image/*" class="cropArea card-panel">
+            <div class="col-md-5">
+                <h3>Upload Cover Letters</h3>
+                <h5>Drag & Drop Documents Here</h5>
+                <p class="center">OR</p>
+                <div class="clearfix"></div>
+                <div ngf-select  ng-change="open()" class="btn select_files_btn" ng-model="picFile" accept="image/*">Select Docs From Computer</div>
+            </div>
+
+            <div class="padded">
+
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+
+<!--<form name="myForm">-->
+<!--<div style="    padding: 10px;" >-->
+    <!--<div ngf-drop ng-model="picFile" ngf-drag-over-class="dashed"  class="cropArea card-panel" >-->
+        <!--<div class="col-md-8">-->
+            <!--<h3>Upload to gallery</h3>-->
+
+            <!--<h5>Drag & Drop Images Here</h5>-->
+            <!--<p class="col-md-6 center">OR</p>-->
+            <!--<div ngf-select ng-model="picFile" type="file" ngf-change="onChange($files)" class="btn select_files_btn"  ngf-multiple="true">Select images from your computer</div>-->
+
+        <!--</div>-->
+
+        <!--<div class="thumbnail croppedData col-md-3 " ng-hide="picFile">-->
+            <!--<img  class="" ng-src="../../img/No-Photo.gif " />-->
+        <!--</div>-->
+
+        <!--<div class="croppedDataUrl croppedData col-md-3 " ng-show="picFile">-->
+            <!--<img  class="" ng-src="{{  croppedDataUrl }}" />-->
+        <!--</div>-->
+
+    <!--</div>-->
+
+
+<!--</div>-->
+<!--&lt;!&ndash; Modal Trigger &ndash;&gt;-->
+<!--<div class="col">-->
+    <!--<a class='btn' href='#demoModal' modal>Crop Image</a>-->
+<!--</div>-->
+<!--<div id="demoModal" class="modal" style="width:95%;">-->
+    <!--<div class="modal-body" style="height:600px;">-->
+        <!--<h4>Modal header</h4>-->
+
+        <!--<img-crop image="picFile  | ngfDataUrl" result-image="croppedDataUrl" ng-init="croppedDataUrl='../../img/No-Photo.gif'"-->
+                  <!--class="col-md-6 croppedData" ng-show="picFile">-->
+        <!--</img-crop>-->
+        <!--<div class="col-md-6">-->
+            <!--<img ng-src="{{croppedDataUrl}}" />-->
+        <!--</div>-->
+
+        <!--<div class="clearfix"></div>-->
+
+    <!--</div>-->
+    <!--<div class="modal-footer">-->
+        <!--<a  class="modal-action modal-close waves-effect waves-green btn-flat">Save</a>-->
+        <!--<a  class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>-->
+
+    <!--</div>-->
+<!--</div>-->
+<!--</form>-->
+
+
+
+
+
+
+
+

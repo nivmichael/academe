@@ -1,0 +1,40 @@
+<ul id="admin_sideNav" class="side-nav fixed">
+    <div class="" style="height: 34px; line-height: 34px;padding-left:15px;" >
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="padding-left:0;">
+            <select class="form-control" ng-model="currentStatus" ng-options="status.value as status.text for status in userStatuses" ng-change="changeStatus(status)"></select>
+        </div>
+    </div>
+    <div class="" style="padding-left:15px;margin:10px 0;">Last Updated -  {{ user.personal_information.last_login | amDateFormat: 'MM/DD/YYYY' }}</div>
+    <div class="" style="padding: 0 25px;">
+        <h5 class="text-center">{{user.company[0][32].paramValue | capitalize}}</h5>
+        <div ng-repeat="file in user.files" ng-if="$first">
+            <img class="profile-picture-card card" ng-src="/	{{file['paramValue'] || '../../img/profile-ph.gif'  }}" alt="Generic placeholder image">
+        </div>
+    </div>
+    <!--this needs to be a ng repeat on the employer registration form that is supposed to be called from controller?-->
+    <ul>
+        <li>
+            <a href="#"
+               ui-sref="admin.steps"
+               ui-sref-active="admin.steps"
+               class="docParamLi waves-effect waves-light">
+                <span class="play"><span>▶</span></span> Steps
+            </a>
+        </li>
+        <li>
+            <a href="#"
+               ui-sref="admin.forms.jobseeker"
+               ui-sref-active="admin.forms.jobseeker"
+               class="docParamLi waves-effect waves-light">
+                <span class="play"><span>▶</span></span> Forms
+            </a>
+        </li>
+
+    </ul>
+
+
+    <!--<style>.affix{top: 0!important;}</style>-->
+    <!--<script>$('#employer_company_sideNav').affix({offset: {top: 64}});</script>-->
+
+
+</ul>

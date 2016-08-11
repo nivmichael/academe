@@ -1,0 +1,113 @@
+<main>
+    <div style=" padding: 15px 50px;background-color:#EDEDED;">
+    <div style=" padding: 15px;background-color:#FFFFFF;">
+        View {{ user.personal_information.first_name + " "}} {{ user.personal_information.last_name + "'s " }} Profile &nbsp;&nbsp; |  &nbsp;&nbsp;  Match ***** For Job Offer POSTID - POST TITLE
+    </div>
+    <uib-accordion close-others="oneAtATime">
+        <uib-accordion-group ng-repeat="(docParamName, iteration_key) in user track by $index" ng-init="status = $first" is-open="status" ng-if="docParamName != 'files'">
+            <uib-accordion-heading >
+                <div ng-class="{'grey': !status,  'cyan':  status}" class="waves-effect waves-light" style="width: 100%;">
+                    <i class="glyphicon glyphicon-plus"  ng-class="{'glyphicon glyphicon-circle-arrow-right': !status,  'glyphicon glyphicon-circle-arrow-down':  status}"></i>
+                    {{docParamName  | underscoreless | capitalize:true}}
+                </div>
+            </uib-accordion-heading>
+
+            <form editable-form class="editableForm" e-name="editableForm" name="editableForm" onaftersave="saveUser(user)" ng-init="loadGroups()" shown="0" e-ng-model="user">
+                <div ng-if="docParamName == 'personal_information'" class="">
+                    <ng-include src="'partials/forms/profile/jobseeker_profile_personal_information.html'"></ng-include>
+                </div>
+                <div ng-repeat="(key,params) in iteration_key"  style="" repeat-done="initDatePicker()" ng-show="isArray(iteration_key)" style="margin-bottom:20px;">
+
+                    <div ng-repeat="(param_id, param) in params track by $index">
+                        <div class="col-md-3" style="float:left;font-weight:bold;">
+                            {{ param.paramName }}
+                        </div>
+                        <div ng-switch="param.inputType" class="col-md-3" style="padding-right:15px;margin-bottom:10px; ">
+
+                            <div ng-switch-when="text">
+                                <div editable-text="param.paramValue" e-class="form-control">
+                                    {{param.paramValue}}
+                                </div>
+
+                            </div>
+
+                            <div ng-switch-when="select">
+                                <div editable-select="param.paramValue"
+                                     name="user[docParamName][key][param_id]['paramName']"
+                                     e-name="user[docParamName][key][param_id]['paramName']"
+                                     e-class="form-control"
+                                     e-ng-options="o.value as o.text for o in groups[param.paramName] | toArray:true ">
+
+                                    {{ user[docParamName][key][param_id]['paramValue'] }}
+                                </div>
+                            </div>
+
+                            <div ng-switch-when="textarea">
+
+
+                            </div>
+
+                            <div ng-switch-when="date">
+
+
+                            </div>
+
+                            <div ng-switch-when="cv">
+
+
+                            </div>
+
+                            <div ng-switch-default>
+                                {{ user[docParamName][key][param_id]['paramValue'] }}
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="clearfix"></div>
+                    <div class="iterationCtrls" ng-show="editableForm.$visible && iteration_key.length > 1">
+
+                        <div class="iterationCtrl" ng-click="remove(iteration_key,$index,user['personal_information']['id'])">
+                            X Delete
+                        </div>
+                        <div class="iterationCtrl" ng-hide="$first" ng-click="move(iteration_key,$index,$index-1)">
+                            Move Up
+                        </div>
+                        <div class="iterationCtrl" ng-hide="$last" ng-click="move(iteration_key,$index,$index+1)">
+                            Move Down
+                        </div>
+
+                    </div>
+
+
+
+                    <hr ng-show="isArray(iteration_key) && !$last">
+
+
+                </div>
+                <div class="clearfix" ></div>
+                <div class="buttons" >
+
+                    <button type="button" class="btn btn-default editBtn" ng-click="editableForm.$show()" ng-show="!editableForm.$visible" style="float:right;">Edit</button>
+
+                    <div ng-show="editableForm.$visible" style="float:left;">
+                        <button type="button" class="btn btn-default" ng-click="add(docParamName,$index)">+ Add a Record</button>
+                    </div>
+                    <div ng-show="editableForm.$visible" style="float:right;">
+                        <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting" >Save</button>
+                        <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()" >Cancel</button>
+                    </div>
+                </div>
+
+            </form>
+        </uib-accordion-group>
+    </uib-accordion>
+
+
+    <!--<pre>-->
+        <!--{{user | json}}-->
+    <!--</pre>-->
+    </div>
+</main>

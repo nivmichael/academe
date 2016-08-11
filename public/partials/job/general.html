@@ -1,0 +1,159 @@
+
+
+<!--<div ng-repeat="(iteration, params) in jobPost.general">-->
+    <!--<div ng-repeat="(paramId, param) in params" ng-if="param.paramName">-->
+        <!--<div class="param_label">-->
+            <!--{{param.paramName | underscoreless | capitalize}}-->
+        <!--</div>-->
+        <!--<div>-->
+            <!--{{param.paramValue}}-->
+        <!--</div>-->
+
+    <!--</div>-->
+
+
+<!--</div>-->
+
+
+
+<form editable-form name="editableForm" onaftersave="validatePost()"  novalidate>
+
+    <div >
+
+
+        <div ng-if="errors" class="errors alert alert-danger col-md-10 col-md-offset-1" >
+            <div ng-repeat="(key,error) in errors track by $index">
+                <span ng-if="$first">Please Check the following :<br><br></span>
+                - {{key | underscoreless | capitalize}}
+            </div>
+        </div>
+
+        <div class="container">
+
+            <!--START of hardcoded parameter-->
+            <div class="form-group">
+                <div class="param_label col-md-2">
+                    Job Description*
+                </div>
+                <div class="col-md-3">
+                   {{formData.general.job_description}}
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <!--END of Hardcoded parameter-->
+
+            <!--START of dynamic parameters-->
+            <div ng-repeat="(docParam, iterations) in jobPost" ng-if="docParam != 'general'">
+                <div ng-if="docParam == 'education'">
+                    <br><br>
+                </div>
+                <div ng-repeat="(iteration, params) in iterations">
+                    <div class="param_label col-md-2" ng-if="docParam == 'education'">
+                        <span ng-if="$first">{{ docParam | underscoreless | capitalize }}</span>
+                    </div>
+
+                    <div ng-repeat="(param_id, param) in params track by $index"  class="form-group" ng-if="param.inputType">
+
+                        <div class="col-md-2" ng-if="docParam == 'education' && !$first">
+                        </div>
+
+                        <div class="param_label col-md-2">
+                            {{param.paramName | underscoreless | capitalize }}
+                        </div>
+
+
+                            <div>
+                               {{param.paramValue}}
+                            </div>
+                            <!--<div ng-switch-when="select">-->
+                                <!--<div editable-select="param.paramValue"-->
+                                     <!--e-form="rowform"-->
+                                     <!--e-name="param.paramValue"-->
+                                     <!--e-class="form-control"-->
+                                     <!--e-ng-options="o.value as o.text for o in groups[param.paramName] | toArray:true ">-->
+
+                                    <!--{{param.paramValue}}-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <!-- iteration controls -->
+                    <div ng-if="docParam == 'education'" >
+
+                        <div ng-if="iterations.length > 1" ng-show="editableForm.$visible">
+                            <div class="col-md-2"></div>
+                            <div>
+                                <!-- i would love to pass the `post OR user type dynamically`-->
+                            <span class="iterationCtrl" ng-click="remove(jobPost[docParam],'post',$index)">
+                                <i class="glyphicon glyphicon-remove"></i>Delete
+                            </span>
+                                <span class="iterationCtrl" ng-if="!$first" ng-click="move(jobPost[docParam],$index,$index-1)">Move Up  </span>
+                                <span class="iterationCtrl" ng-if="!$last"  ng-click="move(jobPost[docParam],$index,$index+1)">Move Down</span>
+                            </div>
+                        </div>
+
+                        <br><br>
+                        <hr ng-if="!$last" class="container">
+
+                        <div ng-if="$last" ng-show="editableForm.$visible">
+                            <div class="col-md-2"></div>
+
+                            <div class="clearfix"></div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-10">
+                                <button class="btn" ng-click="add(docParam,$index)" >
+                                    + Add a Record
+                                </button>
+                            </div>
+                        </div>
+                        <br><br>
+                        <br><br>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+            <!--END of dynamic parameters-->
+
+            <!--START of hardcoded parameters-->
+            <div class="form-group">
+                <div class="param_label col-md-2">
+                    Description
+                </div>
+                <div class="col-md-7">
+                  {{formData.general.description}}
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="form-group">
+                <div class="param_label col-md-2">
+                    Requirements
+                </div>
+                <div class="col-md-7">
+                    {{formData.general.requirements}}
+                </div>
+                <div class="clearfix"></div>
+
+            </div>
+            <!--END of Hardcoded parameters-->
+
+        </div>
+
+    </div>
+
+
+</form>
