@@ -1,0 +1,39 @@
+<form>
+<div class="modal-header">
+    <span class="modal-title">{{jobPost.postInfo.title | capitalize}}</span> <small>Job id: {{jobPost.postInfo.id}}</small> <button class="img-btn right"><i class="glyphicon glyphicon-remove"></i></button>
+</div>
+<div class="modal-body" style="height:620px;overflow:auto;">
+
+    <ul class="col-md-2 ">
+        <div ui-sref="general" class="postLi">
+        General
+        </div>
+        <div ui-sref="the_company" class="postLi">
+        The Company
+        </div>
+        <div ui-sref="jobseeker.findajob.company_video" class="postLi">
+        Company Video
+        </div>
+        <div ui-sref="jobseeker.findajob.company_site" class="postLi">
+        Company Site
+        </div>
+    </ul>
+
+    <div ui-view="job"></div>
+
+
+
+
+</div>
+<div class="modal-footer">
+    <span>
+          <button ng-click="applyForJob()" type="submit" class="img-btn">
+              <img ng-src="../img/buttons/jobseeker_modal/1.png" class="">
+          </button>
+
+          <button  type="submit" class="img-btn">
+              <img ng-src="../img/buttons/jobseeker_modal/2.png" class="">
+          </button>
+    </span>
+</div>
+</form>

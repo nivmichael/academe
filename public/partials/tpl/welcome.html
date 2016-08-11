@@ -1,0 +1,114 @@
+
+<style>
+    /*html, body {*/
+        /*height: 100%;*/
+    /*}*/
+
+    /*body {*/
+        /*margin: 0;*/
+        /*padding: 0;*/
+        /*width: 100%;*/
+        /*display: table;*/
+        /*font-weight: 100;*/
+        /*font-family: 'Roboto';*/
+    /*}*/
+
+    .container {
+        text-align: center;
+
+        vertical-align: middle;
+    }
+
+    .content {
+        text-align: center;
+        display: inline-block;
+    }
+
+    /*.title {*/
+        /*font-size: 96px;*/
+    /*}*/
+</style>
+<div class="container" id="welcome_wrapper">
+
+    <img ng-src="{{logo}}" style="width:300px;margin-top:100px;">
+
+    <div class="welcomeIcons">
+
+
+
+
+        <div class="clearfix"></div>
+        <!--
+        <a href="jobseeker"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/student_login_hover.png"></a>
+        <a href="jobseeker"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/interns_login_hover.png"></a>
+        <a href="jobseeker"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/graduate_login_hover.png"></a>
+        <a href="employer"><img class="col-md-3 col-sm-3 col-xs-3" src="../img/index/employer_login_hover.png"></a>
+        -->
+        <div class="welcomeIcon col-xs-12 col-sm-6 col-md-3 col-lg-3" >
+            <div class="welcomeIconInner" style="background-color:{{ main_color }}">
+                <a ui-sref="jobseeker.profile({type: 'jobseeker',  sub_type : 'student'})" class="waves-effect waves-light"><img  src="../img/index/icons-01.png">
+                <!--<a ui-sref="form.personal_information({type: 'jobseeker',  sub_type : 'student'})" class="waves-effect waves-light"><img  src="../img/index/icons-01.png">-->
+                    <label>
+                        Student
+                    </label>
+                </a>
+            </div>
+        </div>
+        <div class="welcomeIcon col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <div class="welcomeIconInner" style="background-color:{{ main_color }}">
+                <a ui-sref="jobseeker.profile({type: 'jobseeker', sub_type : 'graduate'})" class="waves-effect waves-light"><img src="../img/index/icons-02.png">
+                <!--<a ui-sref="form.personal_information({type: 'jobseeker', sub_type : 'graduate'})" class="waves-effect waves-light"><img src="../img/index/icons-02.png">-->
+                    <label>
+                        Graduate
+                    </label>
+                </a>
+            </div>
+        </div>
+        <div class="welcomeIcon col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <div class="welcomeIconInner" style="background-color:{{ main_color }}">
+                <a ui-sref="jobseeker.profile({type: 'jobseeker', sub_type : 'intern'})" class="waves-effect waves-light"><img src="../img/index/icons-03.png">
+                    <label>
+                        Intern
+                    </label>
+                </a>
+            </div>
+        </div>
+        <div class="welcomeIcon col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <div class="welcomeIconInner" style="background-color:{{ main_color }}">
+                <a ui-sref="employer.portal({type: 'employer', sub_type : 'employer'})" class="waves-effect waves-light"><img src="../img/index/icons-04.png">
+                    <label>
+                        Employer
+                    </label>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="push"></div>
+</div>
+
+<div class="footer">
+
+        <div class="">
+
+                <a ui-sref="admin.blank">
+                    <img class="footer_logo" src="../img/icons/academe_brand.png" >
+                </a>
+
+
+                 <a class="right" href="http://www.acade-me.com" ><p>AcadeME &copy; 2015</p></a>
+
+        </div>
+
+</div>
+
+<!--<div >-->
+    <!--<div class="row center">-->
+        <!--<a ui-sref="admin.steps">-->
+            <!--<img class="footer_logo" src="../img/icons/academe_brand.png" >-->
+        <!--</a>-->
+    <!--</div>-->
+
+    <!--<a class="right" href="http://www.acade-me.com" ><p>AcadeME &copy; 2015</p></a>-->
+<!--</div>-->
+
+

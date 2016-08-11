@@ -1,0 +1,11 @@
+
+<ul id="jobseeker_register_steps_sideNav"  class="side-nav fixed" style="">
+    <li class="logo">
+        <div class="profile_pic">
+            <img   ng-src="../../img/profile-ph.gif"  class="thumbnail add_profile_pic" />
+        </div>
+    </li>
+    <li ng-repeat="step in steps | toArray:false" >
+        <a ui-sref-active="active" ui-sref=".{{step}}" > <span class="play"><span>▶</span></span>{{step | underscoreless | capitalize}}</a>
+    </li>
+</ul>

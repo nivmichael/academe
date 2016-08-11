@@ -1,0 +1,30 @@
+
+<form name="registerJobSeekerForm" accessibleForm autocomplete="off"  novalidate>
+
+	<ul id="nav-mobile" class="side-nav fixed col-xs-2 col-sm-2 col-md-2 col-lg-2">
+
+		<a href="#" ng-repeat="(key,step) in steps track by $index | toArray:true | filter: {step.belongsTo:'employer' }  "
+			 class="docParamLi waves-effect waves-light"
+			 ui-sref-active="active"
+			 ui-sref="{{step.name}}">
+			<span class="▶">▶ </span>
+		</a>
+
+
+	</ul>
+
+	<div ui-view=""  class="col-xs-10 col-sm-10 col-md-10 col-lg-10"></div>
+	<div ui-view="main"></div><div ui-view="sideNav"></div>
+</form>
+
+<script>
+//	$('.button-collapse').sideNav();
+//	$('html').click(function(){});
+//	$('html').click(function(){ $('div[id^=sidenav-overlay]').remove();});
+//	$('.modal-trigger').leanModal({
+//		complete: function () {
+//			$('.lean-overlay').remove();
+//		},
+//
+//	}); // Initialize the modals
+</script>
