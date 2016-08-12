@@ -234,7 +234,7 @@ Route::group(['domain' => 'localhost'], function(){
 
 });
 
-Route::group(['middleware' => ['web','domain']], function () {
+Route::group(['middlewareGroup' => ['web','domain']], function () {
     //comment is a dev tool..
     Route::any('/comment', function () { return view('comment'); });
 

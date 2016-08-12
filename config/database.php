@@ -56,9 +56,9 @@ return [
 //        'mysql' => [
 //            'driver'    => 'mysql',
 //            'host'      => 'localhost',
-//            'database'  => 'domains',
+//            'database'  => 'academe',
 //            'username'  => 'root',
-//            'password'  => 'nox22old',
+//            'password'  => 'password',
 //            'charset'   => 'utf8',
 //            'collation' => 'utf8_unicode_ci',
 //            'prefix'    => '',
@@ -78,7 +78,7 @@ return [
         'domain' => [
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'domains',
+            'database'  => 'academe',
             'username'  => 'root',
             'password'  =>  '',
             'charset'   => 'utf8',
