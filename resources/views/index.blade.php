@@ -25,7 +25,7 @@
     {!! Html::style('css/ng-img-crop.css') !!}
     {!! Html::style('css/materialize.css') !!}
     {!! Html::style('lib/xeditable/css/xeditable.css') !!}
-    {!! Html::script('lib/slider.js') !!}
+   {{--{!! Html::script('lib/slider.js') !!}--}}
     <!--Custom CSS-->
 
 

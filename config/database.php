@@ -78,7 +78,7 @@ return [
         'domain' => [
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'academe',
+            'database'  => 'domains',
             'username'  => 'root',
             'password'  =>  '',
             'charset'   => 'utf8',
