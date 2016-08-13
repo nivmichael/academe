@@ -1,6 +1,5 @@
-
 <?php
-    header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: *");
 ?>
 
 
@@ -13,10 +12,13 @@
 
     {!! Html::script('lib/jquery-2.2.3.js') !!}
     {!! Html::script('lib/jquery-ui.min.js') !!}
-    <link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' rel='stylesheet' type='text/css'>
+    <link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' rel='stylesheet'
+          type='text/css'>
     {!! Html::script('lib/angular.js') !!}
-    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.css' type='text/css' media='all' />
-    <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.js'></script>
+    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.css'
+          type='text/css' media='all'/>
+    <script type='text/javascript'
+            src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.js'></script>
     <!--CSS Libraries: bootstrap, materialize, angular-materialize-->
 
 
@@ -25,15 +27,23 @@
     {!! Html::style('css/ng-img-crop.css') !!}
     {!! Html::style('css/materialize.css') !!}
     {!! Html::style('lib/xeditable/css/xeditable.css') !!}
-   {{--{!! Html::script('lib/slider.js') !!}--}}
-    <!--Custom CSS-->
-
+    {{--{!! Html::script('lib/slider.js') !!}--}}
+            <!--Custom CSS-->
 
     {{--{!! Html::style('css/statevis.css') !!}--}}
     {!! Html::style('css/rerouting.css') !!}
     {!! Html::style('css/dnd.css') !!}
     {{--{!! Html::style('css/jquery.rateyo.css') !!}--}}
-    <!--Fonts-->
+
+
+    {{---------------------------------- COMPOENTNS CSS -------------------------------------------}}
+
+            {{-- EVENTS --}}
+    {!! Html::style('components/events-component/events.style.css') !!}
+
+    {{---------------------------------- END OF COMPOENTNS CSS  -------------------------------------------}}
+
+            <!--Fonts-->
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
@@ -42,12 +52,12 @@
 </head>
 
 
-<body  ng-cloak>
+<body ng-cloak>
 
-    <div  ui-view="sideNav"     ng-show="ToolbarModel.IsVisible"></div>
-    <div  ui-view="nav"                                         ></div>
-    <div  ui-view=""                                   id="main"></div>
-    <div  ui-view="footer"                              class=""></div>
+<div ui-view="sideNav" ng-show="ToolbarModel.IsVisible"></div>
+<div ui-view="nav"></div>
+<div ui-view="" id="main"></div>
+<div ui-view="footer" class=""></div>
 
 </body>
 
@@ -126,6 +136,13 @@
 {!! Html::script('lib/angular-filter.js') !!}
 
 
+{{---------------------------------- COMPOENTNS JS -------------------------------------------}}
+
+{{-- EVENTS --}}
+{!! Html::script('components/events-component/events.component.js') !!}
+{!! Html::script('components/events-component/events.service.js') !!}
+
+{{---------------------------------- END OF COMPOENTNS JS  -------------------------------------------}}
 
 <script>angular.module("acadb").constant("CSRF_TOKEN", '{!! csrf_token() !!}');</script>
 
@@ -136,8 +153,6 @@
 
 
 -->
-
-
 
 
 </html>

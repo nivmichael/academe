@@ -253,8 +253,7 @@ var acadb = angular.module('acadb', [
                                 controller:  'SideNavCtrl as NC',
                             },
                             '': {
-                                templateUrl: '../partials/admin/events.html',
-                                //controller: 'StepManagerCtrl as SMC',
+                                template: '<events></events>',
                             },
                         }
 

@@ -1,0 +1,55 @@
+#eventsView {
+    margin-top:  80px;
+}
+
+#eventsView .tableParent {
+    width: 95%;
+    margin: 0 auto;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border: 1px solid #444;
+}
+
+#eventsView .tableBottom {
+    height: 20px;
+    background: #88b8eb;
+    border-top: 1px solid #444;
+    -webkit-border-radius: 8px 0 8px 8px;
+    -moz-border-radius: 0 0 8px 8px;
+    border-radius: 0 0 8px 8px;
+}
+
+#eventsView .eventsTable tr th,
+#eventsView .eventsTable tr td {
+    text-align: center;
+}
+
+#eventsView .eventsTable tr th {
+    background: #88b8eb;
+    color: #fff;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    border-bottom: 1px solid #444;
+}
+
+#eventsView .eventsTable tr th:first-child {
+    -webkit-border-radius: 8px 0 0 0;
+    -moz-border-radius: 8px 0 0 0;
+    border-radius: 8px 0 0 0;
+}
+
+#eventsView .eventsTable tr th:last-child {
+    -webkit-border-radius: 0 8px 0 0;
+    -moz-border-radius: 0 8px 0 0;
+    border-radius: 0 8px 0 0;
+}
+
+#eventsView .eventsTable tr td.active {
+    color: #1FFF20;
+}
+
+#eventsView .eventsTable tr td.finished {
+    color: #DD0707;
+}
