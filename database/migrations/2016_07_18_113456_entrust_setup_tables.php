@@ -53,6 +53,38 @@ class EntrustSetupTables extends Migration
 
             $table->primary(['permission_id', 'role_id']);
         });
+
+        // Create table for Events
+        Schema::create('ac_event', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
+            $table->timestamp('event_date');
+            $table->string('event_type');
+            $table->string('event_subject');
+            $table->text('event_text');
+            $table->text('event_comment');
+            $table->boolean('active');
+        });
+
+        // Create table for list invites
+        Schema::create('ac_event_invites', function(Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
+            $table->integer('event_id');
+            $table->integer('user_id');
+            $table->integer('user_status');
+            $table->text('comments');
+        });
+
+        // Create table for user event status
+        Schema::create('ac_event_user_status_list', function(Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
+            $table->integer('event_id');
+            $table->integer('user_id');
+            $table->integer('invite_id');
+            $table->string('status');
+        });
     }
 
     /**
@@ -66,5 +98,8 @@ class EntrustSetupTables extends Migration
         Schema::drop('permissions');
         Schema::drop('role_user');
         Schema::drop('roles');
+        Schema::drop('ac_event');
+        Schema::drop('ac_event_invites');
+        Schema::drop('ac_event_user_status_list');
     }
 }
