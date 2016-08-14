@@ -1,0 +1,183 @@
+/****************************** START OF DATA TABLES ****************************************/
+
+/* ROWS LENGTH */
+.dataTables_length select {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+    border: 1px solid #e4e4e4;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px 10px;
+}
+
+/* FILTER */
+.dataTables_wrapper .dataTables_filter input {
+    margin-left: 10px;
+    width: 16em;
+    -webkit-appearance: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    height: 30px;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 0;
+}
+
+.dataTables_filter input {
+    border-radius: 0;
+}
+
+/* BUTTONS */
+button.dt-button, div.dt-button, a.dt-button {
+    border-radius: 0;
+}
+
+/* TABLE */
+table.dataTable {
+    border-color: #eeeeee;
+    clear: both;
+    margin-top: 6px !important;
+    margin-bottom: 6px !important;
+    max-width: none !important;
+}
+
+table.dataTable.table-bordered {
+    border: 1px solid #eee;
+}
+
+table.dataTable {
+    font-size: 13px;
+}
+
+/* TABLE HEADER */
+.dataTables_wrapper .table thead > tr[role="row"] > th {
+    border-bottom: 0;
+}
+
+.dataTables_wrapper .table thead > tr > th:not(:first-child) {
+    border-left: 0;
+}
+
+.dataTables_wrapper .table thead > tr .sorting:before, .dataTables_wrapper .table thead > tr .sorting_asc:before, .dataTables_wrapper .table thead > tr .sorting_desc:before {
+    font-family: 'fontawesome';
+    content: '\f0dc';
+    float: right;
+    display: block;
+    zoom: 1;
+    filter: alpha(opacity=50);
+    -webkit-opacity: 0.5;
+    -moz-opacity: 0.5;
+    opacity: 0.5;
+}
+
+.dataTables_wrapper .table thead > tr .sorting_asc:before {
+    content: '\f0de';
+}
+
+.dataTables_wrapper .table thead > tr .sorting_desc:before {
+    content: '\f0dd';
+}
+
+/* TABLE BODY */
+.dataTables_wrapper .table thead > tr .sorting, .dataTables_wrapper .table thead > tr .sorting_asc, .dataTables_wrapper .table thead > tr .sorting_desc {
+    background: none;
+}
+
+.dataTables_wrapper table.dataTable thead > tr > th {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.table.table-bordered > thead > tr > td, .table.table-bordered > tbody > tr > td, .table.table-bordered > tfood > tr > td, .table.table-bordered > thead > tr > th, .table.table-bordered > tbody > tr > th, .table.table-bordered > tfood > tr > th {
+    border-color: #eeeeee;
+}
+
+.table > thead > tr > td, .table > thead > tr > th {
+    position: relative;
+    border-bottom: 1px solid #eeeeee;
+    color: #2c2e2f;
+}
+
+.table > thead > tr > td, .table > tbody > tr > td, .table > tfood > tr > td, .table > thead > tr > th, .table > tbody > tr > th, .table > tfood > tr > th {
+    padding: 12px 15px;
+}
+
+.table.table-bordered > thead > tr > td, .table.table-bordered > tbody > tr > td, .table.table-bordered > tfood > tr > td, .table.table-bordered > thead > tr > th, .table.table-bordered > tbody > tr > th, .table.table-bordered > tfood > tr > th {
+    border-color: #eeeeee;
+}
+
+.table > tbody > tr > td, .table > tfoot > tr > td, .table > tbody > tr > th, .table > tfoot > tr > th {
+    border-top: 0;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.table > thead > tr > td, .table > tbody > tr > td, .table > tfood > tr > td, .table > thead > tr > th, .table > tbody > tr > th, .table > tfood > tr > th {
+    padding: 12px 15px;
+}
+
+/* PAGING */
+.dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_paginate {
+    padding-top: 10px;
+}
+
+.dataTables_paginate a {
+    position: relative !important;
+    float: left !important;;
+    padding: 6px 12px !important;;
+    line-height: 1.42857143 !important;;
+    text-decoration: none !important;;
+    color: #373e4a !important;;
+    background-color: #fff !important;;
+    border: 1px solid #ddd !important;;
+    margin-left: -1px !important;
+    border-radius: 0 !important;
+}
+
+.dataTables_paginate a.current {
+    z-index: 2 !important;
+    color: #fff !important;
+    background-color: #2c2e2f !important;
+    cursor: auto !important;
+}
+
+.dataTables_paginate a:not(.current):not(.disabled):hover {
+    color: #16191e !important;
+    background-color: #eee !important;
+    border-color: #ddd !important;
+}
+
+/* BORDER LESS TABLE */
+
+table.dataTable.table-border-less td, table.dataTable.table-border-less th {
+    border-left: 0 !important;
+    border-right: 0 !important;
+}
+
+/* TABLE STRIPED */
+table.dataTable.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: white;
+}
+
+table.dataTable.table-striped > tbody > tr:nth-of-type(even) {
+    background-color: #6498e2;
+    color: white;
+}
+
+table.dataTable.table-striped > tbody > tr:nth-of-type(odd) > td {
+    border: 1px solid white;
+}
+
+table.dataTable.table-striped > tbody > tr:nth-of-type(even) > td {
+    border: 1px solid #6498e2;
+}
+
+/****************************** END OF DATA TABLES ****************************************/
+
+

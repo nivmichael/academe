@@ -8,45 +8,52 @@ header("Access-Control-Allow-Origin: *");
     <meta charset="utf-8">
     <title>AcadeME Smart & Simple</title>
     <link rel="shortcut icon" href="img/icons/acadeMe.ico">
-    <!--jQuery & jQuery-ui-->
+    {{--jQuery & jQuery-ui--}}
 
     {!! Html::script('lib/jquery-2.2.3.js') !!}
     {!! Html::script('lib/jquery-ui.min.js') !!}
     <link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' rel='stylesheet'
           type='text/css'>
-    {!! Html::script('lib/angular.js') !!}
+    {!! Html::script('bower_components/angular/angular.js') !!}
+
     <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.css'
           type='text/css' media='all'/>
     <script type='text/javascript'
             src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.js'></script>
-    <!--CSS Libraries: bootstrap, materialize, angular-materialize-->
+    {{--CSS Libraries: bootstrap, materialize, angular-materialize--}}
 
 
-    {!! Html::style('css/bootstrap.min.css') !!}
-    {!! Html::style('css/angular-responsive-tables.min.css') !!}
-    {!! Html::style('css/ng-img-crop.css') !!}
-    {!! Html::style('css/materialize.css') !!}
-    {!! Html::style('lib/xeditable/css/xeditable.css') !!}
-    {{--{!! Html::script('lib/slider.js') !!}--}}
-            <!--Custom CSS-->
+{!! Html::style('css/bootstrap.min.css') !!}
+{!! Html::style('css/angular-responsive-tables.min.css') !!}
+{!! Html::style('css/ng-img-crop.css') !!}
+{!! Html::style('css/materialize.css') !!}
+{!! Html::style('lib/xeditable/css/xeditable.css') !!}
+{{--{!! Html::script('lib/slider.js') !!}--}}
+{{--Custom CSS--}}
 
-    {{--{!! Html::style('css/statevis.css') !!}--}}
-    {!! Html::style('css/rerouting.css') !!}
-    {!! Html::style('css/dnd.css') !!}
-    {{--{!! Html::style('css/jquery.rateyo.css') !!}--}}
+{{--{!! Html::style('css/statevis.css') !!}--}}
+{!! Html::style('css/rerouting.css') !!}
+{!! Html::style('css/dnd.css') !!}
 
 
-    {{---------------------------------- COMPOENTNS CSS -------------------------------------------}}
+{{--{!! Html::style('css/jquery.rateyo.css') !!}--}}
 
-            {{-- EVENTS --}}
-    {!! Html::style('components/events-component/events.style.css') !!}
 
-    {{---------------------------------- END OF COMPOENTNS CSS  -------------------------------------------}}
+{{------------------------------------ START OF COMPONENTS (CSS) --------------------------------------------}}
 
-            <!--Fonts-->
+    {{-- EVENTS --}}
+{!! Html::style('components/events-component/events.style.css') !!}
+
+{{---------------------------------- END OF COMPONENTS (CSS)  -------------------------------------------}}
+
+
+    {{---------------------------------- START OF FONTS  --------------------------------------------}}
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" type="text/css">
+
+    {{---------------------------------- END OF FONTS  --------------------------------------------}}
 
 
 </head>
@@ -61,7 +68,8 @@ header("Access-Control-Allow-Origin: *");
 
 </body>
 
-<!-- Application Dependencies -->
+{{-------------------------------- START OF Application Dependencies -------------------------------------------}}
+
 
 
 {!! Html::script('lib/angular-ui-router.min.js') !!}
@@ -136,13 +144,41 @@ header("Access-Control-Allow-Origin: *");
 {!! Html::script('lib/angular-filter.js') !!}
 
 
-{{---------------------------------- COMPOENTNS JS -------------------------------------------}}
+
+{{-- DATA TABLES --}}
+{!! Html::style('lib/data-tables/data-tables.min.css') !!}
+{!! Html::script('lib/data-tables/data-tables.min.js') !!}
+
+
+{!! Html::script('bower_components/angular-datatables/dist/angular-datatables.js') !!}
+{!! Html::script('bower_components/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.min.js') !!}
+
+{!! Html::style('bower_components/angular-datatables/dist/css/angular-datatables.min.css') !!}
+
+{!! Html::script('bower_components/datatables-light-columnfilter/dist/dataTables.lightColumnFilter.js') !!}
+{!! Html::script('bower_components/angular-datatables/dist/plugins/light-columnfilter/angular-datatables.light-columnfilter.js') !!}
+
+{{-- END DATA TABLES --}}
+
+
+{{--------------------------------- END OF Application Dependencies ------------------------------------------}}
+
+
+{{--------------------------------- START OF CUSTOM STYLE ------------------------------------------}}
+
+{!! Html::style('css/styles.css') !!}
+
+{{--------------------------------- END OF CUSTOM STYLE ------------------------------------------}}
+
+
+
+{{---------------------------------- START OF COMPONENTS (JS) ------------------------------------------}}
 
 {{-- EVENTS --}}
 {!! Html::script('components/events-component/events.component.js') !!}
 {!! Html::script('components/events-component/events.service.js') !!}
 
-{{---------------------------------- END OF COMPOENTNS JS  -------------------------------------------}}
+{{-------------------------------- END OF COMPONENTS (JS)  -------------------------------------------}}
 
 <script>angular.module("acadb").constant("CSRF_TOKEN", '{!! csrf_token() !!}');</script>
 

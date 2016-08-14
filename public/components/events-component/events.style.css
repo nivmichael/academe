@@ -1,14 +1,15 @@
 #eventsView {
-    margin-top:  80px;
+    margin-top: 80px;
 }
 
 #eventsView .tableParent {
     width: 95%;
     margin: 0 auto;
-    border-radius: 8px;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border: 1px solid #444;
+    /*border-radius: 8px;*/
+    /*-webkit-border-radius: 8px;*/
+    /*-moz-border-radius: 8px;*/
+    border: 1px solid lightgray;
+    padding: 10px;
 }
 
 #eventsView .tableBottom {

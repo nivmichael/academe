@@ -1,31 +1,10 @@
 <section id="eventsView">
     <section class="tableParent">
-        <table wt-responsive-table class="eventsTable">
-            <tr>
-                <th>Event Date</th>
-                <th>Event Type</th>
-                <th># of Guests</th>
-                <th>Status</th>
-            </tr>
-            <tr>
-                <td>18-12-2016</td>
-                <td>Opan day event title</td>
-                <td>3</td>
-                <td class="active">Active</td>
-            </tr>
-            <tr>
-                <td>18-12-2016</td>
-                <td>Opan day event title</td>
-                <td>6</td>
-                <td class="finished">Active</td>
-            </tr>
-            <tr>
-                <td>18-12-2016</td>
-                <td>Opan day event title</td>
-                <td>4</td>
-                <td class="finished">Active</td>
-            </tr>
+
+
+        <table datatable="$ctrl.eventsDT.getDt" dt-options="$ctrl.eventsDT.options" dt-columns="$ctrl.eventsDT.columns"
+               class="events-table table table-striped border-less dataTable">
         </table>
-        <section class="tableBottom"></section>
+
     </section>
 </section>

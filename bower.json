@@ -1,0 +1,23 @@
+{
+  "name": "Academe",
+  "description": "",
+  "main": "",
+  "authors": [
+    "sergei <sergeisafrigin@gmail.com>"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.5.8",
+    "angular-datatables": "^0.5.4",
+    "datatables-light-columnfilter": "^1.0.1",
+    "datatables-buttons": "^1.2.2",
+    "font-awesome": "^4.6.3"
+  }
+}

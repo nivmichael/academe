@@ -32,6 +32,9 @@ var acadb = angular.module('acadb', [
     'dndLists',
     'ui.slider',
 
+    //COMPONENTS
+    'acadb.components.events'
+
     ])
 
 
