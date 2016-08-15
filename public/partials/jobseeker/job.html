@@ -1,55 +1,52 @@
 <form>
-<div class="modal-header">
-    <span class="modal-title">{{jobPost.postInfo.title | capitalize}}</span> <small>Job id: {{jobPost.postInfo.id}}</small> <button class="img-btn right" ng-click="close()"><i class="glyphicon glyphicon-remove"></i></button>
-</div>
 
-<div class="modal-body" style="height:620px;overflow:auto;">
-
-    <ul class="col-md-2">
-        <div ui-sref="general"  ui-sref-active="active" class="postLi btn">
-           General
-        </div>
-        <div ui-sref="the_company" ui-sref-active="active" class="postLi btn">
-           The Company
-        </div>
-        <div ui-sref="company_video" ui-sref-active="active" class="postLi btn">
-           Company Video
-        </div>
-        <div ui-sref="company_site" ui-sref-active="active" class="postLi btn">
-           Company Site
-        </div>
-    </ul>
-
-    <div ui-view="job"></div>
-
-
-
+    <div class="modal-header">
+        <span class="modal-title">{{jobPost.postInfo.title | capitalize}}</span> <small>Job id: {{jobPost.postInfo.id}}</small> <button class="img-btn right" ng-click="close()"><i class="glyphicon glyphicon-remove"></i></button>
+    </div>
+    <div class="modal-body" style="height:620px;overflow:auto;">
+        <ul class="col-md-2">
+            <div ui-sref="general"       ui-sref-active="active" class="postLi btn">
+               General
+            </div>
+            <div ui-sref="the_company"   ui-sref-active="active" class="postLi btn">
+               The Company
+            </div>
+            <div ui-sref="company_video" ui-sref-active="active" class="postLi btn">
+               Company Video
+            </div>
+            <div ui-sref="company_site"  ui-sref-active="active" class="postLi btn">
+               Company Site
+            </div>
+        </ul>
+        <div ui-view="job"></div>
+    </div>
+    <div class="modal-footer">
+        <span>
 
 
-</div>
-<div class="modal-footer">
-    <span>
+              <div ng-if="applied">
+                  <h5 class="text-danger">
+                        You Applied for this job successfully
+                  </h5>
 
-          <div ng-if="applied">
-              <h5 class="text-danger">
-                    You Applied for this job successfully
-              </h5>
-              <a  ng-click="unApply()">
-                    Click here to cancel application for this job
-              </a>
-          </div>
-
-          <!-- open modal choose cover letter-->
+                  <a  ng-click="unApply()">
+                      <button type="submit" class="img-btn">
+                          <img ng-src="../img/buttons/jobseeker_modal/cancel_candidacy.png">
+                      </button>
+                  </a>
+              </div>
 
 
-          <button  type="submit" class="img-btn">
-              <img ng-src="../img/buttons/jobseeker_modal/2.png" class="">
-          </button>
 
-          <button ng-if="!applied" ng-click="applyForJob()" type="submit" class="img-btn">
-              <img ng-src="../img/buttons/jobseeker_modal/1.png" class="">
-          </button>
+              <!-- open modal choose cover letter-->
+              <button ng-if="!applied" ng-click="interestedInJob()"  type="submit" class="img-btn">
+                  <img ng-src="../img/buttons/jobseeker_modal/2.png" class="">
+              </button>
 
-    </span>
-</div>
+              <button ng-if="!applied" ng-click="applyForJob()" type="submit" class="img-btn">
+                  <img ng-src="../img/buttons/jobseeker_modal/1.png" class="">
+              </button>
+
+        </span>
+    </div>
 </form>

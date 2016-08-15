@@ -10,18 +10,28 @@ angular.module('acadb')
             labelFilterData.broadcast(label)
         }
 
+        $scope.labelsCounts = labelFilterData.getLabelCount();
+        $scope.$on('updateBadges', function(event, labelsCounts) {
+            console.log(labelsCounts);
+            $scope.labelsCounts = labelsCounts;
+        });
+        //$scope.$on('handleLabel', function(event, post_id, move_to) {
+        //    $scope.labelsCounts = labelFilterData.getLabelCount();
+        //})
+        //$scope.$on('handleRemovedLabel', function(event, post_id, remove_from) {
+        //    $scope.labelsCounts = labelFilterData.getLabelCount();
+        //});
+
+
         $scope.status = {
             isopen: false
         };
 
-
-
-        $scope.toggleDropdown = function($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-            $scope.status.isopen = !$scope.status.isopen;
-        };
-
+      $scope.toggleDropdown = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.status.isopen = !$scope.status.isopen;
+      };
 
       TableData.list().$promise.then(function(tables){
       	$scope.tables = tables;
@@ -39,25 +49,18 @@ angular.module('acadb')
       //  //$scope.allJobs = user.posts;
       //});
 
-
       // on default restricts all steps in sideNav
       $scope.restricted = true;
       $scope.isRestricted =function(){
-
           //return $scope.restricted;
-
           if( $scope.restricted ){
                 return true;
             }else{
               return false;
           }
-
       }
-
       $scope.$on('newSignedUser', function(event, unrestrict) {
-
           $scope.restricted = false;
-
       });
 
       $scope.type = $stateParams.type;

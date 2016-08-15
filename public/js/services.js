@@ -6,8 +6,10 @@ angular.module('acadb.services', ['acadb.services.resources','acadb.services.for
 
 
 
-.factory('labelFilterData', function($http, $q, $rootScope, $stateParams ) {
+.factory('labelFilterData', function($http, $q, $rootScope, $stateParams, Account, $filter, Job ) {
 	var filter;
+	var labelsCount = [];
+	var posts;
 
 	return {
 		getFilterLabel: function(){
@@ -22,6 +24,22 @@ angular.module('acadb.services', ['acadb.services.resources','acadb.services.for
 			filter = label;
 			return filter;
 			//return $q.when(filter);
+		},
+		getLabelCount: function(){
+
+			Account.getProfile().then(function(user){
+				posts = user.posts;
+				//console.log(posts);
+
+				angular.forEach(posts, function(value, key) {
+					console.log(posts.index)
+					labelsCount[key] = value.length;
+				});
+
+				//console.log(posts);
+				//console.log(labelsCount);
+			});
+			return labelsCount;
 		},
 		broadcast: function(){
 			$rootScope.$broadcast('filter', filter);

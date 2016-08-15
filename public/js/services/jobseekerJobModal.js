@@ -15,7 +15,7 @@ angular.module('acadb.services.jobseekerJobModal', [])
                         if( _.contains( data.user.posts.applied , data.post['postInfo']['id']) ){
                             $scope.applied = true;
                         }
-
+                        $scope.label = $stateParams.labeled;
                         $scope.jobPost  = data.post;
                         $scope.formData = data.formData;
                         $scope.postedBy = data.post['postInfo']['user_id'];

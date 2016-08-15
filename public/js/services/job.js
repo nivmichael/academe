@@ -1,7 +1,6 @@
 angular.module('acadb.services.job', []).value('version', '0.1')
 
 .factory('Job', function($http, $rootScope, $q, PostData ) {
-
     var jobsArr;
     var jobs;
    // var jobsForUser;
@@ -11,7 +10,6 @@ angular.module('acadb.services.job', []).value('version', '0.1')
             //
             if(!jobsArr){
                 jobsArr = PostData.list().$promise.then(function(posts){
-                    console.log(posts);
                     jobsArr = posts;
                     return $q.when(jobsArr);
                 })
@@ -19,14 +17,10 @@ angular.module('acadb.services.job', []).value('version', '0.1')
             return $q.when(jobsArr);
         },
         getJobsAgain: function(){
-
-
             jobsArr = PostData.list().$promise.then(function(posts){
-                console.log(posts);
                 jobsArr = posts;
                 return $q.when(jobsArr);
             })
-
             return $q.when(jobsArr);
         },
         getJob: function(id){
@@ -38,7 +32,5 @@ angular.module('acadb.services.job', []).value('version', '0.1')
             }
             return $q.when(jobs[id])
         }
-
     };
-
 })

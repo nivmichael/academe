@@ -46,11 +46,13 @@
 
 			</div>
 			<div class="clear"></div>
-
+	<!--<pre>{{(allPosts|labeled:label:this).length }}</pre>-->
 			<div class="">
-				<div  class=" text-center col-xs-12 col-sm-6 col-lg-6 col-lg-6"  ng-repeat="(key,job) in allPosts  |  toArray:false  | labeled:label:this |  filter:searchText | orderBy:orderByFilter:reverse">
+				<div  class=" text-center col-xs-12 col-sm-6 col-lg-6 col-lg-6"
 
-						<div  class="job-card card text-center" ui-sref="general({jobId:job.postInfo.id})">
+					  ng-repeat="(key,job) in allPosts  |  toArray:false  | labeled:label:this |  filter:searchText | orderBy:orderByFilter:reverse">
+
+						<div  class="job-card card text-center" ui-sref="general({jobId:job.postInfo.id})" ng-class="{labeledPostBox:job.label}">
 							<div class="col-xs-3 col-sm-3 col-lg-3 col-lg-3 job-card-inner"><img ng-src="/{{job.postInfo.company_logo || '../../img/icons/academelogo.jpg' }}" style="width:100px"  class=""></div>
 
 								<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1">

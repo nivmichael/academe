@@ -1,25 +1,40 @@
 angular.module('acadb.filters', [])
 
-.filter('labeled', function(Account, $stateParams) {
+.filter('labeled', function(Account, $stateParams, $rootScope) {
 	return function(input, label, scope) {
+
 		var labeledPosts = scope.labeledPosts;
+		console.log(labeledPosts);
+
 		if(!$stateParams.labeled){
 			label = 'index';
+
 		}
-		var output = [];
+		labeledPosts['index'] = [];
+		var output    = [];
+
+
 		if(typeof (label) === 'undefined' || label == '' || label == 'index'){
 			angular.forEach(input, function(value, key) {
 				if(!angular.isDefined(value.label) ){
+					labeledPosts['index'].push( value.postInfo.id )
 					output.push(value);
 				}
 			});
 		}else{
+
 			angular.forEach(input, function(value, key) {
+
 				if(_.contains(labeledPosts[label], value.postInfo.id) ){
 					output.push(value);
+				}else{
+					labeledPosts['index'].push( value.postInfo.id )
 				}
 			});
 		}
+
+		$rootScope.$broadcast('updateBadges', labeledPosts);
+		console.log(labeledPosts);
 		return output;
 	}
 })

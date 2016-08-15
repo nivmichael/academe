@@ -31,7 +31,7 @@
                  ng-class="{active: $stateParams.labeled ==  'index' || $stateParams.labeled ==  '' }"
                  ui-sref="jobseeker.findajob({labeled:'index'})"
                  ui-sref-opts="{notify: false}">
-                 <span class="play"><span>?</span></span>Find Jobs<span class="right">( {{  }} )</span> </a>
+                 <span class="play"><span>?</span></span>Find Jobs<span class="right">( {{ labelsCounts['index'].length }} )</span> </a>
         </li>
         <li>
             <a  ng-click="setFilterLabel('interesting')"
@@ -39,21 +39,21 @@
                 ui-sref="jobseeker.findajob({labeled:'interesting'})"
                 ui-sref-opts="{notify: false}">
 
-                <span class="play"><span>?</span></span>Interesting</a>
+                <span class="play"><span>?</span></span>Interesting <span class="right">( {{ labelsCounts['interesting'] }} )</span></a>
         </li>
         <li>
             <a  ng-click="setFilterLabel('applied')"
                 ng-class="{active: $stateParams.labeled ==  'applied'}"
                 ui-sref="jobseeker.findajob({labeled:'applied'})"
                 ui-sref-opts="{notify: false}" >
-                <span class="play"><span>?</span></span>My Applications</a>
+                <span class="play"><span>?</span></span>My Applications <span class="right">( {{ labelsCounts['applied'].length }} )</span></a>
         </li>
         <li>
             <a   ng-click="setFilterLabel('rejected')"
                  ng-class="{active: $stateParams.labeled ==  'rejected'}"
                  ui-sref="jobseeker.findajob({labeled:'rejected'})"
                  ui-sref-opts="{notify: false}" >
-                <span class="play"><span>?</span></span>Rejected</a>
+                <span class="play"><span>?</span></span>Rejected<span class="right">( {{ labelsCounts['rejected'] }} )</span></a>
         </li>
 
     </ul>

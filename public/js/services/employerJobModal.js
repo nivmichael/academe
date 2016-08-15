@@ -10,6 +10,7 @@ angular.module('acadb.services.employerJobModal', [])
                     backdrop: 'static',
                     controller: function($scope, $uibModalInstance, $sce, post, form, $http, $stateParams,An_searchData,options,$rootScope) {
 
+
                         $scope.jobPost  = post.post;
                         $scope.formData = post.formData;
                         $scope.groups   = options.data;
