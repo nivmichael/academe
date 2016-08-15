@@ -11,6 +11,6 @@ class Events extends Model
     public function users()
     {
         return $this->belongsToMany('App\User', 'ac_event_invites', 'event_id', 'user_id')
-            ->withPivot('user_id');
+            ->withPivot('event_id');
     }
 }

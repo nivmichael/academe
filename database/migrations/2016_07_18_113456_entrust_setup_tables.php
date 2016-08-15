@@ -67,22 +67,28 @@ class EntrustSetupTables extends Migration
         });
 
         // Create table for list invites
-        Schema::create('ac_event_invites', function(Blueprint $table) {
+        Schema::create('ac_event_invites', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->integer('event_id');
-            $table->integer('user_id');
-            $table->integer('user_status');
+
+            $table->integer('event_id')->unsigned();
+            $table->foreign('event_id')
+                ->references('id')
+                ->on('ac_event')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->integer('user_id')->unsigned();
+            $table->integer('user_status')->unsigned();
             $table->text('comments');
+
         });
 
         // Create table for user event status
-        Schema::create('ac_event_user_status_list', function(Blueprint $table) {
+        Schema::create('ac_event_user_status_list', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->integer('event_id');
-            $table->integer('user_id');
-            $table->integer('invite_id');
+            $table->integer('invite_id')->unsigned();
             $table->string('status');
         });
     }

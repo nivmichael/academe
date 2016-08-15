@@ -6,6 +6,7 @@ use App\Events;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\EventDispatcher\Event;
 
 class EventsController extends Controller
 {
@@ -58,10 +59,8 @@ class EventsController extends Controller
             )
         );
 
-        //$invites = DB::table('ac_event_invites')->where('event_id', 1)->lists('user_id');
+        $events = new Events();
 
-        foreach ($invites as $invite) {
-            echo $invite;
-        }
+        $event = $events::find(1)->users();
     }
 }

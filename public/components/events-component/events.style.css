@@ -5,52 +5,135 @@
 #eventsView .tableParent {
     width: 95%;
     margin: 0 auto;
-    /*border-radius: 8px;*/
-    /*-webkit-border-radius: 8px;*/
-    /*-moz-border-radius: 8px;*/
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
     border: 1px solid lightgray;
     padding: 10px;
 }
 
-#eventsView .tableBottom {
-    height: 20px;
-    background: #88b8eb;
-    border-top: 1px solid #444;
-    -webkit-border-radius: 8px 0 8px 8px;
-    -moz-border-radius: 0 0 8px 8px;
-    border-radius: 0 0 8px 8px;
+#eventsView input[type=text],
+#eventsView input[type=number],
+#eventsView select {
+    border: 1px solid #ddd;
+    height: 25px;
 }
 
-#eventsView .eventsTable tr th,
-#eventsView .eventsTable tr td {
-    text-align: center;
+#eventsView th {
+    padding-left: 0;
 }
 
-#eventsView .eventsTable tr th {
-    background: #88b8eb;
-    color: #fff;
+#eventsView th:last-child {
+    padding-right: 0;
+}
+
+#eventsView td {
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
-    border-bottom: 1px solid #444;
 }
 
-#eventsView .eventsTable tr th:first-child {
-    -webkit-border-radius: 8px 0 0 0;
-    -moz-border-radius: 8px 0 0 0;
-    border-radius: 8px 0 0 0;
+div#DataTables_Table_0_filter {
+    margin-right: 0;
 }
 
-#eventsView .eventsTable tr th:last-child {
-    -webkit-border-radius: 0 8px 0 0;
-    -moz-border-radius: 0 8px 0 0;
-    border-radius: 0 8px 0 0;
+.dataTables_length select {
+    margin: 0 5px;
 }
 
-#eventsView .eventsTable tr td.active {
-    color: #1FFF20;
+#eventsView label {
+    font-weight: 500;
 }
 
-#eventsView .eventsTable tr td.finished {
-    color: #DD0707;
+.dt-button {
+    border: none !important;
+    color: #fff !important;
+    -webkit-border-radius: 4px !important;
+    -moz-border-radius: 4px !important;
+    border-radius: 4px !important;
+    transition: background 0.2s;
+}
+
+.dt-button:active,
+.dt-button:focus {
+    outline: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+.buttons-excel {
+    background: #27ae60 !important;
+}
+
+.buttons-excel:hover {
+    background: #219251 !important;
+}
+
+.buttons-print {
+    background: #2980b9 !important;
+}
+
+.buttons-print:hover {
+   background:  #236d9d !important;
+}
+
+.dataTables_paginate a.current {
+    background-color: #2980b9 !important;
+}
+
+@media only screen and (max-width: 640px) {
+
+    div.dt-buttons {
+        text-align: left !important;
+        margin-bottom: 10px;
+    }
+
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter {
+        text-align: left !important;
+    }
+
+    .dataTables_wrapper .dataTables_length {
+        margin-left: 0;
+    }
+
+    table.dataTable thead .sorting_asc {
+        width: 170px !important;
+    }
+
+}
+
+@media only screen and (max-width: 550px) {
+    #eventsView th:last-child {
+        width: 85px !important;
+    }
+
+    table.dataTable thead .sorting_asc {
+        width: 140px !important;
+    }
+}
+
+@media only screen and (max-width: 420px) {
+    #eventsView th:last-child {
+        width: 41px !important;
+    }
+
+    #eventsView td {
+        padding: 5px;
+    }
+
+    #eventsView td {
+        padding: 5px;
+        font-size: 11px;
+    }
+
+    #eventsView th.sorting, #eventsView .sorting_asc {
+        padding: 5px;
+        font-size: 10px;
+    }
+
+    #eventsView th {
+        padding: 5px;
+    }
 }
