@@ -91,6 +91,13 @@ class EntrustSetupTables extends Migration
             $table->integer('invite_id')->unsigned();
             $table->string('status');
         });
+
+        // Create table for event files
+        Schema::create('ac_event_file', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
+            $table->integer('event_id')->unsigned();
+        });
     }
 
     /**
@@ -107,5 +114,6 @@ class EntrustSetupTables extends Migration
         Schema::drop('ac_event');
         Schema::drop('ac_event_invites');
         Schema::drop('ac_event_user_status_list');
+        Schema::drop('ac_event_file');
     }
 }

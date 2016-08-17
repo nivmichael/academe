@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Events;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 use Symfony\Component\EventDispatcher\Event;
 
 class EventsController extends Controller
@@ -25,42 +25,62 @@ class EventsController extends Controller
             $event = $events::where('id', $id)->first();
 
             if ($event) {
+
                 return $event->toJson();
+
             } else {
+                
                 return 'error';
+                
             }
         }
     }
 
-    // create event
-    public function createEvent(Request $request)
+    // create event or update
+    public function postEvent(Request $request)
     {
-        $event = new Events();
-        $event->event_date = Carbon::today();
-        $event->event_type = $request['type'];
-        $event->event_subject = $request['subject'];
-        $event->event_text = $request['text'];
-        $event->event_comment = $request['comment'];
-        $event->active = $request['isActive'];
-        $event->save();
-    }
+        if ($request['status'] == 'insert') { // if status is insert (create new event)
 
-    // add user to event
-    public function addUsersToEvent(Request $request)
-    {
-        $list = array(
-            'eventId' => 1,
-            'users' => array(
-                ['id' => 1, 'status' => 'On Hold', 'comments' => 'comment text'],
-                ['id' => 2, 'status' => 'On Hold', 'comments' => 'comment text'],
-                ['id' => 3, 'status' => 'On Hold', 'comments' => 'comment text'],
-                ['id' => 4, 'status' => 'On Hold', 'comments' => 'comment text'],
-                ['id' => 5, 'status' => 'On Hold', 'comments' => 'comment text'],
-            )
-        );
+            // file
 
-        $events = new Events();
+           /* if($request->hasFile('file')) {
+                $path = storage_path() . '/app/events/';
+                $fileName = $request->file('file')->get;
+                //$request->file('file')->move($path, $fileName);
+                var_dump($fileName);
+            }
+            return 0;*/
 
-        $event = $events::find(1)->users();
+            $newEvent = new Events();
+            $newEvent->event_date = $request['eventDate'];
+            $newEvent->event_type = $request['eventType'];
+            $newEvent->event_subject = $request['eventSubject'];
+            $newEvent->event_text = $request['eventText'];
+            $newEvent->event_comment = $request['eventComment'];
+            $newEvent->active = $request['eventActive'];
+            $newEvent->save();
+
+            // test users
+
+            $users = array(
+                array('id' => '1', 'userStatus' => '1', 'comments' => 'comment of user'),
+                array('id' => '2', 'userStatus' => '1', 'comments' => 'comment of user'),
+                array('id' => '3', 'userStatus' => '1', 'comments' => 'comment of user'),
+                array('id' => '4', 'userStatus' => '1', 'comments' => 'comment of user'),
+                array('id' => '5', 'userStatus' => '1', 'comments' => 'comment of user')
+            );
+
+            // if users exist in new event add new invite
+            if(count($users) > 0) {
+                foreach ($users as $user) {
+                    $newEvent->users()->attach($newEvent->id,
+                        ['event_id' => $newEvent->id, 'user_id' => $user['id'], 'user_status' => $user['userStatus'], 'comments' => $user['comments']]);
+                }
+            }
+
+
+        } else { // if status is update (update event)
+
+        }
     }
 }
