@@ -77,6 +77,7 @@ return [
 //        ],
         'domain' => [
             'driver'    => 'mysql',
+            'engine' => 'InnoDB',
             'host'      => 'localhost',
             'database'  => 'domains',
             'username'  => 'root',

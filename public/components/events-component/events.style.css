@@ -33,6 +33,14 @@
     border-radius: 0;
 }
 
+#eventsView tr:hover td {
+    background-color: #086fe9;
+    border-color: transparent;
+    color: white;
+    cursor: pointer;
+}
+
+
 div#DataTables_Table_0_filter {
     margin-right: 0;
 }

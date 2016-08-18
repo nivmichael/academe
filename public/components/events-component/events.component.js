@@ -14,51 +14,48 @@ angular.module("acadb.components.events", [
  * controller constructor
  * @constructor
  */
-function EventComponentCtrl(DTOptionsBuilder, DTColumnBuilder, $q, $timeout) {
+function EventComponentCtrl($state, $scope, DTOptionsBuilder, DTColumnBuilder, eventsService, $log) {
 
     var vm = this;
 
+    vm.$state = $state;
+    vm.$scope = $scope;
+    vm.DTOptionsBuilder = DTOptionsBuilder;
+    vm.DTColumnBuilder = DTColumnBuilder;
+    vm.eventsService = eventsService;
+    vm.$log = $log;
 
-    /////////////////
 
+}
+
+/**
+ * initialize controller
+ */
+EventComponentCtrl.prototype.$onInit = function () {
 
     var vm = this;
 
 
     //events data-table conf object
     vm.eventsDT = {
-        options: DTOptionsBuilder.fromFnPromise(function () {
-            var defer = $q.defer();
-
-            var events = [{
-                id: 1,
-                date: moment().format("LLL"),
-                type: "aloo1",
-                numOfGuests: 4,
-                status: 'active'
-            }, {
-                id: 1,
-                date: moment().subtract(4, 'days').format("LLL"),
-                type: "aloo2",
-                numOfGuests: 2,
-                status: 'finished'
-            }, {
-                id: 1,
-                date: moment().subtract(14, 'days').add(3, 'hours').format("LLL"),
-                type: "aloo3",
-                numOfGuests: 7,
-                status: 'finished'
-            }];
-
-            $timeout(function() {
-                defer.resolve(events);
-
-            }, 1000);
-
-
-            return defer.promise;
+        options: vm.DTOptionsBuilder.fromFnPromise(function () {
+            return vm.eventsService.getEvents();
         }).withPaginationType('full_numbers')
             .withOption('order', [0, 'asc'])
+            .withOption('rowCallback', function (element, event, iDisplayIndex, iDisplayIndexFull) {
+
+                // Unbind first in order to avoid any duplicate handler (see https://github.com/l-lin/angular-datatables/issues/87)
+                $('td', element).unbind('click');
+                $('td', element).bind('click', function () {
+
+                    vm.$scope.$apply(function () {
+                        vm.openEvent(event);
+                    });
+
+                });
+                return element;
+
+            })
             .withButtons([
                 'print',
                 'excel'
@@ -89,20 +86,13 @@ function EventComponentCtrl(DTOptionsBuilder, DTColumnBuilder, $q, $timeout) {
             }),
 
         columns: [
-            DTColumnBuilder.newColumn('date').withTitle('Date'),
-            DTColumnBuilder.newColumn('type').withTitle('Type'),
-            DTColumnBuilder.newColumn('numOfGuests').withTitle('# of Guests'),
-            DTColumnBuilder.newColumn('status').withTitle('Status')
+            vm.DTColumnBuilder.newColumn('date').withTitle('Date'),
+            vm.DTColumnBuilder.newColumn('type').withTitle('Type'),
+            vm.DTColumnBuilder.newColumn('numOfGuests').withTitle('# of Guests'),
+            vm.DTColumnBuilder.newColumn('status').withTitle('Status')
         ]
 
     };
-
-}
-
-/**
- * initialize controller
- */
-EventComponentCtrl.prototype.$onInit = function () {
 
 };
 
@@ -113,5 +103,14 @@ EventComponentCtrl.prototype.$onDestroy = function () {
 
 };
 
+
+EventComponentCtrl.prototype.openEvent = function (event) {
+
+    var vm = this;
+
+    vm.$state.go('admin.event', {});
+};
+
+
 //inject the following dependencies
-EventComponentCtrl.$inject = ['DTOptionsBuilder', 'DTColumnBuilder', '$q', '$timeout'];
+EventComponentCtrl.$inject = ['$state', '$scope', 'DTOptionsBuilder', 'DTColumnBuilder', 'eventsService', '$log'];

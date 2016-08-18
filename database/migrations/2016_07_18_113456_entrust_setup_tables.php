@@ -22,7 +22,7 @@ class EntrustSetupTables extends Migration
 
         // Create table for associating roles to users (Many-to-Many)
         Schema::create('role_user', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned();
+            $table->mediumInteger('user_id')->unsigned();
             $table->integer('role_id')->unsigned();
 
             $table->foreign('user_id')->references('id')->on('type_user')
@@ -85,19 +85,19 @@ class EntrustSetupTables extends Migration
         });
 
         // Create table for user event status
-        Schema::create('ac_event_user_status_list', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
-            $table->integer('invite_id')->unsigned();
-            $table->string('status');
-        });
-
-        // Create table for event files
-        Schema::create('ac_event_file', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
-            $table->integer('event_id')->unsigned();
-        });
+//        Schema::create('ac_event_user_status_list', function (Blueprint $table) {
+//            $table->increments('id');
+//            $table->timestamps();
+//            $table->integer('invite_id')->unsigned();
+//            $table->string('status');
+//        });
+//
+//        // Create table for event files
+//        Schema::create('ac_event_file', function (Blueprint $table) {
+//            $table->increments('id');
+//            $table->timestamps();
+//            $table->integer('event_id')->unsigned();
+//        });
     }
 
     /**
@@ -111,9 +111,9 @@ class EntrustSetupTables extends Migration
         Schema::drop('permissions');
         Schema::drop('role_user');
         Schema::drop('roles');
-        Schema::drop('ac_event');
         Schema::drop('ac_event_invites');
-        Schema::drop('ac_event_user_status_list');
-        Schema::drop('ac_event_file');
+//        Schema::drop('ac_event_user_status_list');
+//        Schema::drop('ac_event_file');
+        Schema::drop('ac_event');
     }
 }
