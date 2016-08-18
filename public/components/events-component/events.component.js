@@ -14,7 +14,7 @@ angular.module("acadb.components.events", [
  * controller constructor
  * @constructor
  */
-function EventComponentCtrl(DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $q, $timeout) {
+function EventComponentCtrl(DTOptionsBuilder, DTColumnBuilder, $q, $timeout) {
 
     var vm = this;
 
@@ -114,4 +114,4 @@ EventComponentCtrl.prototype.$onDestroy = function () {
 };
 
 //inject the following dependencies
-EventComponentCtrl.$inject = ['DTOptionsBuilder', 'DTColumnDefBuilder', 'DTColumnBuilder', '$q', '$timeout'];
+EventComponentCtrl.$inject = ['DTOptionsBuilder', 'DTColumnBuilder', '$q', '$timeout'];
