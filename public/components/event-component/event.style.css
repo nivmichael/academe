@@ -1,0 +1,55 @@
+#eventView {
+
+}
+
+#eventView .attachments {
+    padding-top: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin-left: 15px;
+    min-height: 200px;
+}
+
+@media (max-width: 767px) {
+
+    #eventView .attachments-container {
+        margin-top: 30px;
+        border-top: 1px solid lightgray;
+        padding-top: 30px !important;
+    }
+
+    #eventView .attachments {
+        margin-left: initial;
+    }
+
+}
+
+#eventView .uib-datepicker {
+    max-width: 400px;
+    width: 100%;
+}
+
+#eventView .add-attachment-button {
+    margin-top: 30px;
+}
+
+#eventView .attachment {
+    margin-bottom: 10px;
+    padding: 0 10px;
+}
+
+#eventView .attachment .download-icon,
+#eventView .attachment .file-icon,
+#eventView .attachment .delete-icon {
+    padding-top: 3px !important;
+}
+
+#eventView section.divider-section {
+    border-top: 1px solid lightgray;
+    padding: 20px;
+}
+
+#eventView .invites-table {
+    padding: 20px 20px;
+    border: 1px solid lightgray;
+    margin-top: 20px;
+}

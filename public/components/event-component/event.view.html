@@ -1,0 +1,151 @@
+<div id="eventView" class="ac-page">
+
+    <!-- HEADER-->
+    <section class="row header-section">
+
+        <div class="col-xs-12">
+
+            <!-- FORM CONTROL BUTTONS -->
+            <div class="pull-right">
+
+                <div class="btn btn-info">
+                    <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                    Save
+                </div>
+
+                <!--<div class="btn btn-info">-->
+                    <!--<i class="fa fa-pencil" aria-hidden="true"></i>-->
+                    <!--Edit-->
+                <!--</div>-->
+
+                <div class="btn btn-danger">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    Delete
+                </div>
+            </div>
+
+
+            <!-- TITLE -->
+            <h3 class="pull-left no-margin">
+                MyEvent - Lecture
+            </h3>
+
+
+        </div>
+
+    </section>
+
+    <!-- FORM -->
+    <section class="row">
+
+
+        <!-- FORM -->
+        <form class="col-sm-8 no-padding">
+            <br/><br/>
+
+            <!-- TITLE -->
+            <div class="row">
+
+                <label for="title" class="col-sm-3">
+                    Title:
+                </label>
+
+                <div class="col-sm-7">
+                    <input id="title" class="form-control"/>
+                </div>
+            </div>
+
+            <!-- TYPE -->
+            <div class="row">
+
+                <label for="type" class="col-sm-3">
+                    Type:
+                </label>
+
+                <div class="col-sm-7">
+                    <select id="type" class="form-control">
+                        <option>Happening</option>
+                        <option>Lecture</option>
+                        <option>Ceremony</option>
+                    </select>
+                </div>
+            </div>
+
+
+        </form>
+
+        <!-- EVENT DATE-->
+        <div class="col-sm-4 no-padding text-center">
+
+            <div uib-datepicker ng-model="$ctrl.eventDate" datepicker-options="$ctrl.datePickerOptions"></div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- CONTENT AND ATTACHMENTS -->
+    <section class = "row divider-section">
+
+        <div class = "col-sm-8 no-padding">
+            <div class = "row">
+                <label for = "content" class = "col-xs-12">
+                    Content:
+                </label>
+            </div>
+
+
+            <textarea id = "content" ui-tinymce="$ctrl.tinymceOptions" ng-model="$ctrl.eventContent"></textarea>
+        </div>
+
+
+        <div class = "col-sm-4 no-padding attachments-container">
+
+            <div class = "row">
+                <label class = "col-xs-12">
+                    Attachments:
+                </label>
+            </div>
+
+
+            <div class = "attachments">
+
+                <div class = "attachment row" ng-repeat="attachment in $ctrl.attachments">
+                    <i class="hoverable-btn clickable download-icon fa fa-download col-xs-1 no-padding text-center" aria-hidden="true"></i>
+                    <i class="file-icon fa fa-file-text-o col-xs-1 no-padding text-center" aria-hidden="true"></i>
+                    <input class = "file-name col-xs-9 no-padding" ng-model = "attachment.name" />
+                    <i class="hoverable-btn clickable delete-icon fa fa-times col-xs-1 no-padding text-center" aria-hidden="true"></i>
+                </div>
+
+
+                <div class = "text-center btn btn-info add-attachment-button block">
+                    <i class="fa fa-upload" aria-hidden="true"></i>
+                    Add Attachment
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- INVITES -->
+    <section class = "row divider-section">
+
+        <div class = "btn btn-info" ng-click = "$ctrl.editInvitees()">
+        <i class="fa fa-users" aria-hidden="true"></i>
+        Edit Invites
+    </div>
+
+        <div class = "invites-table">
+            <table datatable dt-options="$ctrl.invitesDT.options" dt-columns="$ctrl.invitesDT.columns"
+                   class="table border-less dataTable">
+            </table>
+        </div>
+
+
+
+    </section>
+
+</div>
