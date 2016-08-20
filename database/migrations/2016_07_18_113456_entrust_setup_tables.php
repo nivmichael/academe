@@ -11,93 +11,142 @@ class EntrustSetupTables extends Migration
      */
     public function up()
     {
-        // Create table for storing roles
-        Schema::create('roles', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name')->unique();
-            $table->string('display_name')->nullable();
-            $table->string('description')->nullable();
-            $table->timestamps();
-        });
+        
+        if (!Schema::hasTable('roles')) {
+            
+            // Create table for storing roles
+            Schema::create('roles', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name')->unique();
+                $table->string('display_name')->nullable();
+                $table->string('description')->nullable();
+                $table->timestamps();
+            });
+        }
+        
+        if (!Schema::hasTable('role_user')) {
+            
+            // Create table for associating roles to users (Many-to-Many)
+            Schema::create('role_user', function (Blueprint $table) {
+                $table->mediumInteger('user_id')->unsigned();
+                $table->integer('role_id')->unsigned();
 
-        // Create table for associating roles to users (Many-to-Many)
-        Schema::create('role_user', function (Blueprint $table) {
-            $table->mediumInteger('user_id')->unsigned();
-            $table->integer('role_id')->unsigned();
+                $table->foreign('user_id')->references('id')->on('type_user')
+                    ->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('role_id')->references('id')->on('roles')
+                    ->onUpdate('cascade')->onDelete('cascade');
+                $table->primary(['user_id', 'role_id']);
+            });
+        }
 
-            $table->foreign('user_id')->references('id')->on('type_user')
-                ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('role_id')->references('id')->on('roles')
-                ->onUpdate('cascade')->onDelete('cascade');
-            $table->primary(['user_id', 'role_id']);
-        });
+        if (!Schema::hasTable('permissions')) {
+            
+            // Create table for storing permissions
+            Schema::create('permissions', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name')->unique();
+                $table->string('display_name')->nullable();
+                $table->string('description')->nullable();
+                $table->timestamps();
+            });
+        }
 
-        // Create table for storing permissions
-        Schema::create('permissions', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name')->unique();
-            $table->string('display_name')->nullable();
-            $table->string('description')->nullable();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('permission_role')) {
+            
+            // Create table for associating permissions to roles (Many-to-Many)
+            Schema::create('permission_role', function (Blueprint $table) {
+                $table->integer('permission_id')->unsigned();
+                $table->integer('role_id')->unsigned();
 
-        // Create table for associating permissions to roles (Many-to-Many)
-        Schema::create('permission_role', function (Blueprint $table) {
-            $table->integer('permission_id')->unsigned();
-            $table->integer('role_id')->unsigned();
+                $table->foreign('permission_id')->references('id')->on('permissions')
+                    ->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('role_id')->references('id')->on('roles')
+                    ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->foreign('permission_id')->references('id')->on('permissions')
-                ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('role_id')->references('id')->on('roles')
-                ->onUpdate('cascade')->onDelete('cascade');
+                $table->primary(['permission_id', 'role_id']);
+            });
+        }
 
-            $table->primary(['permission_id', 'role_id']);
-        });
+        if (!Schema::hasTable('ac_event')) {
+            
+            // Create table for Events
+            Schema::create('ac_event', function (Blueprint $table) {
+                $table->increments('id');
+                $table->timestamps();
+                $table->timestamp('event_date');
+                $table->string('event_type');
+                $table->string('event_subject');
+                $table->text('event_text');
+                $table->text('event_comment');
+                $table->boolean('active');
+            });
+        }
 
-        // Create table for Events
-        Schema::create('ac_event', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
-            $table->timestamp('event_date');
-            $table->string('event_type');
-            $table->string('event_subject');
-            $table->text('event_text');
-            $table->text('event_comment');
-            $table->boolean('active');
-        });
+        if (!Schema::hasTable('ac_event_user_status_list')) {
 
-        // Create table for list invites
-        Schema::create('ac_event_invites', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+            //Create table for user event status
+            Schema::create('ac_event_user_status_list', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('user_status_type');
+            });
+        }
 
-            $table->integer('event_id')->unsigned();
-            $table->foreign('event_id')
-                ->references('id')
-                ->on('ac_event')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+        if (!Schema::hasTable('ac_event_invites')) {
+            
+            // Create table for list invites
+            Schema::create('ac_event_invites', function (Blueprint $table) {
+                $table->timestamps();
 
-            $table->integer('user_id')->unsigned();
-            $table->integer('user_status')->unsigned();
-            $table->text('comments');
+                $table->integer('event_id')->unsigned();
+                $table->foreign('event_id')
+                    ->references('id')
+                    ->on('ac_event')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
 
-        });
+                $table->mediumInteger('user_id')->unsigned();
+                $table->foreign('user_id')
+                    ->references('id')
+                    ->on('type_user')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
 
-        // Create table for user event status
-//        Schema::create('ac_event_user_status_list', function (Blueprint $table) {
-//            $table->increments('id');
-//            $table->timestamps();
-//            $table->integer('invite_id')->unsigned();
-//            $table->string('status');
-//        });
-//
-//        // Create table for event files
-//        Schema::create('ac_event_file', function (Blueprint $table) {
-//            $table->increments('id');
-//            $table->timestamps();
-//            $table->integer('event_id')->unsigned();
-//        });
+                $table->integer('user_status')->unsigned();
+                $table->foreign('user_status')
+                     ->references('id')
+                     ->on('ac_event_user_status_list')
+                     ->onUpdate('cascade')
+                     ->onDelete('cascade');
+
+                $table->text('comments');
+
+                $table->unique(['event_id', 'user_id']);
+                $table->primary(['event_id', 'user_id']);
+            });
+        }
+
+        if (!Schema::hasTable('file')) {
+
+            // Create table for event files
+            Schema::create('file', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('path');
+                $table->string('filename');
+                $table->enum('choises', ['event-attachment']);
+            });
+        }
+
+        if (!Schema::hasTable('ac_event_file')) {
+
+            // Create table for event files
+            Schema::create('ac_event_file', function (Blueprint $table) {
+                $table->integer('file_id')->unsigned();
+                $table->foreign('file_id')->references('id')->on('file');
+
+                $table->integer('event_id')->unsigned();
+                $table->foreign('event_id')->references('id')->on('ac_event');
+            });
+        }
     }
 
     /**
@@ -107,13 +156,41 @@ class EntrustSetupTables extends Migration
      */
     public function down()
     {
-        Schema::drop('permission_role');
-        Schema::drop('permissions');
-        Schema::drop('role_user');
-        Schema::drop('roles');
-        Schema::drop('ac_event_invites');
-//        Schema::drop('ac_event_user_status_list');
-//        Schema::drop('ac_event_file');
-        Schema::drop('ac_event');
+        if (Schema::hasTable('permission_role')) {
+            Schema::drop('permission_role');
+        }
+
+        if (Schema::hasTable('permissions')) {
+            Schema::drop('permissions');
+        }
+
+        if (Schema::hasTable('role_user')) {
+            Schema::drop('role_user');
+        }
+
+        if (Schema::hasTable('roles')) {
+            Schema::drop('roles');
+        }
+
+        if (Schema::hasTable('ac_event_invites')) {
+            Schema::drop('ac_event_invites');
+        }
+
+        if (Schema::hasTable('ac_event_user_status_list')) {
+            Schema::drop('ac_event_user_status_list');
+        }
+
+
+        if (Schema::hasTable('ac_event_file')) {
+            Schema::drop('ac_event_file');
+        }
+
+        if (Schema::hasTable('file')) {
+            Schema::drop('file');
+        }
+
+        if (Schema::hasTable('ac_event')) {
+            Schema::drop('ac_event');
+        }
     }
 }
