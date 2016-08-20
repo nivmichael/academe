@@ -17,7 +17,7 @@ function EventsService($timeout, $q) {
 
 
 /**
- * get events
+ * get all events
  */
 EventsService.prototype.getEvents = function() {
 
@@ -75,6 +75,7 @@ EventsService.mockEvents = [{
     numOfGuests: 7,
     status: 'finished'
 }];
+
 
 
 EventsService.$inject = ['$timeout', '$q'];

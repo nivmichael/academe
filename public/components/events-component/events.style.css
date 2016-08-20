@@ -56,9 +56,6 @@ div#DataTables_Table_0_filter {
 .dt-button {
     border: none !important;
     color: #fff !important;
-    -webkit-border-radius: 4px !important;
-    -moz-border-radius: 4px !important;
-    border-radius: 4px !important;
     transition: background 0.2s;
 }
 

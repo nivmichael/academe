@@ -1,3 +1,155 @@
+
+* {
+    outline: none;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+
+.ac-page {
+    margin-top: 80px;
+    padding: 0 20px;
+}
+
+
+.clickable {
+    cursor: pointer;
+}
+
+
+.hoverable-btn {
+    color: gray;
+}
+
+.hoverable-btn:hover {
+    color: #333;
+}
+
+.block {
+    display: block;
+}
+
+.block-im {
+    display: block !important;
+}
+
+
+
+section + section {
+    margin-top: 30px;
+}
+
+section.header-section + section {
+    margin-top: 50px;
+}
+
+
+
+/****************************** START OF CUSTOM BOOTSTRAP ****************************************/
+
+/****** FORM ********/
+input.form-control,
+select.form-control {
+    max-width: 300px;
+    border-radius: 0;
+}
+
+
+/****** BUTTONS ********/
+.btn + .btn {
+    margin-left: 5px;
+}
+
+.btn {
+    border-radius: 0;
+}
+
+
+/******* GRID *******/
+.row:not(section) + .row:not(section),
+.row:not(section) + .row,
+.row + .row:not(section) {
+    margin-top: 15px;
+}
+
+
+
+
+
+
+/**** DATEPICKER *******/
+
+.uib-datepicker {
+    display: inline-block;
+}
+
+
+/* HEADER BUTTONS */
+.uib-datepicker table thead th .uib-left,
+.uib-datepicker table thead th .uib-right,
+.uib-datepicker table thead th .uib-title,
+.uib-datepicker table thead th .uib-left,
+.uib-datepicker table thead th .uib-right,
+.uib-datepicker table thead th .uib-title,
+.uib-datepicker table thead th .uib-left,
+.uib-datepicker table thead th .uib-right,
+.uib-datepicker table thead th .uib-title {
+    border-radius: 0;
+    border: 1px solid transparent;
+    height: 30px;
+}
+
+.uib-datepicker table thead th .uib-left,
+.uib-datepicker table thead th .uib-right {
+    width: 34px;
+}
+
+
+/* BODY BUTTONS*/
+.uib-datepicker table tbody tr td.uib-day button,
+.uib-datepicker table tbody tr td.uib-month button,
+.uib-datepicker table tbody tr td.uib-year button {
+    border: 1px solid transparent;
+    border-radius: 0;
+}
+
+.uib-datepicker .btn-info.active.focus,
+.uib-datepicker .btn-info.active:focus,
+.uib-datepicker .btn-info.active:hover,
+.uib-datepicker .btn-info:active.focus,
+.uib-datepicker .btn-info:active:focus,
+.uib-datepicker .btn-info:active:hover,
+.uib-datepicker .open > .dropdown-toggle.btn-info.focus,
+.uib-datepicker .open > .dropdown-toggle.btn-info:focus,
+.uib-datepicker .open > .dropdown-toggle.btn-info:hover {
+    background-color: #269abc !important;
+}
+
+/* FIX MATERIALIZE STYLES */
+.uib-datepicker .btn {
+    box-shadow: none;
+}
+
+
+.uib-datepicker td,
+.uib-datepicker th {
+    padding: 0;
+}
+
+
+.uib-datepicker thead {
+    border-bottom: 0;
+}
+
+
+/****************************** END OF CUSTOM BOOTSTRAP ****************************************/
+
 /****************************** START OF DATA TABLES ****************************************/
 
 /* ROWS LENGTH */
@@ -95,7 +247,7 @@ table.dataTable {
     padding-right: 15px;
 }
 
-.table.table-bordered > thead > tr > td, .table.table-bordered > tbody > tr > td, .table.table-bordered > tfood > tr > td, .table.table-bordered > thead > tr > th, .table.table-bordered > tbody > tr > th, .table.table-bordered > tfood > tr > th {
+.table.table-bordered > thead > tr > td, .table.table-bordered > tbody > tr > td, .table.table-bordered > tfoot > tr > td, .table.table-bordered > thead > tr > th, .table.table-bordered > tbody > tr > th, .table.table-bordered > tfoot > tr > th {
     border-color: #eeeeee;
 }
 
@@ -105,11 +257,11 @@ table.dataTable {
     color: #2c2e2f;
 }
 
-.table > thead > tr > td, .table > tbody > tr > td, .table > tfood > tr > td, .table > thead > tr > th, .table > tbody > tr > th, .table > tfood > tr > th {
+.table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td, .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th {
     padding: 12px 15px;
 }
 
-.table.table-bordered > thead > tr > td, .table.table-bordered > tbody > tr > td, .table.table-bordered > tfood > tr > td, .table.table-bordered > thead > tr > th, .table.table-bordered > tbody > tr > th, .table.table-bordered > tfood > tr > th {
+.table.table-bordered > thead > tr > td, .table.table-bordered > tbody > tr > td, .table.table-bordered > tfoot > tr > td, .table.table-bordered > thead > tr > th, .table.table-bordered > tbody > tr > th, .table.table-bordered > tfoot > tr > th {
     border-color: #eeeeee;
 }
 
@@ -118,7 +270,7 @@ table.dataTable {
     border-bottom: 1px solid #eeeeee;
 }
 
-.table > thead > tr > td, .table > tbody > tr > td, .table > tfood > tr > td, .table > thead > tr > th, .table > tbody > tr > th, .table > tfood > tr > th {
+.table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td, .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th {
     padding: 12px 15px;
 }
 
@@ -129,13 +281,13 @@ table.dataTable {
 
 .dataTables_paginate a {
     position: relative !important;
-    float: left !important;;
-    padding: 6px 12px !important;;
-    line-height: 1.42857143 !important;;
-    text-decoration: none !important;;
-    color: #373e4a !important;;
-    background-color: #fff !important;;
-    border: 1px solid #ddd !important;;
+    float: left !important;
+    padding: 6px 12px !important;
+    line-height: 1.42857143 !important;
+    text-decoration: none !important;
+    color: #373e4a !important;
+    background-color: #fff !important;
+    border: 1px solid #ddd !important;
     margin-left: -1px !important;
     border-radius: 0 !important;
 }
@@ -179,5 +331,3 @@ table.dataTable.table-striped > tbody > tr:nth-of-type(even) > td {
 }
 
 /****************************** END OF DATA TABLES ****************************************/
-
-

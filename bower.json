@@ -18,6 +18,8 @@
     "angular-datatables": "^0.5.4",
     "datatables-light-columnfilter": "^1.0.1",
     "datatables-buttons": "^1.2.2",
-    "font-awesome": "^4.6.3"
+    "font-awesome": "^4.6.3",
+    "tinymce-dist": "4.3.12",
+    "angular-ui-tinymce": "^0.0.16"
   }
 }

@@ -24,28 +24,32 @@ header("Access-Control-Allow-Origin: *");
     {{--CSS Libraries: bootstrap, materialize, angular-materialize--}}
 
 
-{!! Html::style('css/bootstrap.min.css') !!}
-{!! Html::style('css/angular-responsive-tables.min.css') !!}
-{!! Html::style('css/ng-img-crop.css') !!}
-{!! Html::style('css/materialize.css') !!}
-{!! Html::style('lib/xeditable/css/xeditable.css') !!}
-{{--{!! Html::script('lib/slider.js') !!}--}}
-{{--Custom CSS--}}
+    {!! Html::style('css/bootstrap.min.css') !!}
+    {!! Html::style('css/angular-responsive-tables.min.css') !!}
+    {!! Html::style('css/ng-img-crop.css') !!}
+    {!! Html::style('css/materialize.css') !!}
+    {!! Html::style('lib/xeditable/css/xeditable.css') !!}
+    {{--{!! Html::script('lib/slider.js') !!}--}}
+    {{--Custom CSS--}}
 
-{{--{!! Html::style('css/statevis.css') !!}--}}
-{!! Html::style('css/rerouting.css') !!}
-{!! Html::style('css/dnd.css') !!}
-
-
-{{--{!! Html::style('css/jquery.rateyo.css') !!}--}}
+    {{--{!! Html::style('css/statevis.css') !!}--}}
+    {!! Html::style('css/rerouting.css') !!}
+    {!! Html::style('css/dnd.css') !!}
 
 
-{{------------------------------------ START OF COMPONENTS (CSS) --------------------------------------------}}
+    {{--{!! Html::style('css/jquery.rateyo.css') !!}--}}
+
+
+    {{------------------------------------ START OF COMPONENTS (CSS) --------------------------------------------}}
 
     {{-- EVENTS --}}
-{!! Html::style('components/events-component/events.style.css') !!}
+    {!! Html::style('components/events-component/events.style.css') !!}
+    {{-- EVENT --}}
+    {!! Html::style('components/event-component/event.style.css') !!}
 
-{{---------------------------------- END OF COMPONENTS (CSS)  -------------------------------------------}}
+
+
+    {{---------------------------------- END OF COMPONENTS (CSS)  -------------------------------------------}}
 
 
     {{---------------------------------- START OF FONTS  --------------------------------------------}}
@@ -97,7 +101,8 @@ header("Access-Control-Allow-Origin: *");
 {!! Html::script('/lib/angular-resource.js') !!}
 {!! Html::script('/lib/bootstrap.js') !!}
 {{--{!! Html::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js') !!}--}}
-{!! Html::script('lib/ui-bootstrap-tpls.js') !!}
+{{--{!! Html::script('lib/ui-bootstrap-tpls.js') !!}--}}
+{!! Html::script('node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js') !!}
 {!! Html::script('/lib/ui-slider.js') !!}
 {!! Html::script('lib/angular-route.js') !!}
 {!! Html::script('lib/moment.js')!!}
@@ -122,6 +127,11 @@ header("Access-Control-Allow-Origin: *");
 
 {!! Html::script('lib/angular-permission-ui.js')!!}
 {!! Html::script('lib/angular-drag-and-drop-lists.min.js') !!}
+
+{{-- TINYMCE --}}
+{!! Html::script('bower_components/tinymce-dist/tinymce.min.js') !!}
+{!! Html::script('bower_components/angular-ui-tinymce/dist/tinymce.min.js') !!}
+
 
 {{--angular controllers--}}
 {!! Html::script('js/controllers/home.js') !!}
@@ -167,6 +177,7 @@ header("Access-Control-Allow-Origin: *");
 
 {{--------------------------------- START OF CUSTOM STYLE ------------------------------------------}}
 
+{!! Html::style('css/angular-responsive-tables.min.css') !!}
 {!! Html::style('css/styles.css') !!}
 
 {{--------------------------------- END OF CUSTOM STYLE ------------------------------------------}}
@@ -178,6 +189,14 @@ header("Access-Control-Allow-Origin: *");
 {{-- EVENTS --}}
 {!! Html::script('components/events-component/events.component.js') !!}
 {!! Html::script('components/events-component/events.service.js') !!}
+
+{{-- EVNET --}}
+{!! Html::script('components/event-component/event.component.js') !!}
+
+{{-- EDIT EVENT MODAL --}}
+{!! Html::script('components/edit-event-invitees-component/edit-event-invitees-modal.js') !!}
+{!! Html::script('components/edit-event-invitees-component/edit-event-invitees-modal.service.js') !!}
+
 
 {{-------------------------------- END OF COMPONENTS (JS)  -------------------------------------------}}
 

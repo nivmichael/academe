@@ -6,7 +6,7 @@ angular.module("acadb.components.events", [
 
     .component('events', {
         templateUrl: 'components/events-component/events.view.html',
-        controller: EventComponentCtrl
+        controller: EventsComponentCtrl
     });
 
 
@@ -14,7 +14,7 @@ angular.module("acadb.components.events", [
  * controller constructor
  * @constructor
  */
-function EventComponentCtrl($state, $scope, DTOptionsBuilder, DTColumnBuilder, eventsService, $log) {
+function EventsComponentCtrl($state, $scope, DTOptionsBuilder, DTColumnBuilder, eventsService, $log) {
 
     var vm = this;
 
@@ -31,7 +31,7 @@ function EventComponentCtrl($state, $scope, DTOptionsBuilder, DTColumnBuilder, e
 /**
  * initialize controller
  */
-EventComponentCtrl.prototype.$onInit = function () {
+EventsComponentCtrl.prototype.$onInit = function () {
 
     var vm = this;
 
@@ -42,6 +42,10 @@ EventComponentCtrl.prototype.$onInit = function () {
             return vm.eventsService.getEvents();
         }).withPaginationType('full_numbers')
             .withOption('order', [0, 'asc'])
+
+            /**
+             * on click go to event page
+             */
             .withOption('rowCallback', function (element, event, iDisplayIndex, iDisplayIndexFull) {
 
                 // Unbind first in order to avoid any duplicate handler (see https://github.com/l-lin/angular-datatables/issues/87)
@@ -99,18 +103,16 @@ EventComponentCtrl.prototype.$onInit = function () {
 /**
  * destroy controller
  */
-EventComponentCtrl.prototype.$onDestroy = function () {
-
-};
+EventsComponentCtrl.prototype.$onDestroy = function () {};
 
 
-EventComponentCtrl.prototype.openEvent = function (event) {
+EventsComponentCtrl.prototype.openEvent = function (event) {
 
     var vm = this;
 
-    vm.$state.go('admin.event', {});
+    vm.$state.go('admin.event', {id: event.id});
 };
 
 
 //inject the following dependencies
-EventComponentCtrl.$inject = ['$state', '$scope', 'DTOptionsBuilder', 'DTColumnBuilder', 'eventsService', '$log'];
+EventsComponentCtrl.$inject = ['$state', '$scope', 'DTOptionsBuilder', 'DTColumnBuilder', 'eventsService', '$log'];
