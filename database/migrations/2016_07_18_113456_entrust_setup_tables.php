@@ -133,6 +133,7 @@ class EntrustSetupTables extends Migration
                 $table->timestamps();
                 $table->string('path');
                 $table->string('filename');
+                $table->string('orginalName');
                 $table->enum('choises', ['event-attachment']);
             });
         }
@@ -142,10 +143,43 @@ class EntrustSetupTables extends Migration
             // Create table for event files
             Schema::create('ac_event_file', function (Blueprint $table) {
                 $table->integer('file_id')->unsigned();
-                $table->foreign('file_id')->references('id')->on('file');
+                $table->foreign('file_id')
+                    ->references('id')
+                    ->on('file')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
 
                 $table->integer('event_id')->unsigned();
-                $table->foreign('event_id')->references('id')->on('ac_event');
+                $table->foreign('event_id')
+                    ->references('id')
+                    ->on('ac_event')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
+            });
+        }
+
+        if (!Schema::hasTable('type_steps')) {
+
+            // Create type steps table
+            Schema::create('type_steps', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name');
+            });
+        }
+
+        if (!Schema::hasTable('steps')) {
+
+            // Create steps table
+            Schema::create('steps', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name');
+                $table->integer('order');
+                $table->integer('type_id')->unsigned();
+                $table->foreign('type_id')
+                    ->references('id')
+                    ->on('type_steps')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
             });
         }
     }
@@ -178,8 +212,8 @@ class EntrustSetupTables extends Migration
         }
 
         if (Schema::hasTable('ac_event_user_status_list')) {
-            Schema::drop('ac_event_user_status_list');
-        }
+        Schema::drop('ac_event_user_status_list');
+    }
 
 
         if (Schema::hasTable('ac_event_file')) {
@@ -188,6 +222,14 @@ class EntrustSetupTables extends Migration
 
         if (Schema::hasTable('file')) {
             Schema::drop('file');
+        }
+
+        if (Schema::hasTable('steps')) {
+            Schema::drop('steps');
+        }
+
+        if (Schema::hasTable('type_steps')) {
+            Schema::drop('type_steps');
         }
 
         if (Schema::hasTable('ac_event')) {

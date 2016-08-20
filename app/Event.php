@@ -17,7 +17,7 @@ class Event extends Model
 
     public function files()
     {
-        return $this->belongsToMany('App\File', 'ac_event_file', 'event_id', 'file_id');
+        return $this->belongsToMany('App\File', 'ac_event_file', 'event_id',  'file_id');
     }
 
     public function Invites()
@@ -42,19 +42,19 @@ class Event extends Model
         }
 
         if ($jsonEvent->date !== null)
-            $event->event_date = $jsonEvent->date;
+            $event->event_date = $jsonEvent->event_date;
 
         if ($jsonEvent->type !== null)
-            $event->event_type = $jsonEvent->type;
+            $event->event_type = $jsonEvent->evet_type;
 
         if ($jsonEvent->subject !== null)
-            $event->event_subject = $jsonEvent->subject;
+            $event->event_subject = $jsonEvent->event_subject;
 
         if ($jsonEvent->text !== null)
-            $event->event_text = $jsonEvent->text;
+            $event->event_text = $jsonEvent->event_text;
 
         if ($jsonEvent->comment !== null)
-            $event->event_comment = $jsonEvent->comment;
+            $event->event_comment = $jsonEvent->event_comment;
 
         if ($jsonEvent->active !== null)
             $event->active = $jsonEvent->active;
@@ -69,7 +69,8 @@ class Event extends Model
         $toDelete = $oldInvites->filter(function ($oldInvite) use ($newInvites) {
 
             return $newInvites->filter(function ($newInvite) use ($oldInvite) {
-                return $newInvite['userId'] == $oldInvite->user_id;
+
+                return $newInvite['user_id'] == $oldInvite->user_id;
             })->count() <= 0;
 
         });

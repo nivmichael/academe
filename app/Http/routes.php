@@ -314,9 +314,11 @@ Route::group(['middlewareGroup' => ['web','domain']], function () {
 
 });
 
-Route::get('/events/{id?}',   'EventController@getEvents');
-Route::post('/postEvent',     'EventController@postEvent');
-Route::get('/userEvent',     'EventController@addUsersToEvent');
+Route::get('/events',             'EventController@getEvents');
+Route::get('/event/{id}',         'EventController@getEvent');
+Route::post('/postEvent',         'EventController@postEvent');
+Route::get('/userEvent',          'EventController@addUsersToEvent');
+Route::get('/userStatusType',     'UserStatusTypeController@getStatusType');
 
 
 

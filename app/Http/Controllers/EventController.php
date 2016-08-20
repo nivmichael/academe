@@ -5,38 +5,37 @@ namespace App\Http\Controllers;
 use App\Event;
 use App\File;
 use App\Invite;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Repositories\EventRepository;
 
 
 class EventController extends Controller
 {
-    // get all event or event by id if id exist
-    public function getEvents($id = null)
+    protected $events;
+
+    public function __construct(EventRepository $events)
     {
-        $event = new Event();
-
-        if (!$id) {  // if id is null return all events
-
-            $event::all();
-
-        } else { // if id is not null, check if event by id exist or not and return event or error
-
-            $thisEvent = $event::find($id);
-
-            if ($event) {
-
-            } else {
-
-                return 'error';
-
-            }
-        }
+        $this->events = $events;
     }
+
+    // get all event or event by id if id exist
+    public function getEvents()
+    {
+        $this->events->getEvents();
+    }
+
+    public function getEvent($id)
+    {
+        $this->events->getEvent($id);
+    }
+
 
     // create event or update
     public function postEvent(Request $eventJson)
     {
+
         // create or update event
         $event = Event::mapFromJsonEvent($eventJson);
         $event->save();
@@ -78,17 +77,22 @@ class EventController extends Controller
         // if Invite (param newInvite = true) create new invite else update invite
         foreach ($newInvites->toArray() as $invite) {
 
-            $pivotId = $event->users()->where('user_id', $invite['userId'])->first();
+            $pivotId = $event->users()->where('user_id', $invite['user_id'])->first();
 
-            if ($invite['newInvite']) {
-                $event->users()->attach($event->id,
-                    ['event_id' => $event->id, 'user_id' => $invite['userId'], 'user_status' => $invite['status'], 'comments' => $invite['comments']]);
+            if (array_key_exists('newInvite', $invite)) {
+
+                if ($event->users()->where('user_id', $invite['user_id'])->count() < 1) {
+
+                    $event->users()->attach($event->id,
+                        ['event_id' => $event->id, 'user_id' => $invite['user_id'], 'user_status' => $invite['user_status'], 'comments' => $invite['comments']]);
+                }
+
             } else {
 
-                if ($event->users->where('user_id', $invite['userId'])->count() > 0) {
+                if ($event->users()->where('user_id', $invite['user_id'])->count() > 0) {
 
                     $event->users()->updateExistingPivot($pivotId->pivot->user_id,
-                        ['event_id' => $event->id, 'user_id' => $invite['userId'], 'user_status' => $invite['status'], 'comments' => $invite['comments']]);
+                        ['event_id' => $event->id, 'user_id' => $invite['user_id'], 'user_status' => $invite['user_status'], 'comments' => $invite['comments']]);
                 }
             }
         }
@@ -100,7 +104,7 @@ class EventController extends Controller
         }
 
         foreach ($newInvites as $invite) {
-            if ($invite['newInvite']) {
+            if (array_key_exists('newInvite', $invite)) {
                 // TODO email for new invites
             } else {
                 // TODO emails for update invites
