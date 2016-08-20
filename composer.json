@@ -15,7 +15,8 @@
         "symfony/psr-http-message-bridge": "^0.2.0",
         "zendframework/zend-diactoros": "^1.3",
         "nesbot/carbon": "^1.21",
-        "zizaco/entrust": "5.2.x-dev"
+        "zizaco/entrust": "5.2.x-dev",
+        "nathanmac/laravel-guid": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -885,6 +885,7 @@ class ComposerStaticInit80b22f70049f3624208abd26957d2a45
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
         'TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
+        'UserStatusTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UserStatusTableSeeder.php',
         'Zizaco\\Entrust\\MigrationCommand' => __DIR__ . '/..' . '/zizaco/entrust/src/commands/MigrationCommand.php',
     );
 
