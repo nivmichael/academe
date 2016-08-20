@@ -130,6 +130,7 @@ class EntrustSetupTables extends Migration
             // Create table for event files
             Schema::create('file', function (Blueprint $table) {
                 $table->increments('id');
+                $table->timestamps();
                 $table->string('path');
                 $table->string('filename');
                 $table->enum('choises', ['event-attachment']);

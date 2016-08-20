@@ -6,7 +6,8 @@ use App\Event;
 use App\File;
 use App\Invite;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+
 
 class EventController extends Controller
 {
@@ -17,17 +18,13 @@ class EventController extends Controller
 
         if (!$id) {  // if id is null return all events
 
-            return $event::where('event_type', 'good')->get();
+            $event::all();
 
         } else { // if id is not null, check if event by id exist or not and return event or error
 
             $thisEvent = $event::find($id);
 
             if ($event) {
-
-                $invites = $thisEvent->invites;
-                //var_dump($invites->toJson());
-                //return $event->toJson();
 
             } else {
 
@@ -43,6 +40,28 @@ class EventController extends Controller
         // create or update event
         $event = Event::mapFromJsonEvent($eventJson);
         $event->save();
+
+        // files
+        if ($eventJson->hasFile('file')) {
+
+            $path = storage_path() . '/app/events/'; // upload path
+
+            foreach ($eventJson->file('file') as $file) {
+
+                $filename = File::generateFileName($file);
+
+                $file->move($path, $filename);
+
+                $newFile = new File();
+                $newFile->path = '/app/events/';
+                $newFile->filename = $filename;
+                $newFile->choises = 'event-attachment';
+                $newFile->save();
+
+                $event->files()->attach($newFile->id,
+                    ['event_id' => $newFile->id, 'event_id' => $event->id]);
+            }
+        }
 
         $oldInvites = $event->invites; // invites from db
         $newInvites = collect($eventJson->invites); // invites from request
@@ -61,7 +80,7 @@ class EventController extends Controller
 
             $pivotId = $event->users()->where('user_id', $invite['userId'])->first();
 
-            if($invite['newInvite']) {
+            if ($invite['newInvite']) {
                 $event->users()->attach($event->id,
                     ['event_id' => $event->id, 'user_id' => $invite['userId'], 'user_status' => $invite['status'], 'comments' => $invite['comments']]);
             } else {
@@ -74,19 +93,14 @@ class EventController extends Controller
             }
         }
 
-        // files
-        if ($eventJson->hasFile('file')) {
-            File::eventFileUpload($eventJson);
-        }
-
         // emails
-        foreach($deleteInvites as $invite) {
-            
+        foreach ($deleteInvites as $invite) {
+
             // TODO emails for delete invites
         }
 
         foreach ($newInvites as $invite) {
-            if($invite['newInvite']) {
+            if ($invite['newInvite']) {
                 // TODO email for new invites
             } else {
                 // TODO emails for update invites
@@ -94,7 +108,8 @@ class EventController extends Controller
         }
     }
 
-    public function deleteEvent() {
+    public function deleteEvent()
+    {
 
     }
 }
