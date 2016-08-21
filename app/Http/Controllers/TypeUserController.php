@@ -525,6 +525,10 @@ class TypeUserController extends Controller
 		return Response::json($user);
 	}
 
+	public function getAllUsers()
+	{
+		var_dump($this->user->allUsers());
+	}
 
 //	public function getProfilePic()
 //	{

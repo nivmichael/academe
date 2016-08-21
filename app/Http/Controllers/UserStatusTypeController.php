@@ -6,6 +6,11 @@ use App\UserStatusType;
 
 class UserStatusTypeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('jwt.auth');
+    }
+
     public function getStatusType()
     {
         $status = new UserStatusType();

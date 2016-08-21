@@ -30,39 +30,6 @@ class Event extends Model
         return Event::deleteInvitesNotIn($this, $oldInvites, $newInvites);
     }
 
-    public static function mapFromJsonEvent($jsonEvent, $event = null)
-    {
-        if ($event === null) {
-
-            $event = new Event();
-
-            if ($jsonEvent->id !== null && $jsonEvent->id > 0) {
-                $event = $event::find($jsonEvent->id);
-            }
-        }
-
-        if ($jsonEvent->date !== null)
-            $event->event_date = $jsonEvent->event_date;
-
-        if ($jsonEvent->type !== null)
-            $event->event_type = $jsonEvent->evet_type;
-
-        if ($jsonEvent->subject !== null)
-            $event->event_subject = $jsonEvent->event_subject;
-
-        if ($jsonEvent->text !== null)
-            $event->event_text = $jsonEvent->event_text;
-
-        if ($jsonEvent->comment !== null)
-            $event->event_comment = $jsonEvent->event_comment;
-
-        if ($jsonEvent->active !== null)
-            $event->active = $jsonEvent->active;
-
-        return $event;
-    }
-
-
     public static function deleteInvitesNotIn($event, $oldInvites, $newInvites)
     {
 
