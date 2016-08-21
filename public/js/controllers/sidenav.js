@@ -5,14 +5,16 @@ angular.module('acadb')
 
         //$scope.label = labelFilterData.getFilterLabel();
 
+
+
         $scope.setFilterLabel = function(label){
             labelFilterData.setFilterLabel(label);
             labelFilterData.broadcast(label)
         }
-
+        $scope.setFilterLabel($stateParams.labeled);
         $scope.labelsCounts = labelFilterData.getLabelCount();
         $scope.$on('updateBadges', function(event, labelsCounts) {
-            console.log(labelsCounts);
+
             $scope.labelsCounts = labelsCounts;
         });
         //$scope.$on('handleLabel', function(event, post_id, move_to) {
@@ -72,14 +74,17 @@ angular.module('acadb')
           $scope.currentStatus = response.user.personal_information.status;
         })
       }
+
       $scope.ToolbarModel = {
         IsVisible: true,
         ViewUrl: null,
       };
+
       $scope.ToolbarModel.close = function () {
         this.IsVisible = false;
         this.ViewUrl = null;
       }
+
       $scope.isAuthenticated = function () {
         return $auth.isAuthenticated();
       };

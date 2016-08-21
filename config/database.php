@@ -25,7 +25,7 @@ return [
     | you may use many connections at once using the Database library.
     |
     */
-//    'default' => 'domain',
+
     'default' => 'base',
 
     /*
@@ -75,23 +75,12 @@ return [
 //            'prefix'    => '',
 //            'strict'    => false,
 //        ],
-        'local' => [
-            'driver'    => 'mysql',
-            'host'      => 'localhost',
-            'database'  => 'base',
-            'username'  => 'root',
-            'password'  => '',
-            'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
-            'strict'    => false,
-        ],
         'domain' => [
             'driver'    => 'mysql',
             'host'      => 'localhost',
             'database'  => 'domains',
             'username'  => 'root',
-            'password'  =>  'nox22old',
+            'password'  =>  '',
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
@@ -102,23 +91,13 @@ return [
             'host'      => 'localhost',
             'database'  => 'base',
             'username'  => 'root',
-            'password'  => 'nox22old',
+            'password'  => '',
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
             'strict'    => false,
         ],
-        'dev_base' => [
-            'driver'    => 'mysql',
-            'host'      => 'localhost',
-            'database'  => 'dev_base',
-            'username'  => 'root',
-            'password'  => 'nox22old',
-            'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
-            'strict'    => false,
-        ],
+
 
 //        'sqlsrv' => [
 //            'driver'   => 'sqlsrv',

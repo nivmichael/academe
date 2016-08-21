@@ -81,6 +81,8 @@ class PostRepository
 
 //            $match = $this->calcMatchPercentage($post, $user);
 //            $post['match'] = $match;
+
+
             $info = Post::find($postId);
             $post['postInfo'] = $info;
             $postsArr[] = $post;

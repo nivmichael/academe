@@ -31,6 +31,9 @@ class LabelController extends Controller
 
     public function apply($post_id)
     {
+
+        // add second parameter that is the label name
+
         //maybe this should be a simple sysparamvalues resource ?
         $user_id = request()->user_id;
 

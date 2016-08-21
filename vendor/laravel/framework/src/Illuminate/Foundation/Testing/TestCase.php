@@ -38,7 +38,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     protected $beforeApplicationDestroyedCallbacks = [];
 
     /**
-     * Indicates if we have made it throught the base setUp function.
+     * Indicates if we have made it through the base setUp function.
      *
      * @var bool
      */
@@ -92,7 +92,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      */
     protected function setUpTraits()
     {
-        $uses = array_flip(class_uses_recursive(get_class($this)));
+        $uses = array_flip(class_uses_recursive(static::class));
 
         if (isset($uses[DatabaseTransactions::class])) {
             $this->beginDatabaseTransaction();
@@ -118,10 +118,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        if (class_exists('Mockery')) {
-            Mockery::close();
-        }
-
         if ($this->app) {
             foreach ($this->beforeApplicationDestroyedCallbacks as $callback) {
                 call_user_func($callback);
@@ -136,6 +132,10 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
         if (property_exists($this, 'serverVariables')) {
             $this->serverVariables = [];
+        }
+
+        if (class_exists('Mockery')) {
+            Mockery::close();
         }
 
         $this->afterApplicationCreatedCallbacks = [];

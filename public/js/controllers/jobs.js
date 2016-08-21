@@ -1,10 +1,28 @@
 'use strict';
 angular.module('acadb')
-.controller("FindajobController",['$scope','Account','Job','$filter', 'PostData','$stateParams','labelFilterData',  function($scope, Account, Job, $filter, PostData, $stateParams, labelFilterData) {
+.controller("FindajobController",['$scope','Account','Job','$filter', 'PostData','$stateParams','labelFilterData','$http','$rootScope','Form',   function($scope, Account, Job, $filter, PostData, $stateParams, labelFilterData, $http, $rootScope, Form) {
+
+        //
+        //$scope.groups['stuff'] = [{
+        //    value: 'low',
+        //    text: "Low"
+        //}, {
+        //    value: 'normal',
+        //    text: "Normal"
+        //}];
+        //$scope.selected_status = [];
+        //$scope.selected_status['stuff'] = 'normal';
+
+    $scope.orderOptions = function(value){
+        $scope.orderByFilter = value;
+        $scope.reverse = !$scope.reverse;
+    };
 
     //get labeledPostsId's
     Account.getProfile().then(function(user){
         $scope.labeledPosts = user.posts;
+        $scope.user_id      = user.user['personal_information']['id'];
+        $scope.user         = user.user;
     });
 
     //should resolve posts in router
@@ -14,6 +32,12 @@ angular.module('acadb')
 
         //get the current label / filter
         $scope.label = labelFilterData.getFilterLabel();
+    });
+
+    //get filter select options
+    Form.getAllOptionValues().then(function(options){
+        $scope.groups = options.data;
+
     });
 
     //when filter is changed, get the new filter
@@ -39,6 +63,7 @@ angular.module('acadb')
 
     //when unsetting a label
     $scope.$on('handleRemovedLabel', function(event, post_id, remove_from) {
+        console.log('handleRemovedLabel');
         var index = $scope.labeledPosts[remove_from].indexOf(parseInt(post_id, 10));
         $scope.labeledPosts[remove_from].splice(index,1);;
         Job.getJobsAgain().then(function(posts){
@@ -46,11 +71,39 @@ angular.module('acadb')
         });
     });
 
+    $scope.hoverIn = function(){
+        this.hoverEdit = true;
+    };
+
+    $scope.hoverOut = function(){
+        this.hoverEdit = false;
+    };
 
 
 
 
-}])
+    $scope.unApply = function(id) {
+        //remove from db
+        $http.post('api/job/unApply/' + id, {user_id:$scope.user_id  , docSubType: 'jobseeker'}).then(function(response){
+            $scope.applied = false;
+            //recover post
+            Account.updateProfile($scope.user);
+            $rootScope.$broadcast('handleRemovedLabel', id, 'applied');
+            //$rootScope.$broadcast('addToPostList',  $scope.jobPost);
+            return response.data;
+        });
+        $scope.applied = false
+    }
+
+    $scope.emptyFolder = function(){
+        //ajax to LabelController
+
+
+    };
+
+
+
+    }])
 
 
 

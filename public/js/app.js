@@ -932,10 +932,10 @@ var acadb = angular.module('acadb', [
 .run(function ($rootScope, $state, $location, AuthenticationService,$stateParams,$uibModalStack,PermissionStore,RoleStore,RoleData,PermissionData,$auth,Account, $urlRouter,Dynamics) {
 
 
-
+        //if we have an authenticated user meaning we have a jwt in local storage
 
        if($auth.isAuthenticated()){
-
+        //get the user
            Account.getProfile().then(function(account){
 
               var type      = account.user.personal_information['subtype'];

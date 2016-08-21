@@ -99,7 +99,7 @@ class Container implements ArrayAccess, ContainerContract
     protected $globalAfterResolvingCallbacks = [];
 
     /**
-     * All of the after resolving callbacks by class type.
+     * All of the resolving callbacks by class type.
      *
      * @var array
      */
@@ -515,11 +515,7 @@ class Container implements ArrayAccess, ContainerContract
      */
     protected function isCallableWithAtSign($callback)
     {
-        if (! is_string($callback)) {
-            return false;
-        }
-
-        return strpos($callback, '@') !== false;
+        return is_string($callback) && strpos($callback, '@') !== false;
     }
 
     /**
@@ -1077,7 +1073,11 @@ class Container implements ArrayAccess, ContainerContract
      */
     protected function getAlias($abstract)
     {
-        return isset($this->aliases[$abstract]) ? $this->aliases[$abstract] : $abstract;
+        if (! isset($this->aliases[$abstract])) {
+            return $abstract;
+        }
+
+        return $this->getAlias($this->aliases[$abstract]);
     }
 
     /**
@@ -1164,7 +1164,7 @@ class Container implements ArrayAccess, ContainerContract
      */
     public function offsetExists($key)
     {
-        return isset($this->bindings[$this->normalize($key)]);
+        return $this->bound($key);
     }
 
     /**

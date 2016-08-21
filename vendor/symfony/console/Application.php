@@ -232,7 +232,7 @@ class Application
     /**
      * Gets the help message.
      *
-     * @return string A help message.
+     * @return string A help message
      */
     public function getHelp()
     {
@@ -424,7 +424,7 @@ class Application
     public function getNamespaces()
     {
         $namespaces = array();
-        foreach ($this->commands as $command) {
+        foreach ($this->all() as $command) {
             $namespaces = array_merge($namespaces, $this->extractAllNamespaces($command->getName()));
 
             foreach ($command->getAliases() as $alias) {

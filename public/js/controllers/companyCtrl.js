@@ -3,7 +3,7 @@ angular.module('acadb')
   .controller('CompanyCtrl', function($scope, $auth, Account, $http, $uibModal, $rootScope, $filter, Form, $stateParams,$log, ModalService, PostData,$location, Job) {
 
 
-
+        //filters init properties
         $scope.reverse = true;
         $scope.orderByFilter = 'match';
         //this is the former attempt to broadcast a new job to the all jobs array
@@ -20,12 +20,8 @@ angular.module('acadb')
             /*
             need to update system matches too
              */
-            console.log('updatedPost');
-            console.log(post)
             angular.forEach($scope.allJobs, function(value, key) {
                 if(value.postInfo.id == post.id){
-                    console.log(post);
-                    console.log($scope.allJobs[key]);
                     $scope.allJobs[key].postInfo = post;
                 }
             });

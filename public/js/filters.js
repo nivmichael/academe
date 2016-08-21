@@ -4,7 +4,7 @@ angular.module('acadb.filters', [])
 	return function(input, label, scope) {
 
 		var labeledPosts = scope.labeledPosts;
-		console.log(labeledPosts);
+
 
 		if(!$stateParams.labeled){
 			label = 'index';
@@ -34,7 +34,7 @@ angular.module('acadb.filters', [])
 		}
 
 		$rootScope.$broadcast('updateBadges', labeledPosts);
-		console.log(labeledPosts);
+		
 		return output;
 	}
 })
