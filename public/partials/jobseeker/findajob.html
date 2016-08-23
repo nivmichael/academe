@@ -5,42 +5,100 @@
 
 
 
+	<!--<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">-->
+	<!--<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.bootstrap3.css">-->
+
 	<div class="">
-			<div class="" style="width: 80%; margin:0 auto; margin-top:15px;">
-				<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
-					<select ng-model="filter.main_field" class="form-control" style="margin-top:20px;"
-							ng-options="s.value as s.text for s in groups['main_field']"
-							placeholder="Main Field">
-						<option value="">Main Field</option>
-					</select>
-				</div>
+			<div class="" style="width: 90%; margin:0 auto; margin-top:15px;">
 
-				<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
-					<select ng-model="filter.employment_type" class="form-control" style="margin-top:20px;"
-							ng-options="s.value as s.text for s in groups['employment_type']">
-						<option value="">Employment Type</option>
-					</select>
-				</div>
 
-				<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
-					<select ng-model="filter.location" class="form-control" style="margin-top:20px;">
-						<option value="">Location</option>
-						<option value="">West Side</option>
-						<option value="">East Side</option>
-					</select>
-				</div>
 
-				<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
-					<select ng-model="filter.experience" class="form-control" style="margin-top:20px;">
-						<option value="">Experience</option>
-						<option value="false">desc</option>
-						<option value="true">asc</option>
-					</select>
-				</div>
+						<!--<div class="col-md-3">-->
+							<!--<selectize placeholder='Main Field' options="groups['main_field']" config="{maxItems: 1}" ng-model="myModel"  required='true'></selectize>-->
+						<!--</div>-->
+						<!--<div class="col-md-3">-->
+							<!--<selectize placeholder='Employment Type' options="groups['employment type']" config="{maxItems: 1}" ng-model="myModel"  required='true'></selectize>-->
+						<!--</div>-->
+					<!--</div>-->
 
-				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-					<input type="text" class="form-control" ng-model="searchText" placeholder="Free Query" style="margin-top:20px;"/>
-				</div>
+					<!--<div class="col-md-6">-->
+						<!--<div class="col-md-2">-->
+							<!--<selectize placeholder='Location' options="groups['degree']" config="{maxItems: 1}" ng-model="myModel"  required='true'></selectize>-->
+						<!--</div>-->
+						<!--<div class="col-md-2">-->
+							<!--<selectize placeholder='Experience' options="groups['experience']" config="{maxItems: 1}" ng-model="myModel"  required='true'></selectize>-->
+						<!--</div>-->
+
+
+
+
+						<!--<div class="col-md-2">-->
+							<!--<input type="text" placeholder="Main Field" ng-model="selected" uib-typeahead="mf.value as mf.text for mf in groups['main_field'] | filter:$viewValue | limitTo:8" class="form-control">-->
+							<!--<span><i class="glyphicon glyphicon-menu-down"></i></span>-->
+						<!--</div>-->
+
+
+
+
+						<!--<div class="col-md-2">-->
+							<!--<input type="text" class="form-control" ng-model="searchText" placeholder="Free Query" />-->
+						<!--</div>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				<!--<selectize config='myConfig' options='myOptions' ng-model="myModel"></selectize>-->
+				<!--<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">-->
+					<!--<select ng-model="filter.main_field" class="form-control" style="margin-top:20px;"-->
+							<!--ng-options="s.value as s.text for s in groups['main_field']"-->
+							<!--placeholder="Main Field">-->
+						<!--<option value="">Main Field</option>-->
+					<!--</select>-->
+				<!--</div>-->
+
+				<!--<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">-->
+					<!--<select ng-model="filter.employment_type" class="form-control" style="margin-top:20px;"-->
+							<!--ng-options="s.value as s.text for s in groups['employment_type']">-->
+						<!--<option value="">Employment Type</option>-->
+					<!--</select>-->
+				<!--</div>-->
+
+				<!--<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">-->
+					<!--<select ng-model="filter.location" class="form-control" style="margin-top:20px;">-->
+						<!--<option value="">Location</option>-->
+						<!--<option value="">West Side</option>-->
+						<!--<option value="">East Side</option>-->
+					<!--</select>-->
+				<!--</div>-->
+
+				<!--<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">-->
+					<!--<select ng-model="filter.experience" class="form-control" style="margin-top:20px;">-->
+						<!--<option value="">Experience</option>-->
+						<!--<option value="false">desc</option>-->
+						<!--<option value="true">asc</option>-->
+					<!--</select>-->
+				<!--</div>-->
+
+				<!--<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">-->
+					<!--<input type="text" class="form-control" ng-model="searchText" placeholder="Free Query" style="margin-top:20px;"/>-->
+				<!--</div>-->
 
 				<!--<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">-->
 					<!--<select ng-model="orderByFilter" class="form-control" style="margin-top:20px;">-->
@@ -73,18 +131,18 @@
 					<!--</bs-dropdown>-->
 				<!--</div>-->
 
-				<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
-					<bs-dropdown data-menu-type="button" select-val="selected_status['stuff'] = selectedVal"
-								 preselected-item="selected_status['stuff']" data-dropdown-data="groups['stuff']">
-					</bs-dropdown>
-				</div>
+				<!--<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">-->
+					<!--<bs-dropdown data-menu-type="button" select-val="selected_status['stuff'] = selectedVal"-->
+								 <!--preselected-item="selected_status['stuff']" data-dropdown-data="groups['stuff']">-->
+					<!--</bs-dropdown>-->
+				<!--</div>-->
 				<!--<button href="#" ng-click ="orderOptions('title')">Name</button>-->
-				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-					<input type="text" class="form-control" ng-model="searchText" placeholder="Free Query" style="margin-top:20px;"/>
+				<!--<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">-->
+					<!--<input type="text" class="form-control" ng-model="searchText" placeholder="Free Query" style="margin-top:20px;"/>-->
+				<!--</div>-->
+
+
 				</div>
-
-
-			</div>
 
 			</div>
 			<div class="clearfix"></div>

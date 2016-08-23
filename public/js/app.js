@@ -9,6 +9,7 @@ var acadb = angular.module('acadb', [
     'angular-loading-bar',
     'ngAnimate',
     'ui.bootstrap',
+        'selectize',
     'acadb.controllers',
     'acadb.services',
     'acadb.filters',

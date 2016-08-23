@@ -25,13 +25,14 @@
     {!! Html::style('css/ng-img-crop.css') !!}
     {!! Html::style('css/materialize.css') !!}
     {!! Html::style('lib/xeditable/css/xeditable.css') !!}
-    {!! Html::script('lib/slider.js') !!}
+    {!! Html::script('lib/ui-slider.js') !!}
     <!--Custom CSS-->
 
 
     {{--{!! Html::style('css/statevis.css') !!}--}}
     {!! Html::style('css/rerouting.css') !!}
     {!! Html::style('css/dnd.css') !!}
+    {{--{!! Html::style('lib/ui-select/select.css') !!}--}}
     {{--{!! Html::style('css/jquery.rateyo.css') !!}--}}
     <!--Fonts-->
 
@@ -73,6 +74,7 @@
 {{--angular filters--}}
 {!! Html::script('js/filters.js') !!}
 {{--angular directives--}}
+
 {!! Html::script('js/directives.js') !!}
 {{--angular libraries / dependencies / modules--}}
 {!! Html::script('/lib/angular-resource.js') !!}
@@ -103,7 +105,8 @@
 
 {!! Html::script('lib/angular-permission-ui.js')!!}
 {!! Html::script('lib/angular-drag-and-drop-lists.min.js') !!}
-
+{!! Html::script('lib/selectize.min.js') !!}
+{!! Html::script('lib/angular-selectize.js') !!}
 {{--angular controllers--}}
 {!! Html::script('js/controllers/home.js') !!}
 {!! Html::script('js/controllers/login.js') !!}

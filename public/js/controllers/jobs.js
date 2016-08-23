@@ -1,17 +1,8 @@
 'use strict';
 angular.module('acadb')
-.controller("FindajobController",['$scope','Account','Job','$filter', 'PostData','$stateParams','labelFilterData','$http','$rootScope','Form',   function($scope, Account, Job, $filter, PostData, $stateParams, labelFilterData, $http, $rootScope, Form) {
+.controller("FindajobController",['$scope','Account','Job','$filter', 'PostData','$stateParams','labelFilterData','$http','$rootScope','Form','$timeout',   function($scope, Account, Job, $filter, PostData, $stateParams, labelFilterData, $http, $rootScope, Form, $timeout) {
 
-        //
-        //$scope.groups['stuff'] = [{
-        //    value: 'low',
-        //    text: "Low"
-        //}, {
-        //    value: 'normal',
-        //    text: "Normal"
-        //}];
-        //$scope.selected_status = [];
-        //$scope.selected_status['stuff'] = 'normal';
+
 
     $scope.orderOptions = function(value){
         $scope.orderByFilter = value;
@@ -101,9 +92,48 @@ angular.module('acadb')
 
     };
 
+        $scope.selected = undefined;
+        $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+
+
+
+
+
+
 
 
     }])
+    //.filter('propsFilter', function() {
+    //    return function(items, props) {
+    //        var out = [];
+    //
+    //        if (angular.isArray(items)) {
+    //            var keys = Object.keys(props);
+    //
+    //            items.forEach(function(item) {
+    //                var itemMatches = false;
+    //
+    //                for (var i = 0; i < keys.length; i++) {
+    //                    var prop = keys[i];
+    //                    var text = props[prop].toLowerCase();
+    //                    if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+    //                        itemMatches = true;
+    //                        break;
+    //                    }
+    //                }
+    //
+    //                if (itemMatches) {
+    //                    out.push(item);
+    //                }
+    //            });
+    //        } else {
+    //            // Let the output be the input untouched
+    //            out = items;
+    //        }
+    //
+    //        return out;
+    //    };
+    //})
 
 
 

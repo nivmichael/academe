@@ -728,6 +728,9 @@ button:focus {
 .btn-group>.btn+.dropdown-toggle.active{
 
 }
+.selectize-input > * {
+    max-height:20px;
+}
 /*.overlay{*/
     /*background-color:black;*/
     /*background:rgba(0,0,0,0.6);*/
