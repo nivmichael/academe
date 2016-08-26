@@ -25,24 +25,4 @@ class Event extends Model
         return $this->hasMany('App\Invite', 'event_id');
     }
 
-    public function deleteInvites($oldInvites, $newInvites)
-    {
-        return Event::deleteInvitesNotIn($this, $oldInvites, $newInvites);
-    }
-
-    public static function deleteInvitesNotIn($event, $oldInvites, $newInvites)
-    {
-
-        $toDelete = $oldInvites->filter(function ($oldInvite) use ($newInvites) {
-
-            return $newInvites->filter(function ($newInvite) use ($oldInvite) {
-
-                return $newInvite['user_id'] == $oldInvite->user_id;
-            })->count() <= 0;
-
-        });
-
-        return $toDelete;
-    }
-
 }
