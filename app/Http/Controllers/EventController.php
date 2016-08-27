@@ -41,11 +41,18 @@ class EventController extends Controller
     // create event or update
     public function postEvent(Request $eventJson)
     {
+
+        $this->validate($eventJson, [
+            'event_subject' => 'required',
+        ]);
+
         // create or update event
         $event = $this->eventRepo->mapFromJsonEvent($eventJson);
 
+        $invitesArr = $eventJson->toArray()['invites'];
+
         // filter request invites and get only new invites
-        $newInvites = array_where($eventJson->toArray()['invites'], function ($key, $value) {
+        $newInvites = array_where($invitesArr, function ($key, $value) {
             return array_has($value, 'newInvite');
         });
 
@@ -60,22 +67,42 @@ class EventController extends Controller
         $this->inviteRepo->createInvite($newInvites);
 
         // filter request invites for update
-        $updateInvite = array_where($eventJson->toArray()['invites'], function ($key, $value) {
+        $updateInvite = array_where($invitesArr, function ($key, $value) {
             return !array_has($value, 'newInvite');
         });
 
         // update invites
         $this->inviteRepo->updateInvite($updateInvite);
 
+        // get invites to delete
+        $deleteInvites = $this->deleteInvitesNotIn($this->inviteRepo->getInvitesByEvent($event->id));
+
         // delete invites
-        $this->inviteRepo->deleteInvite($this->deleteInvitesNotIn($this->inviteRepo->getInvitesByEvent($event->id), collect($eventJson->toArray()['invites']))->toArray());
+        $this->inviteRepo->deleteInvite($deleteInvites, collect($invitesArr)->toArray());
+
+        // emails for new invites
+        if(count($newInvites) > 0) {
+            // TODO
+        }
+
+        // emails for update invite
+        if(count($updateInvite) > 0) {
+            // TODO
+        }
+
+        // emails for deleted invites
+        if(count($deleteInvites) > 0) {
+            // TODO
+        }
+
+
     }
 
     // get invites for delete
     public function deleteInvitesNotIn($oldInvites, $requestInvites)
     {
 
-       $toDelete = $oldInvites->filter(function ($oldInvite) use ($requestInvites) {
+        $toDelete = $oldInvites->filter(function ($oldInvite) use ($requestInvites) {
 
             return $requestInvites->filter(function ($newInvite) use ($oldInvite) {
 

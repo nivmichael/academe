@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TypeStep extends Model
+class StepType extends Model
 {
     public $timestamps = false;
-    protected $table = 'type_steps';
+    protected $table = 'step_type';
 
     public function steps()
     {

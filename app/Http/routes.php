@@ -318,7 +318,7 @@ Route::group(['middlewareGroup' => ['web','domain']], function () {
         Route::get('/userStatusType',     'UserStatusTypeController@getStatusType');
         
         // steps types
-        Route::get('/stepTypes',          'TypeStepController@getAllTypes');
+        Route::get('/stepTypes',          'StepTypeController@getAllTypes');
     });
 
     Route::get('/password/email',         'Auth\PasswordController@getEmail');
