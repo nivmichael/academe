@@ -33,9 +33,10 @@ class InviteRepository
     // delete multiple invites
     public function deleteInvite($invitesArr)
     {
+
         $ids_to_delete = array_map(function ($item) {
             return $item['user_id'];
-        }, $invitesArr);
+        }, $invitesArr->toArray());
 
         DB::table('ac_event_invites')->whereIn('user_id', $ids_to_delete)->delete();
     }

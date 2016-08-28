@@ -1,6 +1,15 @@
 angular.module('acadb.services.resources', []).
     value('version', '0.1')
 
+    .factory('EventData', ['$resource',
+        function($resource) {
+            return $resource('api/events/:id', {id: '@id'}, {
+                'save': { method:'POST' },
+                'delete': {method:'DELETE'},
+                'list': {method: 'GET', isArray: true }
+            });
+        }])
+
     .factory('ParamData', ['$resource',
         function($resource) {
             return $resource('api/param/:id', {id: '@id'}, {
@@ -8,9 +17,6 @@ angular.module('acadb.services.resources', []).
                 'insertNew': { method:'POST' },
                 'delete':{method:'DELETE'},
                 'list': {method: 'GET', isArray: true }
-
-
-
             });
         }])
     .factory('UserData', ['$resource',
@@ -165,3 +171,6 @@ angular.module('acadb.services.resources', []).
 
             });
         }])
+
+
+;

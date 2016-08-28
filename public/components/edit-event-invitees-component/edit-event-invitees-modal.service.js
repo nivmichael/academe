@@ -48,8 +48,15 @@ EditEventInviteesModalService.$inject = ['$uibModal'];
  * @constructor
  */
 function EditEventInviteesModalDataTransmitCtrl($scope, payload, $uibModalInstance) {
-    $scope.close = function () {
-        $uibModalInstance.close();
+    $scope.close = function (invitees) {
+
+        //if invitees were passed close the modal with a success, else close with error
+        if (invitees) {
+            $uibModalInstance.close(invitees);
+        } else {
+            $uibModalInstance.dismiss();
+        }
+
     };
 
 

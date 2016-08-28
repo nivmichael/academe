@@ -20,7 +20,7 @@ class EventController extends Controller
 
     public function __construct(EventRepository $eventRepository, InviteRepository $inviteRepository)
     {
-        //$this->middleware('jwt.auth');
+        $this->middleware('jwt.auth');
         $this->eventRepo = $eventRepository;
         $this->inviteRepo = $inviteRepository;
     }
@@ -28,18 +28,18 @@ class EventController extends Controller
     // get all events
     public function getEvents()
     {
-        $this->eventRepo->getEvents();
+        return $this->eventRepo->getEvents();
     }
 
     // get event by id
     public function getEvent($id)
     {
-        $this->eventRepo->getEvent($id);
+        return $this->eventRepo->getEvent($id);
     }
 
 
     // create event or update
-    public function postEvent(Request $eventJson)
+    public function postEvent(Request $eventJson, $id = null)
     {
 
         $this->validate($eventJson, [
@@ -75,43 +75,47 @@ class EventController extends Controller
         $this->inviteRepo->updateInvite($updateInvite);
 
         // get invites to delete
-        $deleteInvites = $this->deleteInvitesNotIn($this->inviteRepo->getInvitesByEvent($event->id));
+        $deleteInvites = $this->deleteInvitesNotIn($this->inviteRepo->getInvitesByEvent($event->id), collect($invitesArr));
 
-        // delete invites
-        $this->inviteRepo->deleteInvite($deleteInvites, collect($invitesArr)->toArray());
+        if (count($deleteInvites) > 0) {
+            // delete invites
+            $this->inviteRepo->deleteInvite($deleteInvites, collect($invitesArr)->toArray());
+        }
 
         // emails for new invites
-        if(count($newInvites) > 0) {
+        if (count($newInvites) > 0) {
             // TODO
         }
 
         // emails for update invite
-        if(count($updateInvite) > 0) {
+        if (count($updateInvite) > 0) {
             // TODO
         }
 
         // emails for deleted invites
-        if(count($deleteInvites) > 0) {
+        if (count($deleteInvites) > 0) {
             // TODO
         }
 
-
+        return $this->eventRepo->getEvent($event->id);
     }
 
     // get invites for delete
     public function deleteInvitesNotIn($oldInvites, $requestInvites)
     {
 
-        $toDelete = $oldInvites->filter(function ($oldInvite) use ($requestInvites) {
+        if ($oldInvites->count() > 0 || $requestInvites->count() > 0) {
+            $toDelete = $oldInvites->filter(function ($oldInvite) use ($requestInvites) {
 
-            return $requestInvites->filter(function ($newInvite) use ($oldInvite) {
+                return $requestInvites->filter(function ($newInvite) use ($oldInvite) {
 
-                return $newInvite['user_id'] == $oldInvite->user_id;
-            })->count() <= 0;
+                    return $newInvite['user_id'] == $oldInvite->user_id;
+                })->count() <= 0;
 
-        });
+            });
 
-        return $toDelete;
+            return $toDelete;
+        }
     }
 
     // delete event

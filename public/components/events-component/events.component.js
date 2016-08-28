@@ -10,12 +10,20 @@ angular.module("acadb.components.events", [
     });
 
 
+
 /**
  * controller constructor
+ * @param $state
+ * @param $scope
+ * @param DTOptionsBuilder
+ * @param DTColumnBuilder
+ * @param eventsService
+ * @param $log
+ * @param $q
  * @constructor
  */
 function EventsComponentCtrl($state, $scope, DTOptionsBuilder, DTColumnBuilder, eventsService,
-                             $log, $q, instantPromise) {
+                             $log, $q) {
 
     var vm = this;
 
@@ -26,7 +34,6 @@ function EventsComponentCtrl($state, $scope, DTOptionsBuilder, DTColumnBuilder, 
     vm.eventsService = eventsService;
     vm.$log = $log;
     vm.$q = $q;
-    vm.instantPromise = instantPromise;
 }
 
 /**
@@ -44,7 +51,7 @@ EventsComponentCtrl.prototype.$onInit = function () {
         vm.$log.debug("successfully received all page's required data", result);
 
         vm.events = result.events;
-        vm.eventTypes = result.eventTypes;
+        vm.eventTypes = result.eventTypes.data;
 
 
         //go over all the events and fix date property and set event type value
@@ -54,8 +61,8 @@ EventsComponentCtrl.prototype.$onInit = function () {
             event.event_date = moment(event.event_date, "YYYY-MM-DD HH:mm:ss").format('DD-MM-YYYY');
 
             //set event type value
-            event.event_type = _.first(vm.eventTypes.filter(function (eventType) {
-                return eventType.id == event.event_type_id;
+            event.eventType = _.first(vm.eventTypes.filter(function (eventType) {
+                return eventType.id == event.event_type;
             }));
 
             //set status
@@ -89,7 +96,7 @@ EventsComponentCtrl.prototype.$onInit = function () {
 
             vm.pageIniter.then(function () {
 
-                resolve(vm.DTOptionsBuilder.fromFnPromise(vm.instantPromise(vm.events))
+                resolve(vm.DTOptionsBuilder.fromFnPromise(vm.$q.when(vm.events))
 
                     .withPaginationType('full_numbers')
                     .withOption('order', [0, 'desc'])
@@ -149,7 +156,7 @@ EventsComponentCtrl.prototype.$onInit = function () {
 
         columns: [
             vm.DTColumnBuilder.newColumn('event_date').withTitle('Date'),
-            vm.DTColumnBuilder.newColumn('event_type.name').withTitle('Type'),
+            vm.DTColumnBuilder.newColumn('eventType.name').withTitle('Type'),
             vm.DTColumnBuilder.newColumn('numOfInvitees').withTitle('# of Guests'),
             vm.DTColumnBuilder.newColumn('status').withTitle('Status')
         ]
@@ -178,4 +185,4 @@ EventsComponentCtrl.prototype.openEvent = function (event) {
 
 //inject the following dependencies
 EventsComponentCtrl.$inject = ['$state', '$scope', 'DTOptionsBuilder', 'DTColumnBuilder', 'eventsService',
-    '$log', '$q', 'instantPromise'];
+    '$log', '$q'];

@@ -18,26 +18,25 @@ angular.module('acadb.components.edit-event-invitees-modal', [])
  * @param DTOptionsBuilder
  * @param DTColumnBuilder
  * @param $q
- * @param educationService
  * @param eventsService
  * @param usersService
  * @param $scope
  * @param $compile
+ * @param Form
  * @constructor
  */
-function EditEventInviteesModal($log, DTOptionsBuilder, DTColumnBuilder, $q, educationService,
-                                eventsService, usersService, $scope, $compile) {
+function EditEventInviteesModal($log, DTOptionsBuilder, DTColumnBuilder, $q, eventsService, usersService, $scope, $compile, Form) {
     var vm = this;
 
     vm.$log = $log;
     vm.DTOptionsBuilder = DTOptionsBuilder;
     vm.DTColumnBuilder = DTColumnBuilder;
-    vm.educationService = educationService;
     vm.$q = $q;
     vm.eventsService = eventsService;
     vm.usersService = usersService;
     vm.$scope = $scope;
     vm.$compile = $compile;
+    vm.Form = Form;
 }
 
 /**
@@ -50,15 +49,13 @@ EditEventInviteesModal.prototype.$onInit = function () {
     //init the page with all the required data
     vm.pageIniter = vm.$q.all({
         users: vm.usersService.getUsers(),
-        educationStatuses: vm.educationService.getEducationStatuses(),
-        degrees: vm.educationService.getDegrees(),
-        faculties: vm.educationService.getFaculties()
+        paramValues: vm.Form.getAllOptionValues()
     }).then(function (result) {
 
         vm.users = result.users;
-        vm.educationStatuses = result.educationStatuses;
-        vm.degrees = result.degrees;
-        vm.faculties = result.faculties;
+        vm.educationStatuses = result.paramValues.data.education_status;
+        vm.degrees = result.paramValues.data.degree;
+        vm.faculties = result.paramValues.data.major;
 
 
         //handle users
@@ -71,27 +68,29 @@ EditEventInviteesModal.prototype.$onInit = function () {
             var userDegrees = [];
             var userFaculties = [];
 
-            user.education.forEach(function (education) {
+            if (user.education) {
+                user.education.forEach(function (education) {
 
-                for (var key in education) {
+                    for (var key in education) {
 
-                    if (education[key].paramName == "degree") {
-                        userDegrees.push(education[key].paramValue);
+                        if (education[key].paramName == "degree") {
+                            userDegrees.push(education[key].paramValue);
+                        }
+
+
+                        if (education[key].paramName == "major") {
+                            userFaculties.push(education[key].paramValue);
+                        }
                     }
 
-
-                    if (education[key].paramName == "major") {
-                        userFaculties.push(education[key].paramValue);
-                    }
-                }
-
-            });
+                });
+            }
 
             //set user's degrees
-            user.degrees = symConcatArr(", ", userDegrees);
+            user.degrees = symConcatArr(", ", userDegrees) || "";
 
             //set user's faculties
-            user.faculties = symConcatArr(", ", userFaculties);
+            user.faculties = symConcatArr(", ", userFaculties) || "";
 
             //mark all invited users
             vm.invites.forEach(function(invite) {
@@ -168,7 +167,7 @@ EditEventInviteesModal.prototype.$onInit = function () {
 
                 //create
                 resolve(vm.DTOptionsBuilder.fromFnPromise(function () {
-                    return vm.usersService.getUsers();
+                    return vm.$q.resolve(vm.users);
                 }).withPaginationType('full_numbers')
                     .withOption('order', [0, 'desc'])
                     .withOption('displayLength', 50)
@@ -269,7 +268,7 @@ EditEventInviteesModal.prototype.$onInit = function () {
 
         //if in first stage pre or post page init, return a select html
         if (tableRendererHelper.isUserInvitedRenderer.callNumber == 0) {
-            result = '<input ng-change="$ctrl.reloadData()" type="checkbox" ng-model="$ctrl.users[' + meta.row + '].invited">';
+            result = '<input ng-click="$ctrl.reloadData()" type="checkbox" ng-model="$ctrl.users[' + meta.row + '].invited">';
 
         } else { //in not in first stage, return selected data value
 
@@ -312,13 +311,30 @@ EditEventInviteesModal.prototype.$onInit = function () {
 EditEventInviteesModal.prototype.$onDestroy = function () {
 };
 
+
 /**
- * close the forgot password modal
+ * close the edit event invitees modal, if selected invitees are given, pass then to the event controller
+ * @param invitees
  */
-EditEventInviteesModal.prototype.close = function () {
+EditEventInviteesModal.prototype.close = function (invitees) {
     var vm = this;
 
-    vm.close();
+    vm.close(invitees);
+};
+
+
+/**
+ * save selected users as invitees
+ */
+EditEventInviteesModal.prototype.save = function () {
+
+    var vm = this;
+
+    //close the modal and pass all the selected users as invitees
+    vm.close(vm.users.filter(function (user) {
+        return user.invited;
+    }));
+
 };
 
 
@@ -400,5 +416,5 @@ EditEventInviteesModal.prototype.reloadData = function () {
 };
 
 
-EditEventInviteesModal.$inject = ['$log', 'DTOptionsBuilder', 'DTColumnBuilder', '$q', 'educationService',
-    'eventsService', 'usersService', '$scope', '$compile'];
+EditEventInviteesModal.$inject = ['$log', 'DTOptionsBuilder', 'DTColumnBuilder', '$q',
+    'eventsService', 'usersService', '$scope', '$compile', 'Form'];

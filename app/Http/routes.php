@@ -310,15 +310,15 @@ Route::group(['middlewareGroup' => ['web','domain']], function () {
         
         //Events routes
         Route::get('/events',             'EventController@getEvents');
-        Route::get('/event/{id}',         'EventController@getEvent');
-        Route::post('/postEvent',         'EventController@postEvent');
-        Route::post('/deleteEvent',       'EventController@deleteEvent');
+        Route::get('/events/{id}',         'EventController@getEvent');
+        Route::post('/events/{id?}',         'EventController@postEvent');
+        Route::delete('/events',       'EventController@deleteEvent');
 
         // status types
-        Route::get('/userStatusType',     'UserStatusTypeController@getStatusType');
+        Route::get('/inviteStatusTypes',     'UserStatusTypeController@getStatusType');
         
-        // steps types
-        Route::get('/stepTypes',          'StepTypeController@getAllTypes');
+        //get all event types
+        Route::get('/eventTypes',          'StepTypeController@getAllTypes');
     });
 
     Route::get('/password/email',         'Auth\PasswordController@getEmail');

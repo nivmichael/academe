@@ -244,24 +244,6 @@ angular.module('acadb.services', ['acadb.services.resources', 'acadb.services.fo
 
     })
 
-
-
-    /**
-     * use instant promise when data is already available but promise is required
-     */
-    .factory('instantPromise', ['$q', function ($q) {
-
-        return function (data) {
-            var defer = $q.defer();
-
-            defer.resolve(data);
-
-            return defer.promise;
-        };
-
-    }])
-
-
     /**
      * download a file for a given path
      */

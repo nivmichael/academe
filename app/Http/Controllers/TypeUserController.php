@@ -527,7 +527,7 @@ class TypeUserController extends Controller
 
 	public function getAllUsers()
 	{
-		var_dump($this->user->allUsers());
+		return $this->user->allUsers();
 	}
 
 //	public function getProfilePic()

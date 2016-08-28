@@ -9,7 +9,7 @@ class StepTypeController extends Controller
 
     public function __construct()
     {
-        //$this->middleware('jwt.auth');
+        $this->middleware('jwt.auth');
     }
 
     // get all event types

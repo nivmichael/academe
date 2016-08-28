@@ -23,13 +23,12 @@ angular.module("acadb.components.event", [
  * @param editEventInviteesModalService
  * @param $q
  * @param $timeout
- * @param instantPromise
  * @param fileDownloader
  * @constructor
  */
 function EventComponentCtrl($state, $stateParams, $compile, $scope, DTOptionsBuilder,
                             DTColumnBuilder, eventsService, $log, editEventInviteesModalService, $q,
-                            $timeout, instantPromise, fileDownloader) {
+                            $timeout, fileDownloader) {
 
     var vm = this;
     vm.$stateParams = $stateParams;
@@ -43,7 +42,6 @@ function EventComponentCtrl($state, $stateParams, $compile, $scope, DTOptionsBui
     vm.editEventInviteesModalService = editEventInviteesModalService;
     vm.$q = $q;
     vm.$timeout = $timeout;
-    vm.instantPromise = instantPromise;
     vm.fileDownloader = fileDownloader;
 
 
@@ -92,15 +90,15 @@ EventComponentCtrl.prototype.$onInit = function () {
         eventTypes: vm.eventsService.getEventTypes(),
         inviteStatuses: vm.eventsService.getInviteStatuses()
     }).then(function (result) {
-        vm.eventTypes = result.eventTypes;
-        vm.inviteStatuses = result.inviteStatuses;
+        vm.eventTypes = result.eventTypes.data;
+        vm.inviteStatuses = result.inviteStatuses.data;
 
 
         //create invite statuses filter for our datatable out of all possible invite statuses
         vm.inviteesDT.inviteStatusesFilter = vm.inviteStatuses.map(function (inviteStatus) {
             return {
-                value: inviteStatus.name,
-                label: inviteStatus.name
+                value: inviteStatus.user_status_type,
+                label: inviteStatus.user_status_type
             };
         });
 
@@ -156,7 +154,7 @@ EventComponentCtrl.prototype.$onInit = function () {
                 //create
                 resolve(vm.DTOptionsBuilder
                     .fromFnPromise(function () {
-                        return vm.instantPromise(vm.invites);
+                        return vm.$q.when(vm.invites);
                     })
                     .withPaginationType('full_numbers')
                     .withOption('order', [0, 'asc'])
@@ -196,7 +194,7 @@ EventComponentCtrl.prototype.$onInit = function () {
             vm.DTColumnBuilder.newColumn('user.email').withTitle('Email'),
             vm.DTColumnBuilder.newColumn('user.mobile').withTitle('Phone Number'),
             vm.DTColumnBuilder
-                .newColumn('user_status').withTitle('Status')
+                .newColumn('userStatus').withTitle('Status')
                 .renderWith(inviteeStatusRenderer),
             vm.DTColumnBuilder.newColumn('comments')
                 .withTitle('Comments')
@@ -239,11 +237,11 @@ EventComponentCtrl.prototype.$onInit = function () {
 
         //if in first stage pre or post page init, return a select html
         if (tableRendererHelper.inviteeStatusRendered.callNumber == 0) {
-            var select = '<select class = "fill-w" gt-editor-input="$ctrl.eventFormEditor" ng-change = "$ctrl.inviteesDT.dtInstance.reloadData(null, false);" ng-model = "$ctrl.invites[' + meta.row + '].user_status">';
+            var select = '<select class = "fill-w" gt-editor-input="$ctrl.eventFormEditor" ng-change = "$ctrl.reloadDataTable();" ng-model = "$ctrl.invites[' + meta.row + '].userStatus">';
 
             //populate options
             vm.inviteStatuses.forEach(function (inviteStatus) {
-                select += '<option value = "' + inviteStatus.name + '">' + inviteStatus.name + '</option>';
+                select += '<option value = "' + inviteStatus.user_status_type + '">' + inviteStatus.user_status_type + '</option>';
             });
 
             select += '</select>';
@@ -251,7 +249,7 @@ EventComponentCtrl.prototype.$onInit = function () {
             result = select;
         } else { //in not in first stage, return selected data value
 
-            result = vm.invites[meta.row].user_status;
+            result = vm.invites[meta.row].userStatus;
         }
 
         //manage the renderer helper
@@ -319,23 +317,26 @@ EventComponentCtrl.prototype.$onInit = function () {
         if (!vm.eventFormEditor.isCreating()) {
             vm.event = event;
 
+            vm.event.notifyNew = vm.event.notifyUpdated = vm.event.notifyDeleted = true;
+
+
             //set event date
             vm.eventDate = moment(vm.event.event_date, "YYYY-MM-DD HH:mm:ss");
 
             //set selected event type by event's type id
             vm.selectedEventType = _.first(vm.eventTypes.filter(function (eventType) {
-                return eventType.id == vm.event.event_type_id;
+                return eventType.id == vm.event.event_type;
             }));
 
             //for every invite the event has, set user status by user status id
             vm.event.invites.forEach(function (invite) {
 
                 //set invite's user status
-                invite.user_status = _.first(
+                invite.userStatus = _.first(
                     vm.inviteStatuses.filter(function (inviteStatus) {
-                        return inviteStatus.id == invite.user_status_id;
+                        return inviteStatus.id == invite.user_status;
                     })
-                ).name;
+                ).user_status_type;
 
                 //set full name
                 invite.user.fullName = concat(invite.user.first_name, invite.user.last_name);
@@ -372,7 +373,7 @@ EventComponentCtrl.prototype.$onInit = function () {
         var saveEvent = angular.copy(vm.event);
 
         //handle event type
-        saveEvent.event_type_id = vm.selectedEventType.id;
+        saveEvent.event_type = vm.selectedEventType.id;
 
         //handle event date
         saveEvent.event_date = moment(vm.eventDate).format("YYYY-MM-DD HH:mm");
@@ -381,12 +382,17 @@ EventComponentCtrl.prototype.$onInit = function () {
         saveEvent.invites = angular.copy(vm.invites);
         saveEvent.invites.forEach(function (invite) {
 
+            //set user id
+            invite.user_id = invite.user.id;
+            delete invite.user;
+
+
             //set user status id
-            invite.user_status_id = _.first(vm.inviteStatuses.filter(function(inviteStatus) {
-                return inviteStatus.name == invite.user_status;
+            invite.user_status = _.first(vm.inviteStatuses.filter(function(inviteStatus) {
+                return inviteStatus.user_status_type == invite.userStatus;
             })).id;
 
-            delete invite.user_status;
+            delete invite.userStatus;
         });
 
 
@@ -462,8 +468,64 @@ EventComponentCtrl.prototype.editInvitees = function () {
     var vm = this;
 
     //open edit invitees modal
-    vm.editEventInviteesModalService.open(vm.invites);
+    vm.editEventInviteesModalService.open(vm.invites, function(invitees) {
 
+        vm.invites = invitees.map(function (invitee) {
+
+            //look for an already existing invite in our edited invites list
+            var invite = _.first(vm.invites.filter(function (_invite) {
+
+                return _invite.user_id == invitee.personal_information.id;
+
+            }));
+
+            //if invite was not found, check if the original event had the invite
+            //(could happen when a user edits the invites and removes someone, then before saving the
+            //event, he changes his mind and decided to add him back)
+            if (!invite) {
+
+                invite = _.first(vm.event.invites.filter(function (_invite) {
+
+                    return _invite.user_id == invitee.personal_information.id;
+
+                }));
+            }
+
+
+            //return the invite if found, if not create new invite
+            if (invite) {
+                return invite;
+            } else {
+                //get full name
+                invitee.personal_information.fullName = concat(invitee.personal_information.first_name, invitee.personal_information.last_name);
+
+                return {
+                    event_id: vm.event.id,
+                    user_id: invitee.personal_information.id,
+                    user_status: 1,
+                    userStatus: _.first(vm.inviteStatuses.filter(function (inviteStatus) {
+                        return inviteStatus.id == 1;
+                    })).user_status_type,
+                    user: invitee.personal_information,
+                    newInvite: true,
+                    comments: ""
+                }
+            }
+
+        });
+
+        //reload data-table data
+        vm.reloadDataTable();
+
+    });
+
+};
+
+/**
+ * reload data-table data
+ */
+EventComponentCtrl.prototype.reloadDataTable = function () {
+    this.inviteesDT.dtInstance.reloadData(null, false);
 };
 
 
@@ -498,4 +560,4 @@ EventComponentCtrl.prototype.downloadAttachment = function (attachment) {
 //inject the following dependencies
 EventComponentCtrl.$inject = ['$state', '$stateParams', '$compile', '$scope', 'DTOptionsBuilder',
     'DTColumnBuilder', 'eventsService', '$log', 'editEventInviteesModalService', '$q',
-    '$timeout', 'instantPromise', 'fileDownloader'];
+    '$timeout', 'fileDownloader'];

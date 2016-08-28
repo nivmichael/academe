@@ -93,7 +93,6 @@ header("Access-Control-Allow-Origin: *");
 {!! Html::script('js/services/RolesAndPermissions.js') !!}
 {!! Html::script('js/services/job.js') !!}
 {!! Html::script('js/services.js') !!}
-{!! Html::script('js/services/promiseCombiner.js') !!}
 {{--angular filters--}}
 {!! Html::script('js/filters.js') !!}
 
@@ -234,10 +233,6 @@ header("Access-Control-Allow-Origin: *");
 
 {{-- USERS --}}
 {!! Html::script('components/users-components/users.service.js') !!}
-
-
-{{-- EDUCATION --}}
-{!! Html::script('components/education-components/education.service.js') !!}
 
 
 {{-------------------------------- END OF COMPONENTS (JS)  -------------------------------------------}}

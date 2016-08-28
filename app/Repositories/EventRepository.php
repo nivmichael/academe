@@ -48,12 +48,6 @@ class EventRepository
 
         }
 
-        for ($i = 0; $i < count($eventArr['invites']); $i++) {
-            $statusType = new UserStatusType();
-            $eventArr['invites'][$i]['statusName'] = $statusType::find($eventArr['invites'][$i]['user_status'])->toArray()['user_status_type'];
-        }
-
-
         echo json_encode($eventArr);
     }
 
