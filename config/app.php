@@ -152,6 +152,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
+        Nathanmac\GUID\GUIDServiceProvider::class,
 
 
 

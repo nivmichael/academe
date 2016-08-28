@@ -67,6 +67,32 @@ class EntrustSetupTables extends Migration
             });
         }
 
+
+        if (!Schema::hasTable('step_type')) {
+
+            // Create type steps table
+            Schema::create('step_type', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name');
+            });
+        }
+
+        if (!Schema::hasTable('steps')) {
+
+            // Create steps table
+            Schema::create('steps', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('name');
+                $table->integer('order');
+                $table->integer('type_id')->unsigned();
+                $table->foreign('type_id')
+                    ->references('id')
+                    ->on('step_type')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
+            });
+        }
+
         if (!Schema::hasTable('ac_event')) {
             
             // Create table for Events
@@ -74,7 +100,13 @@ class EntrustSetupTables extends Migration
                 $table->increments('id');
                 $table->timestamps();
                 $table->timestamp('event_date');
-                $table->string('event_type');
+
+                $table->integer('event_type')->unsigned();
+                $table->foreign('event_type') ->references('id')
+                    ->on('steps')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
+
                 $table->string('event_subject');
                 $table->text('event_text');
                 $table->text('event_comment');
@@ -130,8 +162,10 @@ class EntrustSetupTables extends Migration
             // Create table for event files
             Schema::create('file', function (Blueprint $table) {
                 $table->increments('id');
+                $table->timestamps();
                 $table->string('path');
                 $table->string('filename');
+                $table->string('orginalName');
                 $table->enum('choises', ['event-attachment']);
             });
         }
@@ -141,10 +175,18 @@ class EntrustSetupTables extends Migration
             // Create table for event files
             Schema::create('ac_event_file', function (Blueprint $table) {
                 $table->integer('file_id')->unsigned();
-                $table->foreign('file_id')->references('id')->on('file');
+                $table->foreign('file_id')
+                    ->references('id')
+                    ->on('file')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
 
                 $table->integer('event_id')->unsigned();
-                $table->foreign('event_id')->references('id')->on('ac_event');
+                $table->foreign('event_id')
+                    ->references('id')
+                    ->on('ac_event')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
             });
         }
     }
@@ -179,8 +221,7 @@ class EntrustSetupTables extends Migration
         if (Schema::hasTable('ac_event_user_status_list')) {
             Schema::drop('ac_event_user_status_list');
         }
-
-
+        
         if (Schema::hasTable('ac_event_file')) {
             Schema::drop('ac_event_file');
         }
@@ -191,6 +232,14 @@ class EntrustSetupTables extends Migration
 
         if (Schema::hasTable('ac_event')) {
             Schema::drop('ac_event');
+        }
+
+        if (Schema::hasTable('steps')) {
+            Schema::drop('steps');
+        }
+
+        if (Schema::hasTable('step_type')) {
+            Schema::drop('step_type');
         }
     }
 }

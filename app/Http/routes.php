@@ -304,7 +304,21 @@ Route::group(['middlewareGroup' => ['web','domain']], function () {
         Route::post('/admin/forms/save',    'FormController@saveForm');
 
         Route::get('/jobseekerSteps', 'DocParamController@jobseekerSteps');
+        
+        // get all users
+        Route::get('/users', 'TypeUserController@getAllUsers');
+        
+        //Events routes
+        Route::get('/events',             'EventController@getEvents');
+        Route::get('/event/{id}',         'EventController@getEvent');
+        Route::post('/postEvent',         'EventController@postEvent');
+        Route::post('/deleteEvent',       'EventController@deleteEvent');
 
+        // status types
+        Route::get('/userStatusType',     'UserStatusTypeController@getStatusType');
+        
+        // steps types
+        Route::get('/stepTypes',          'StepTypeController@getAllTypes');
     });
 
     Route::get('/password/email',         'Auth\PasswordController@getEmail');
@@ -313,10 +327,6 @@ Route::group(['middlewareGroup' => ['web','domain']], function () {
     Route::get('/param/{paramName}/{docParamId}/{isPost?}', ['as'=>'whatever','uses'=>'ParamValueController@getOptionValues']);
 
 });
-
-Route::get('/events/{id?}',   'EventController@getEvents');
-Route::post('/postEvent',     'EventController@postEvent');
-Route::get('/userEvent',     'EventController@addUsersToEvent');
 
 
 
