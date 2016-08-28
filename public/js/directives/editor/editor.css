@@ -1,0 +1,101 @@
+.no-edit {
+    border: none;
+}
+
+.editor-input-container:hover .editor-button {
+    visibility: visible;
+}
+
+.editor-input-container .editor-button {
+    visibility: hidden;
+}
+
+
+.gt-form .gt-tinymce-container[disabled] .mce-toolbar-grp,
+.gt-form .gt-tinymce-container[disabled] .mce-flow-layout {
+    display: none;
+}
+
+.gt-form .gt-tinymce-container[disabled] .mce-container {
+    border: 0;
+}
+
+
+.gt-form .form-control[disabled],
+.gt-form .form-control[readonly],
+.gt-form fieldset[disabled] .form-control,
+
+.gt-form .gt-control[disabled],
+.gt-form .gt-control[readonly],
+.gt-form fieldset[disabled] .gt-control,
+.gt-form .select2-container.select2-container-disabled .select2-choice .select2-chosen {
+    background-color: white;
+    padding: 0;
+    cursor: default;
+    opacity: 1;
+    color: #555;
+}
+
+
+.gt-form .form-control[disabled],
+.gt-form .form-control[readonly],
+.gt-form fieldset[disabled] .form-control,
+
+.gt-form .gt-control[disabled],
+.gt-form .gt-control[readonly],
+.gt-form fieldset[disabled] .gt-control,
+
+.gt-form .select2-container.select2-container-disabled .select2-choice {
+    border: 0;
+    resize: none;
+    box-shadow: none;
+}
+
+.gt-form .select2-container.select2-container-disabled .select2-choice.select2-default,
+.gt-form .select2-container.select2-container-disabled .select2-choice .select2-arrow,
+.gt-form .ui-select-bootstrap[disabled] .ui-select-toggle>.caret {
+    display: none;
+}
+
+.gt-form .form-control[disabled]::-webkit-input-placeholder,
+.gt-form .form-control[readonly]::-webkit-input-placeholder,
+
+.gt-form .gt-control[disabled]::-webkit-input-placeholder,
+.gt-form .gt-control[readonly]::-webkit-input-placeholder{ /* WebKit browsers */
+    color: #fff;
+}
+
+.gt-form .form-control[disabled]:-moz-placeholder,
+.gt-form .form-control[readonly]:-moz-placeholder,
+
+.gt-form .gt-control[disabled]:-moz-placeholder,
+.gt-form .gt-control[readonly]:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #fff;
+    opacity: 1;
+}
+
+.gt-form .form-control[disabled]::-moz-placeholder,
+.gt-form .form-control[readonly]::-moz-placeholder,
+
+.gt-form .gt-control[disabled]::-moz-placeholder,
+.gt-form .gt-control[readonly]::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #fff;
+    opacity: 1;
+}
+
+.gt-form .form-control[disabled]:-ms-input-placeholder,
+.gt-form .form-control[readonly]:-ms-input-placeholder,
+
+.gt-form .gt-control[disabled]:-ms-input-placeholder,
+.gt-form .gt-control[readonly]:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: #fff;
+}
+
+
+/* REMOVE SELECT CARET */
+.gt-form select[disabled],
+.gt-form select[readonly] {
+    appearance:none;
+    -moz-appearance:none; /* Firefox */
+    -webkit-appearance:none; /* Safari and Chrome */
+}

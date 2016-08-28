@@ -17,20 +17,20 @@ function EditEventInviteesModalService($uibModal) {
  * @param onSuccess
  * @param onError
  */
-EditEventInviteesModalService.prototype.open = function (onSuccess, onError) {
+EditEventInviteesModalService.prototype.open = function (invites, onSuccess, onError) {
 
     var vm = this;
 
     vm.$uibModal.open({
         animation: true,
-        template: '<edit-event-invitees close = "close"></edit-event-invitees>',
+        template: '<edit-event-invitees invites = "invites" close = "close"></edit-event-invitees>',
         controller: EditEventInviteesModalDataTransmitCtrl,
         size: 'md',
         backdrop: true,
         resolve: {
             payload: function () {
                 return {
-
+                    invites: invites
                 };
             }
         }
@@ -53,7 +53,7 @@ function EditEventInviteesModalDataTransmitCtrl($scope, payload, $uibModalInstan
     };
 
 
-    $scope.event = payload.event;
+    $scope.invites = payload.invites;
 }
 
 EditEventInviteesModalDataTransmitCtrl.$inject = ['$scope', 'payload', '$uibModalInstance'];

@@ -1,8 +1,13 @@
-<section id="eventsView">
+<section id="eventsView" class = "ac-page">
+
+    <div ncy-breadcrumb></div>
+
     <section class="tableParent">
 
 
-        <table datatable="$ctrl.eventsDT.getDt" dt-options="$ctrl.eventsDT.options" dt-columns="$ctrl.eventsDT.columns"
+        <table datatable="$ctrl.eventsDT.getDt" dt-options="$ctrl.eventsDT.options"
+               dt-columns="$ctrl.eventsDT.columns"
+               dt-disable-deep-watchers="true"
                class="events-table table table-striped border-less dataTable">
         </table>
 

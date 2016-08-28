@@ -2,102 +2,51 @@
 
     <!-- MODAL HEADER -->
     <div class="modal-header">
-        <button type="button" class="close" ng-click="$ctrl.close()" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">שיחזור סיסמה</h4>
+        <i class="clickable close-btn pull-right fa fa-times" ng-click="$ctrl.close()" aria-hidden="true"></i>
+        <span class="modal-title">Edit Invitees</span>
     </div>
 
     <!--MODAL BODY-->
-    <form class="modal-body">
+    <div class="modal-body">
 
-        <!-- RECOVERY VIEW -->
-        <div ng-show="$ctrl.recoveryView">
 
-            <!-- HEADER -->
-            <h2>
-                שכחת סיסמא? לא נורא!
-            </h2>
+        <div style = "margin-bottom: 20px;">
 
-            <!-- DESC-->
-            <h3>
-                הכנס את כתובת הדוא"ל שלך או את מספר הנייד שלך.
-                <br/>
-                לאחר מכן הכנס את הקוד שקיבלת או לחץ על הלינק במייל.
-            </h3>
-
-            <div class = "row warning-label"  ng-show = "$ctrl.notFound">
-                <div class = "col-xs-12">
-                    *
-                    לא נמצא משתמש עם הפרטים שהזנת, אנא בדוק שנית שהפרטים תקינים.
-                </div>
+            <div class = "btn btn-info" ng-click = "$ctrl.selectAllUsers()">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                Select All
             </div>
 
-            <br />
-
-            <!-- RECOVERY VALUE -->
-            <div class="row">
-
-                <div class="col-sm-3">
-                    <label for="recovery-value">
-                        אימייל / מספר נייד:
-                    </label>
-                </div>
-
-                <div class="col-sm-9">
-                    <input id="recovery-value" ng-model="$ctrl.recoveryValue" class="form-control"/>
-                </div>
+            <div class = "btn btn-info" ng-click="$ctrl.unSelectAllUsers()">
+                <i class="fa fa-times" aria-hidden="true"></i>
+                un-select All
             </div>
 
-            <br/>
+            <div class = "btn btn-info" ng-click="$ctrl.selectFiltered()">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                Select Filtered
+            </div>
 
-            <div class="row text-right flip">
-
-                <div class = "col-xs-12">
-                    <div class="btn btn-info" ng-click="$ctrl.forgotPassword()">
-                        שלח!
-                    </div>
-                </div>
-
+            <div class = "btn btn-info" ng-click="$ctrl.unSelectFiltered()">
+                <i class="fa fa-times" aria-hidden="true"></i>
+                un-select Filtered
             </div>
 
         </div>
 
 
+        <table datatable dt-options="$ctrl.inviteesDT.options" dt-columns="$ctrl.inviteesDT.columns"
+               dt-instance="$ctrl.inviteesDT.dtInstance" class="table border-less dataTable">
+        </table>
 
-        <!-- CODE VIEW -->
-        <div ng-hide="$ctrl.recoveryView">
+        <div class = "text-right">
 
-            <h3>
-                הזן את הקוד שקיבלת באימייל / באס-אמ-אס
-            </h3>
-
-
-            <!-- RECOVERY CODE -->
-            <div class="row">
-
-                <div class="col-sm-3">
-                    <label for="recovery-code">
-                        אימייל / מספר נייד:
-                    </label>
-                </div>
-
-                <div class="col-sm-9">
-                    <input id="recovery-code" ng-model="$ctrl.recoveryCode" class="form-control"/>
-                </div>
-            </div>
-
-            <br/>
-
-            <div class="row text-right flip">
-
-                <div class = "col-xs-12">
-                    <div class="btn btn-info" ng-click="$ctrl.recoverPassword()">
-                        שחזר!
-                    </div>
-                </div>
-
+            <div class = "btn btn-info">
+                <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                Save
             </div>
 
         </div>
 
-    </form>
+    </div>
 </div>

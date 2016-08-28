@@ -50,13 +50,58 @@ section.header-section + section {
 }
 
 
+.fill-w {
+    width: 100%;
+}
+
+
+.fill-h {
+    height: 100%;
+}
+
+
+
+/********************************** START OF BREADCRUMBS **********************************************/
+
+ol.breadcrumb {
+    border-radius: 0;
+}
+
+/********************************** END OF BREADCRUMBS **********************************************/
+
+
+
+
+/********************************** START OF UI SELECT **********************************************/
+
+/* remove shadow from select toggle */
+.ui-select-toggle, .ui-select-toggle:hover {
+    box-shadow: none;
+}
+
+
+/* remove border radius from results */
+.ui-select-choices {
+    border-radius: 0;
+}
+
+/********************************** END OF UI SELECT **********************************************/
+
+
+
+
+
+
+
 
 /****************************** START OF CUSTOM BOOTSTRAP ****************************************/
 
 /****** FORM ********/
 input.form-control,
-select.form-control {
-    max-width: 300px;
+textarea.form-control,
+select.form-control,
+.ui-select-container {
+    max-width: 400px;
     border-radius: 0;
 }
 
@@ -80,6 +125,34 @@ select.form-control {
 
 
 
+/********* MODAL ************/
+.modal-content {
+    border-radius: 0;
+}
+
+
+.modal-header {
+    background: #4E75AD;
+    border-radius: 0;
+    border: 0;
+    margin: 0;
+    color: white;
+}
+
+
+.modal-header .modal-title {
+    font-size: 25px;
+    font-weight: normal;
+}
+
+.modal-header .close-btn {
+    margin: 5px 5px 0 0;
+    color: white;
+}
+
+.modal-header .close-btn:hover {
+    color: #00209b;
+}
 
 
 

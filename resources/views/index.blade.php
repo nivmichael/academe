@@ -56,7 +56,7 @@ header("Access-Control-Allow-Origin: *");
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" type="text/css">
+    {!! Html::style('bower_components/font-awesome/css/font-awesome.min.css') !!}
 
     {{---------------------------------- END OF FONTS  --------------------------------------------}}
 
@@ -93,10 +93,29 @@ header("Access-Control-Allow-Origin: *");
 {!! Html::script('js/services/RolesAndPermissions.js') !!}
 {!! Html::script('js/services/job.js') !!}
 {!! Html::script('js/services.js') !!}
+{!! Html::script('js/services/promiseCombiner.js') !!}
 {{--angular filters--}}
 {!! Html::script('js/filters.js') !!}
-{{--angular directives--}}
+
+
+
+
+{{-------------------- START OF DIRECTIVES ----------------------------}}
 {!! Html::script('js/directives.js') !!}
+
+
+{{-- FORM EDITOR --}}
+{!! Html::style('js/directives/editor/editor.css') !!}
+{!! Html::script('js/directives/editor/editor.js') !!}
+{!! Html::script('js/directives/editor/formEditor.js') !!}
+{!! Html::script('js/directives/editor/inputEditor.js') !!}
+
+
+
+{{--------------------- END OF DIRECTIVES -----------------------------}}
+
+
+
 {{--angular libraries / dependencies / modules--}}
 {!! Html::script('/lib/angular-resource.js') !!}
 {!! Html::script('/lib/bootstrap.js') !!}
@@ -122,6 +141,7 @@ header("Access-Control-Allow-Origin: *");
 {!! Html::script('lib/angular-responsive-tables/irDragNDrop.js') !!}
 {!! Html::script('lib/sortable.js') !!}
 {!! Html::script('lib/ng-sortable.js') !!}
+{!! Html::script('js/utils.js') !!}
 
 {!! Html::script('lib/angular-permission.js')!!}
 
@@ -131,6 +151,35 @@ header("Access-Control-Allow-Origin: *");
 {{-- TINYMCE --}}
 {!! Html::script('bower_components/tinymce-dist/tinymce.min.js') !!}
 {!! Html::script('bower_components/angular-ui-tinymce/dist/tinymce.min.js') !!}
+
+
+{{-- BREADCRUMBS --}}
+{!! Html::script('bower_components/angular-breadcrumb/dist/angular-breadcrumb.min.js') !!}
+
+
+{{-- ANGULAR UI SELECT --}}
+{!! Html::style('bower_components/angular-ui-select/dist/select.min.css') !!}
+{!! Html::script('bower_components/angular-ui-select/dist/select.min.js') !!}
+
+
+{{-- DATA TABLES --}}
+{!! Html::style('lib/data-tables/data-tables.min.css') !!}
+{!! Html::script('lib/data-tables/data-tables.js') !!}
+
+
+{!! Html::script('bower_components/angular-datatables/dist/angular-datatables.min.js') !!}
+{!! Html::script('bower_components/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.min.js') !!}
+
+{!! Html::style('bower_components/angular-datatables/dist/css/angular-datatables.min.css') !!}
+
+{!! Html::script('bower_components/datatables-light-columnfilter/dist/dataTables.lightColumnFilter.js') !!}
+{!! Html::script('bower_components/angular-datatables/dist/plugins/light-columnfilter/angular-datatables.light-columnfilter.js') !!}
+
+{{-- END DATA TABLES --}}
+
+
+
+
 
 
 {{--angular controllers--}}
@@ -155,21 +204,6 @@ header("Access-Control-Allow-Origin: *");
 {!! Html::script('lib/angular-filter.js') !!}
 
 
-
-{{-- DATA TABLES --}}
-{!! Html::style('lib/data-tables/data-tables.min.css') !!}
-{!! Html::script('lib/data-tables/data-tables.min.js') !!}
-
-
-{!! Html::script('bower_components/angular-datatables/dist/angular-datatables.js') !!}
-{!! Html::script('bower_components/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.min.js') !!}
-
-{!! Html::style('bower_components/angular-datatables/dist/css/angular-datatables.min.css') !!}
-
-{!! Html::script('bower_components/datatables-light-columnfilter/dist/dataTables.lightColumnFilter.js') !!}
-{!! Html::script('bower_components/angular-datatables/dist/plugins/light-columnfilter/angular-datatables.light-columnfilter.js') !!}
-
-{{-- END DATA TABLES --}}
 
 
 {{--------------------------------- END OF Application Dependencies ------------------------------------------}}
@@ -196,6 +230,14 @@ header("Access-Control-Allow-Origin: *");
 {{-- EDIT EVENT MODAL --}}
 {!! Html::script('components/edit-event-invitees-component/edit-event-invitees-modal.js') !!}
 {!! Html::script('components/edit-event-invitees-component/edit-event-invitees-modal.service.js') !!}
+
+
+{{-- USERS --}}
+{!! Html::script('components/users-components/users.service.js') !!}
+
+
+{{-- EDUCATION --}}
+{!! Html::script('components/education-components/education.service.js') !!}
 
 
 {{-------------------------------- END OF COMPONENTS (JS)  -------------------------------------------}}

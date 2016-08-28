@@ -30,6 +30,9 @@ var acadb = angular.module('acadb', [
         'angular.filter',
         'dndLists',
         'ui.slider',
+        'ncy-angular-breadcrumb',
+        'ui.select',
+        'acadb.directives.editor',
 
         //COMPONENTS
         'acadb.components.events',
@@ -193,6 +196,9 @@ var acadb = angular.module('acadb', [
                         resolve: {
                             loginRequired: loginRequired,
                         },
+                        ncyBreadcrumb: {
+                            label: 'Admin Page'
+                        },
                         data: {
                             permissions: {
                                 only: ['tech_admin'],
@@ -274,18 +280,21 @@ var acadb = angular.module('acadb', [
                         views: {
                             'nav@admin': {
                                 templateUrl: '../partials/admin/tpl/admin_navbar.html',
-                                controller: 'SideNavCtrl as NC',
+                                controller: 'SideNavCtrl as NC'
                             },
                             '': {
-                                template: '<events></events>',
+                                template: '<events></events>'
                             },
+                        },
+                        ncyBreadcrumb: {
+                            label: 'Events'
                         }
 
                     })
 
 
                     .state('admin.event', {
-                        url: '^/event?{id}',
+                        url: '^/event?{id}{mode}',
                         resolve: {
                             loginRequired: loginRequired
                         },
@@ -300,6 +309,9 @@ var acadb = angular.module('acadb', [
                             '': {
                                 template: '<event></event>'
                             }
+                        },
+                        ncyBreadcrumb: {
+                            label: 'Event'
                         }
 
                     })

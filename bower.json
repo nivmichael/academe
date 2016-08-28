@@ -20,6 +20,8 @@
     "datatables-buttons": "^1.2.2",
     "font-awesome": "^4.6.3",
     "tinymce-dist": "4.3.12",
-    "angular-ui-tinymce": "^0.0.16"
+    "angular-ui-tinymce": "^0.0.16",
+    "angular-breadcrumb": "^0.4.1",
+    "angular-ui-select": "^0.19.4"
   }
 }
