@@ -312,7 +312,7 @@ Route::group(['middlewareGroup' => ['web','domain']], function () {
         Route::get('/events',             'EventController@getEvents');
         Route::get('/events/{id}',         'EventController@getEvent');
         Route::post('/events/{id?}',         'EventController@postEvent');
-        Route::delete('/events',       'EventController@deleteEvent');
+        Route::delete('/events/{id}',       'EventController@deleteEvent');
 
         // status types
         Route::get('/inviteStatusTypes',     'UserStatusTypeController@getStatusType');

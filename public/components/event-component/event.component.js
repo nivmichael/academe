@@ -21,7 +21,6 @@ angular.module("acadb.components.event", [
  * @param eventsService
  * @param $log
  * @param editEventInviteesModalService
- * @param $q
  * @param $timeout
  * @param fileDownloader
  * @constructor
@@ -204,6 +203,28 @@ EventComponentCtrl.prototype.$onInit = function () {
     };
 
 
+    /**
+     * on files attached listener
+     * @param event
+     */
+    vm.onAttachmentsUploaded = function (event) {
+
+        //init new attachments if needed
+        vm.newAttachments = vm.newAttachments || [];
+
+        //for every file we got received, lets add it to the event's attachments list and also save it for later when we would
+        //like to the save the event
+        _.forEach(event.target.files, function (file) {
+            vm.newAttachments.push(file);
+
+            vm.event.files.push({
+                filename: file.name,
+                originalName: file.name
+            });
+        });
+    };
+
+
     //helper object that will detect the renderer call number to be able to render a select with option that is filterable
     //on page init the renderer will be called 4 times, and we want to return the view on the first time
     //and the data on the 2nd, 3nd and 4th times, or else the data-tables lib will evaluate the data as all of the
@@ -215,6 +236,13 @@ EventComponentCtrl.prototype.$onInit = function () {
     //the isPageInit responsible for tell us if what type of calls we are getting, pre or post page init
     //and the callNumber value will tell us at what stage we are (1, 2, 3, 4 for pre page init, and 1, 2, 3 for post page init)
     var tableRendererHelper = {
+
+        numOfPreInitCalls: function() {
+            return vm.event.invites.length > 0 ? 4 : 3;
+        },
+        numOfPostInitCalls: function() {
+            return vm.event.invites.length > 0 ? 3 : 3;
+        },
 
         inviteeStatusRendered: {
             isPageInit: true,
@@ -261,13 +289,13 @@ EventComponentCtrl.prototype.$onInit = function () {
 
             //if in pre page init and at after 3rd stage, or at post page init and  after 2nd stage
             if ((tableRendererHelper.inviteeStatusRendered.isPageInit &&
-                tableRendererHelper.inviteeStatusRendered.callNumber == 4) || (
-                    !tableRendererHelper.inviteeStatusRendered.isPageInit && tableRendererHelper.inviteeStatusRendered.callNumber == 3
+                tableRendererHelper.inviteeStatusRendered.callNumber == tableRendererHelper.numOfPreInitCalls()) || (
+                    !tableRendererHelper.inviteeStatusRendered.isPageInit && tableRendererHelper.inviteeStatusRendered.callNumber == tableRendererHelper.numOfPostInitCalls()
                 )) {
 
                 //if after pre page init, mark that prePage init is over
                 if (tableRendererHelper.inviteeStatusRendered.isPageInit &&
-                    tableRendererHelper.inviteeStatusRendered.callNumber == 4) {
+                    tableRendererHelper.inviteeStatusRendered.callNumber == tableRendererHelper.numOfPreInitCalls()) {
                     tableRendererHelper.inviteeStatusRendered.isPageInit = false;
                 }
 
@@ -359,6 +387,9 @@ EventComponentCtrl.prototype.$onInit = function () {
             vm.invites = vm.event.invites;
             vm.eventDate = data.date;
             vm.selectedEventType = data.eventType;
+
+            //reload the data table as we rolled back the invitees
+            vm.reloadDataTable();
         });
 
     }
@@ -388,18 +419,25 @@ EventComponentCtrl.prototype.$onInit = function () {
 
 
             //set user status id
-            invite.user_status = _.first(vm.inviteStatuses.filter(function(inviteStatus) {
+            invite.user_status = _.first(vm.inviteStatuses.filter(function (inviteStatus) {
                 return inviteStatus.user_status_type == invite.userStatus;
             })).id;
 
             delete invite.userStatus;
         });
 
+        //remove new attachments as the were added for visualization only and will be added the http request via FormData
+        saveEvent.files = saveEvent.files.filter(function (file) {
+            return file.id && file.id > 0;
+        });
+
 
         //try saving current event
-        vm.eventsService.saveEvent(saveEvent).then(function (event) {
+        vm.eventsService.saveEvent(saveEvent, vm.newAttachments).then(function (result) {
 
-            vm.$log.debug("successfully saved the event", event);
+            vm.$log.debug("successfully saved the event", result);
+
+            var event = result.data;
 
             //TODO notify the user that saving the event was a success
 
@@ -468,7 +506,7 @@ EventComponentCtrl.prototype.editInvitees = function () {
     var vm = this;
 
     //open edit invitees modal
-    vm.editEventInviteesModalService.open(vm.invites, function(invitees) {
+    vm.editEventInviteesModalService.open(vm.invites, function (invitees) {
 
         vm.invites = invitees.map(function (invitee) {
 
@@ -537,11 +575,8 @@ EventComponentCtrl.prototype.removeAttachment = function (attachment) {
 
     var vm = this;
 
-    //filter the removed attachment
-    vm.event.files = vm.event.files.filter(function (_attachment) {
-        return attachment.id != _attachment.id;
-    });
-
+    //remove the given attachment from the attachments list
+    vm.event.files.splice(vm.event.files.indexOf(attachment), 1);
 };
 
 
@@ -554,6 +589,17 @@ EventComponentCtrl.prototype.downloadAttachment = function (attachment) {
 
     vm.fileDownloader(attachment.filename, attachment.path);
 
+};
+
+
+/**
+ * on upload attachment button clicked, fire the click event for our hidden file input
+ */
+EventComponentCtrl.prototype.uploadAttachment = function () {
+    //a trick to get out of angular scope.. (gets warning otherwise)
+    setTimeout(function () {
+        angular.element("#addAttachment").trigger('click');
+    }, 0);
 };
 
 

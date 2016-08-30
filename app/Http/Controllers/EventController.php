@@ -9,6 +9,7 @@ use App\Repositories\InviteRepository;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Repositories\EventRepository;
 
@@ -38,33 +39,27 @@ class EventController extends Controller
     }
 
 
-    // create event or update
-    public function postEvent(Request $eventJson, $id = null)
-    {
 
-        $this->validate($eventJson, [
-            'event_subject' => 'required',
-        ]);
+    /**
+     * create event or update
+     *
+     * @param Request $request
+     * @param null $id
+     */
+    public function postEvent(Request $request, $id = null)
+    {
+        $eventJson = json_decode($request->data);
 
         // create or update event
         $event = $this->eventRepo->mapFromJsonEvent($eventJson);
 
-        $invitesArr = $eventJson->toArray()['invites'];
 
-        // filter request invites and get only new invites
-        $newInvites = array_where($invitesArr, function ($key, $value) {
-            return array_has($value, 'newInvite');
-        });
+        $invitesArr = [];
 
-        // remove key from newInvites array and set timestamp for created_at and updated_at
-        foreach ($newInvites as $i => $v) {
-            $newInvites[$i]['created_at'] = Carbon::today();
-            $newInvites[$i]['updated_at'] = Carbon::today();
-            $newInvites[$i] = array_except($newInvites[$i], ['newInvite']);
+        foreach ($eventJson->invites as $invite) {
+            $invitesArr[] = collect($invite)->toArray();
         }
 
-        // insert new invites
-        $this->inviteRepo->createInvite($newInvites);
 
         // filter request invites for update
         $updateInvite = array_where($invitesArr, function ($key, $value) {
@@ -72,7 +67,10 @@ class EventController extends Controller
         });
 
         // update invites
-        $this->inviteRepo->updateInvite($updateInvite);
+        if (count($updateInvite) > 0) {
+            $this->inviteRepo->updateInvite($updateInvite);
+        }
+
 
         // get invites to delete
         $deleteInvites = $this->deleteInvitesNotIn($this->inviteRepo->getInvitesByEvent($event->id), collect($invitesArr));
@@ -81,6 +79,64 @@ class EventController extends Controller
             // delete invites
             $this->inviteRepo->deleteInvite($deleteInvites, collect($invitesArr)->toArray());
         }
+
+
+        // filter request invites and get only new invites
+        $newInvites = array_where($invitesArr, function ($key, $value) {
+            return array_has($value, 'newInvite');
+        });
+
+
+        // remove key from newInvites array and set timestamp for created_at and updated_at
+        foreach ($newInvites as $i => $v) {
+            $newInvites[$i]['created_at'] = Carbon::today();
+            $newInvites[$i]['updated_at'] = Carbon::today();
+
+            $newInvites[$i]['event_id'] = $event['id'];
+
+            $newInvites[$i] = array_except($newInvites[$i], ['newInvite']);
+        }
+
+        // insert new invites
+        $this->inviteRepo->createInvite($newInvites);
+
+
+        $filesArr = $eventJson->files;
+
+        $filesToDelete = $this->deleteFilesNotIn(collect($this->eventRepo->getEventFiles($event->id)), collect($filesArr));
+
+        foreach ($filesToDelete as $file) {
+
+            $files = new File();
+            $files = $files::find($file['id']);
+
+            \Storage::delete('/events/' . $file['filename']);
+
+            $files->delete();
+        }
+
+        if ($request->hasFile('file')) {
+
+            $path = storage_path() . '/app/events/'; // upload path
+
+            foreach ($request->file('file') as $file) {
+
+                $filename = File::generateFileName($file);
+
+                $file->move($path, $filename);
+
+                $newFile = new File();
+                $newFile->path = '/app/events/';
+                $newFile->filename = $filename;
+                $newFile->originalName = $file->getClientOriginalName();
+                $newFile->choises = 'event-attachment';
+                $newFile->save();
+
+                $event->files()->attach($newFile->id,
+                    ['event_id' => $newFile->id, 'event_id' => $event->id]);
+            }
+        }
+
 
         // emails for new invites
         if (count($newInvites) > 0) {
@@ -97,10 +153,18 @@ class EventController extends Controller
             // TODO
         }
 
+
         return $this->eventRepo->getEvent($event->id);
     }
 
-    // get invites for delete
+
+    /**
+     * get invites for delete
+     *
+     * @param $oldInvites
+     * @param $requestInvites
+     * @return mixed
+     */
     public function deleteInvitesNotIn($oldInvites, $requestInvites)
     {
 
@@ -118,37 +182,40 @@ class EventController extends Controller
         }
     }
 
+    public function deleteFilesNotIn($oldFiles, $requestFiles)
+    {
+
+        if ($oldFiles->count() > 0 || $requestFiles->count() > 0) {
+
+            $toDelete = $oldFiles->filter(function ($oldFiles) use ($requestFiles) {
+
+                return $requestFiles->filter(function ($newFiles) use ($oldFiles) {
+
+                    return $newFiles->id == $oldFiles['id'];
+                })->count() <= 0;
+
+            });
+
+            return $toDelete;
+        }
+
+        return [];
+    }
+
     // delete event
-    public function deleteEvent(Request $request)
+
+    /**
+     *
+     *
+     * @param $id
+     */
+    public function deleteEvent($id)
     {
         $events = new Event();
-        $event = $events::where('id', $request->eventId);
+        $event = $events::where('id', $id);
 
         if ($event->count() > 0) {
             $event->delete();
         }
     }
 }
-
-
-/* // files
-        if ($eventJson->hasFile('file')) {
-
-            $path = storage_path() . '/app/events/'; // upload path
-
-            foreach ($eventJson->file('file') as $file) {
-
-                $filename = File::generateFileName($file);
-
-                $file->move($path, $filename);
-
-                $newFile = new File();
-                $newFile->path = '/app/events/';
-                $newFile->filename = $filename;
-                $newFile->choises = 'event-attachment';
-                $newFile->save();
-
-                $event->files()->attach($newFile->id,
-                    ['event_id' => $newFile->id, 'event_id' => $event->id]);
-            }
-        }*/

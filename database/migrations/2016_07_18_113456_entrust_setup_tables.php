@@ -165,7 +165,7 @@ class EntrustSetupTables extends Migration
                 $table->timestamps();
                 $table->string('path');
                 $table->string('filename');
-                $table->string('orginalName');
+                $table->string('originalName');
                 $table->enum('choises', ['event-attachment']);
             });
         }

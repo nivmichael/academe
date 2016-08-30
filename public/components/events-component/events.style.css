@@ -28,12 +28,6 @@
     border-radius: 0;
 }
 
-#eventsView tr:hover td {
-    background-color: #086fe9;
-    border-color: transparent;
-    color: white;
-    cursor: pointer;
-}
 
 
 div#DataTables_Table_0_filter {
@@ -120,11 +114,11 @@ div#DataTables_Table_0_filter {
     border: 1px solid #ccc;
 }
 
-label {
-    font-size: 16px;
-    color: #444;
-    padding-left: 0 !important;
-}
+/*.dataTables_wrapper :not(select)label {*/
+    /*font-size: 16px;*/
+    /*color: #444;*/
+    /*padding-left: 0 !important;*/
+/*}*/
 
 .attachments-container label {
     padding-left: 15px !important;

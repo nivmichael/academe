@@ -6,7 +6,16 @@ angular.module("acadb.components.events")
     .service('eventsService', EventsService);
 
 
-function EventsService($timeout, $q, EventData, $http) {
+/**
+ * service constructor
+ * @param $timeout
+ * @param $q
+ * @param EventData
+ * @param $http
+ * @param $auth
+ * @constructor
+ */
+function EventsService($timeout, $q, EventData, $http, $auth) {
 
     var self = this;
 
@@ -14,7 +23,11 @@ function EventsService($timeout, $q, EventData, $http) {
     self.$q = $q;
     self.EventData = EventData;
     self.$http = $http;
+    self.$auth = $auth;
 }
+
+//set service injections
+EventsService.$inject = ['$timeout', '$q', 'EventData', '$http', '$auth'];
 
 
 /**
@@ -76,11 +89,27 @@ EventsService.prototype.deleteEvent = function (eventId) {
 /**
  * save given event
  * @param event
+ * @param newAttachments
  * @returns {*}
  */
-EventsService.prototype.saveEvent = function (event) {
-    return this.EventData.save(event).$promise;
+EventsService.prototype.saveEvent = function (event, newAttachments) {
+
+    var self = this;
+
+    var fd = new FormData();
+
+    _.forEach(newAttachments, function(file){
+        fd.append('file[]', file);
+    });
+
+    fd.append('data', angular.toJson(event));
+
+
+    return self.$http.post('/api/events', fd, {
+        transformRequest: angular.identity,
+        headers: {
+            'Content-Type': undefined,
+            'Authorization': 'Bearer ' + self.$auth.getToken()
+        }
+    });
 };
-
-
-EventsService.$inject = ['$timeout', '$q', 'EventData', '$http'];

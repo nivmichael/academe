@@ -10,7 +10,6 @@ angular.module("acadb.components.events", [
     });
 
 
-
 /**
  * controller constructor
  * @param $state
@@ -165,10 +164,13 @@ EventsComponentCtrl.prototype.$onInit = function () {
 
 };
 
+
+
 /**
  * destroy controller
  */
-EventsComponentCtrl.prototype.$onDestroy = function () {};
+EventsComponentCtrl.prototype.$onDestroy = function () {
+};
 
 
 /**
@@ -180,6 +182,14 @@ EventsComponentCtrl.prototype.openEvent = function (event) {
     var vm = this;
 
     vm.$state.go('admin.event', {id: event.id, mode: 'read'});
+};
+
+
+/**
+ * create new event
+ */
+EventsComponentCtrl.prototype.createNewEvent = function() {
+    this.$state.go('admin.event', {mode: 'create'});
 };
 
 

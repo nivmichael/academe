@@ -138,7 +138,7 @@
             <div class="attachments">
 
                 <!-- EVENT'S ATTACHMENTS -->
-                <div style="padding-bottom: 20px;">
+                <div style="padding-bottom: 20px; overflow: hidden;">
                     <div ng-if="$ctrl.event" class="attachment row" ng-repeat="attachment in $ctrl.event.files">
                         <i ng-show="$ctrl.eventFormEditor.isEditing()"
                            class="hoverable-btn clickable delete-icon fa fa-times col-xs-1 no-padding text-center"
@@ -147,8 +147,10 @@
                            class="hoverable-btn clickable download-icon fa fa-download col-xs-1 no-padding text-center"
                            aria-hidden="true" ng-click="$ctrl.downloadAttachment(attachment)"></i>
                         <i class="file-icon fa fa-paperclip col-xs-1 no-padding text-center" aria-hidden="true"></i>
-                        <input gt-editor-input="$ctrl.eventFormEditor" class="file-name no-padding col-xs-10"
-                               ng-model="attachment.filename"/>
+
+                        <span class="file-name no-padding col-xs-10">
+                            {{attachment.originalName}}
+                        </span>
                     </div>
 
                     <!-- LOADING FILES -->
@@ -178,10 +180,12 @@
                 </div>
 
                 <!-- ADD ATTACHMENT BUTTON-->
-                <div class="text-center btn btn-info add-attachment-button block"
+                <div class="text-center btn btn-info add-attachment-button block" ng-click="$ctrl.uploadAttachment()"
                      ng-show="$ctrl.eventFormEditor.isEditing()">
                     <i class="fa fa-upload" aria-hidden="true"></i>
                     Add Attachment
+                    <input ng-show="false" id = "addAttachment" type = "file" multiple
+                           file-on-change = "$ctrl.onAttachmentsUploaded" />
                 </div>
 
             </div>

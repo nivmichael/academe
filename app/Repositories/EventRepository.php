@@ -59,31 +59,39 @@ class EventRepository
 
             $event = new Event();
 
-            if ($jsonEvent->id !== null && $jsonEvent->id > 0) {
+            if (isset($jsonEvent->id) && $jsonEvent->id > 0) {
                 $event = $event::find($jsonEvent->id);
             }
         }
 
-        if ($jsonEvent->event_date !== null)
+        if (isset($jsonEvent->event_date))
             $event->event_date = $jsonEvent->event_date;
 
-        if ($jsonEvent->event_type !== null)
+        if (isset($jsonEvent->event_type))
             $event->event_type = $jsonEvent->event_type;
 
-        if ($jsonEvent->event_subject !== null)
+        if (isset($jsonEvent->event_subject))
             $event->event_subject = $jsonEvent->event_subject;
 
-        if ($jsonEvent->event_text !== null)
+        if (isset($jsonEvent->event_text))
             $event->event_text = $jsonEvent->event_text;
 
-        if ($jsonEvent->event_comment !== null)
+        if (isset($jsonEvent->event_comment))
             $event->event_comment = $jsonEvent->event_comment;
 
-        if ($jsonEvent->active !== null)
+        if (isset($jsonEvent->active))
             $event->active = $jsonEvent->active;
 
         $event->save();
 
         return $event;
+    }
+
+    public function getEventFiles($id)
+    {
+        $event = new Event();
+        $event = $event::find($id);
+
+        return $event->files->toArray();
     }
 }

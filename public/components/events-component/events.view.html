@@ -4,6 +4,9 @@
 
     <section class="tableParent">
 
+        <div class = "btn btn-info" ng-click="$ctrl.createNewEvent()" style = "margin-bottom: 25px;">
+            Create new Event
+        </div>
 
         <table datatable="$ctrl.eventsDT.getDt" dt-options="$ctrl.eventsDT.options"
                dt-columns="$ctrl.eventsDT.columns"

@@ -396,16 +396,16 @@ table.dataTable.table-striped > tbody > tr:nth-of-type(odd) {
 }
 
 table.dataTable.table-striped > tbody > tr:nth-of-type(even) {
-    background-color: #6498e2;
+    background-color: #e9ebf3;
+}
+
+table.dataTable.table-striped > tbody > tr:hover {
+    background-color: #a3ade1;
     color: white;
 }
 
-table.dataTable.table-striped > tbody > tr:nth-of-type(odd) > td {
-    border: 1px solid white;
-}
-
-table.dataTable.table-striped > tbody > tr:nth-of-type(even) > td {
-    border: 1px solid #6498e2;
+table.dataTable.table-striped > tbody > tr:nth-of-type > td {
+    border: transparent;
 }
 
 /****************************** END OF DATA TABLES ****************************************/

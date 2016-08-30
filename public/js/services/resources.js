@@ -4,7 +4,6 @@ angular.module('acadb.services.resources', []).
     .factory('EventData', ['$resource',
         function($resource) {
             return $resource('api/events/:id', {id: '@id'}, {
-                'save': { method:'POST' },
                 'delete': {method:'DELETE'},
                 'list': {method: 'GET', isArray: true }
             });

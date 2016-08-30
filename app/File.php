@@ -9,11 +9,13 @@ class File extends Model
 {
     protected $table = 'file';
 
+    /**
+     * generate a unique file name
+     * @param $file
+     * @return string
+     */
     public static function generateFileName($file) {
-
-        $newFileName = str_replace('.' . $file->clientExtension(), GUID::generate() . '.' .$file->clientExtension(), $file->getClientOriginalName());
-        
-        return $newFileName;
+        return GUID::generate() . '.' .$file->clientExtension();
     }
 
 }
