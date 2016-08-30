@@ -26,16 +26,29 @@ class EventController extends Controller
         $this->inviteRepo = $inviteRepository;
     }
 
-    // get all events
+    /**
+     * return all events
+     * type json
+     * 
+     * @return string
+     */
+    
     public function getEvents()
     {
-        return $this->eventRepo->getEvents();
+        return $this->eventRepo->getEvents()->toJson();
     }
 
-    // get event by id
+    /**
+     * return event by id
+     * type json
+     * 
+     * @param $id
+     * @return string
+     */
+    
     public function getEvent($id)
     {
-        return $this->eventRepo->getEvent($id);
+        return json_encode($this->eventRepo->getEvent($id));
     }
 
 
@@ -52,15 +65,13 @@ class EventController extends Controller
 
         // create or update event
         $event = $this->eventRepo->mapFromJsonEvent($eventJson);
-
-
+        
         $invitesArr = [];
 
-        foreach ($eventJson->invites as $invite) {
+        foreach ($eventJson->invites as $invite) { // insert all event invites in $inviteArr
             $invitesArr[] = collect($invite)->toArray();
         }
-
-
+        
         // filter request invites for update
         $updateInvite = array_where($invitesArr, function ($key, $value) {
             return !array_has($value, 'newInvite');
@@ -70,8 +81,7 @@ class EventController extends Controller
         if (count($updateInvite) > 0) {
             $this->inviteRepo->updateInvite($updateInvite);
         }
-
-
+        
         // get invites to delete
         $deleteInvites = $this->deleteInvitesNotIn($this->inviteRepo->getInvitesByEvent($event->id), collect($invitesArr));
 
@@ -87,7 +97,7 @@ class EventController extends Controller
         });
 
 
-        // remove key from newInvites array and set timestamp for created_at and updated_at
+        // remove newInvite key and set created_at and updated for new invites
         foreach ($newInvites as $i => $v) {
             $newInvites[$i]['created_at'] = Carbon::today();
             $newInvites[$i]['updated_at'] = Carbon::today();
@@ -103,6 +113,7 @@ class EventController extends Controller
 
         $filesArr = $eventJson->files;
 
+        // get files to delete
         $filesToDelete = $this->deleteFilesNotIn(collect($this->eventRepo->getEventFiles($event->id)), collect($filesArr));
 
         foreach ($filesToDelete as $file) {
@@ -138,21 +149,29 @@ class EventController extends Controller
         }
 
 
-        // emails for new invites
-        if (count($newInvites) > 0) {
-            // TODO
+        if($newInviteEmail) {
+
+            // email for new invites
+            if (count($newInvites) > 0) {
+                // TODO
+            }
         }
 
-        // emails for update invite
-        if (count($updateInvite) > 0) {
-            // TODO
+        if($updateInviteEmail) {
+
+            // email for update invite
+            if (count($updateInvite) > 0) {
+                // TODO
+            }
         }
 
-        // emails for deleted invites
-        if (count($deleteInvites) > 0) {
-            // TODO
-        }
+        if($deleteInviteEmail) {
 
+            // email for deleted invites
+            if (count($deleteInvites) > 0) {
+                // TODO
+            }
+        }
 
         return $this->eventRepo->getEvent($event->id);
     }
@@ -182,6 +201,13 @@ class EventController extends Controller
         }
     }
 
+    /**
+     * filtring old files and new files and get files to delete
+     *
+     * @param $oldFiles
+     * @param $requestFiles
+     * @return array
+     */
     public function deleteFilesNotIn($oldFiles, $requestFiles)
     {
 
