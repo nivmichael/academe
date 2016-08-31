@@ -1,3 +1,26 @@
+
+
+
+
+
+
+
+//$scope.showIterableGroup = function(paramKey, docParamName, index, paramName) {
+//	paramKey = paramKey.toString();
+//	if($scope.user[docParamName][index][paramKey]['paramValue'] && typeof $scope.groups[paramName] != 'undefined') {
+//		//var selected = $filter('filter')($scope.groups[paramName], {value: $scope.user[docParamName][index][paramKey]['paramValue']});
+//		var selected = $filter('filter')($scope.groups[paramName], {id: $scope.user[docParamName][index][paramKey]['paramValue']});
+//
+//		return selected.length ? selected[0].text : 'Not set';
+//	} else {
+//		return $scope.user[docParamName][index][paramKey]['paramValue'] || '';
+//	}
+//};
+
+
+
+
+
 angular.module('acadb.filters', [])
 
 .filter('labeled', function(Account, $stateParams, $rootScope) {

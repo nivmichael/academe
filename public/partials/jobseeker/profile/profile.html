@@ -36,10 +36,10 @@
 
 		<uib-accordion close-others="oneAtATime">
 			<uib-accordion-group ng-repeat="(docParamName, iteration_key) in user track by $index" ng-init="status = $first" is-open="status" ng-if="docParamName != 'files'">
-				<uib-accordion-heading >
+				<uib-accordion-heading>
 					<div ng-class="{'grey': !status,  'cyan':  status}" class="waves-effect waves-light" style="width: 100%;">
 						<i class="glyphicon glyphicon-plus"  ng-class="{'glyphicon glyphicon-circle-arrow-right': !status,  'glyphicon glyphicon-circle-arrow-down':  status}"></i>
-						{{docParamName  | underscoreless | capitalize:true}}
+						{{ docParamName  | underscoreless | capitalize:true }}
 					</div>
 				</uib-accordion-heading>
 
@@ -67,23 +67,26 @@
 									</div>
 								</div>
 
-								<div ng-switch-when="select">
-									<!--{{param.paramValue}}-->
+								<!--{{ user[docParamName][key][ param.paramParentId ].paramValue  }}-->
+								<!--{{param.paramValue}}-->
+								<div ng-switch-when="select"
+									 uib-tooltip="Please select a {{ user[docParamName][key][ param.paramParentId ].paramName }}"
+									 tooltip-placement="top-right"
+									 tooltip-trigger="mouseenter"
+									 tooltip-popup-delay="500"
+									 tooltip-enable="user[docParamName][key][ param.paramParentId ].paramValue == '' && typeof(user[docParamName][key][ param.paramParentId ].paramValue) === undefined  ">
 									<div editable-select="param.paramValue"
-										 name="user[docParamName][key][param_id]['paramName']"
-										 e-name="user[docParamName][key][param_id]['paramName']"
+										 name="param.paramName"
+										 e-name="param.paramName"
 										 e-class="form-control"
-										 e-ng-options="o.value as o.text for o in groups[param.paramName] | toArray:false | filter:{parent_id:  user[docParamName][key][ param.paramParentId ].paramValue }:true">
-
+										 e-ng-change="changeThis($data, param)"
+										 e-ng-options="o.id as o.text for o in groups[param.paramName] | toArray:false | filter:{parent_id:  user[docParamName][key][ param.paramParentId ].paramValue }:true">
 
 										{{ showIterableGroup(param.paramId, docParamName, key, param.paramName) }}
-
 									</div>
 								</div>
 
 								<div ng-switch-when="textarea">
-
-
 								</div>
 
 								<div ng-switch-when="date">
@@ -148,7 +151,7 @@
 
 						<button type="button" class="btn btn-default editBtn" ng-click="editableForm.$show()" ng-show="!editableForm.$visible" style="float:right;">Edit</button>
 
-						<div ng-show="editableForm.$visible && docParamName != 'personal evaluation'" style="float:left;">
+						<div ng-show="editableForm.$visible && docParamName != 'personal evaluation' && docParamName != 'personal_information'" style="float:left;">
 							<button type="button" class="btn btn-default" ng-click="add(docParamName,$index)">+ Add a Record</button>
 
 						</div>

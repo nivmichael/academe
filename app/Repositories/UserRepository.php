@@ -96,10 +96,12 @@ class UserRepository
             $paramId        = $v->paramId;
             $paramParent    = $v->paramParent;
 
-            if ($v->value_ref == null) {
-                $value = $v->value_short;
+
+
+            if ($v->value_ref !== null) {
+                $value = $v->value_ref;
             } else {
-                $value = $v->value;
+                $value = $v->value_short;
             }
 
 //            if ($iteration !== NULL) {

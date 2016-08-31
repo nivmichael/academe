@@ -1,28 +1,49 @@
-<div class="paramDiv  col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
+<!--on view mode we see only a few grouped parameters:
 
-    <div class="param_label col-xs-12 col-sm-3 col-md-3 col-lg-3">
-        First Name*
+Full name : first name + last name
+Email
+Address: street + city + state + country
+Phone
+
+-->
+
+
+<!--view mode-->
+
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="!editableForm.$visible">
+
+    <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        Full Name
     </div>
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-        <div editable-text="user.personal_information.first_name" e-class="form-control" class="" e-name="first_name"  ng-model="user.personal_information.first_name" required>
+        <div editable-text="user.personal_information.first_name" ng-model="user.personal_information.first_name" name="first_name" e-class="form-control ">
             {{user.personal_information.first_name}}
         </div>
-    </div>
-
-
-</div>
-
-<div class="paramDiv  col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
-
-    <div class="param_label col-xs-12 col-sm-3 col-md-3 col-lg-3">
-        Last Name*
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-        <div editable-text="user.personal_information.last_name" e-class="form-control" e-name="last_name"  ng-model="user.personal_information.last_name" required>
+        <div editable-text="user.personal_information.last_name" ng-model="user.personal_information.last_name" name="last_name" e-class="form-control ">
             {{user.personal_information.last_name}}
         </div>
     </div>
 </div>
+
+
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="!editableForm.$visible">
+
+    <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        Address
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div editable-text="user.personal_information.street" ng-model="user.personal_information.street" name="street" e-class="form-control ">
+            {{user.personal_information.street}}
+        </div>
+        <div editable-text="user.personal_information.state" ng-model="user.personal_information.state" name="state" e-class="form-control ">
+            {{user.personal_information.state}}
+        </div>
+        <div editable-text="user.personal_information.country" ng-model="user.personal_information.country" name="country" e-class="form-control ">
+            {{user.personal_information.country}}
+        </div>
+    </div>
+</div>
+
 
 <div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
 
@@ -48,19 +69,55 @@
     </div>
 </div>
 
+<!--end of view mode-->
 
-<!--<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">-->
 
-    <!--<div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">-->
-        <!--Password*-->
-    <!--</div>-->
-    <!--<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">-->
-      <!--<button class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i></button>-->
-    <!--</div>-->
 
-<!--</div>-->
 
-<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+<!--EDIT MODE-->
+
+
+
+
+<div class="paramDiv  col-xs-12 col-sm-6 col-md-6 col-lg-6 " ng-if="editableForm.$visible">
+
+    <div class="param_label col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        First Name*
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div editable-text="user.personal_information.first_name" e-class="form-control" class="" e-name="first_name"  ng-model="user.personal_information.first_name" required>
+            {{user.personal_information.first_name}}
+        </div>
+    </div>
+
+
+</div>
+
+<div class="paramDiv  col-xs-12 col-sm-6 col-md-6 col-lg-6 " ng-if="editableForm.$visible">
+
+    <div class="param_label col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        Last Name*
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div editable-text="user.personal_information.last_name" e-class="form-control" e-name="last_name"  ng-model="user.personal_information.last_name" required>
+            {{user.personal_information.last_name}}
+        </div>
+    </div>
+</div>
+
+
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="editableForm.$visible">
+
+    <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
+    Password*
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <button class="btn btn-default btn-flat" ui-sref="password_mail"><i class="glyphicon glyphicon-pencil"></i>Password reset</button>
+    </div>
+
+</div>
+
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="editableForm.$visible">
 
     <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
         Gender*
@@ -73,17 +130,17 @@
 </div>
 
 
-<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="editableForm.$visible">
 
     <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
         Birthday*
     </div>
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 
-        <!--<div ng-show="!editableForm.$visible">-->
+        <!--<div ng-if="!editableForm.$visible">-->
 
         <!--</div>-->
-        <!--<div ng-show="editableForm.$visible">-->
+        <!--<div ng-if="editableForm.$visible">-->
             <!--{{ user.personal_information.date_of_birth  | date:"dd/MM/yyyy" }}-->
         <!--</div>-->
 
@@ -96,7 +153,7 @@
     </div>
 </div>
 
-<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="editableForm.$visible">
 
     <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
         Martial status
@@ -109,7 +166,7 @@
     </div>
 </div>
 
-<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="editableForm.$visible">
 
     <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
         Education Status
@@ -121,10 +178,14 @@
     </div>
 </div>
 
-<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+
+
+
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="editableForm.$visible">
 
     <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
-        Street Address 1
+        Street
     </div>
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
         <div editable-text="user.personal_information.street" ng-model="user.personal_information.street" name="street" e-class="form-control ">
@@ -134,7 +195,7 @@
 </div>
 
 
-<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="editableForm.$visible">
 
     <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
         country
@@ -148,7 +209,7 @@
 
 </div>
 
-<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="editableForm.$visible">
 
     <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
         State*
@@ -161,7 +222,7 @@
     </div>
 </div>
 
-<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="editableForm.$visible">
 
     <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
         city*
@@ -173,7 +234,7 @@
     </div>
 </div>
 
-<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="editableForm.$visible">
 
     <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
         Zip Code
@@ -185,7 +246,7 @@
     </div>
 </div>
 
-<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="editableForm.$visible">
 
     <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
         Facebook
@@ -197,7 +258,7 @@
     </div>
 </div>
 
-<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="editableForm.$visible">
 
     <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
         Twitter
@@ -209,7 +270,7 @@
     </div>
 </div>
 
-<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="editableForm.$visible">
 
     <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
         LinkedIn
@@ -221,7 +282,7 @@
     </div>
 </div>
 
-<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6">
+<div class="paramDiv col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="editableForm.$visible">
 
     <div class="param_label  col-xs-12 col-sm-3 col-md-3 col-lg-3">
         YouTube video
@@ -232,3 +293,4 @@
         </div>
     </div>
 </div>
+<!--EDIT MODE-->
