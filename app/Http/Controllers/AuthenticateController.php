@@ -319,7 +319,7 @@ class AuthenticateController extends Controller
                     if ($param_id) {
                         //checking where the values come from? from param_value? or from short/long?
                         $value_ref = DB::table('param_value')->where('id', $paramValue)->value('id');
-                        $existsId  = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_id', $authId)->where('iteration', $iteration_count)->value('id');
+                        $existsId  = DB::table('sys_param_values')->where('param_id', $param_id)->where('ref_id', $authId)->where('iteration', $iteration_count)->where('doc_type', 1)->value('id');
 
                         if ($existsId) {
                             if (!$value_ref) {

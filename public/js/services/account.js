@@ -17,6 +17,18 @@ angular.module('acadb.services.account', []).value('version', '0.1')
             // Return the promise to the controller
             return $q.when(promise);
         },
+        getProfileAgain: function() {
+
+                promise = $http.get('/api/me').then(function (response) {
+                    // The then function here is an opportunity to modify the response
+
+                    // The return value gets picked up by the then in the controller.
+                    return $q.when(response.data);
+                });
+
+            // Return the promise to the controller
+            return $q.when(promise);
+        },
         updateProfile: function(profileData) {
             return $http.post('/api/me',profileData);
         },

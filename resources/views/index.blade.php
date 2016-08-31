@@ -21,21 +21,29 @@
 
 
     {!! Html::style('css/bootstrap.min.css') !!}
+    {!! Html::style('css/nya-bs-select.css') !!}
     {!! Html::style('css/angular-responsive-tables.min.css') !!}
     {!! Html::style('css/ng-img-crop.css') !!}
     {!! Html::style('css/materialize.css') !!}
     {!! Html::style('lib/xeditable/css/xeditable.css') !!}
     {!! Html::script('lib/ui-slider.js') !!}
+
+
     <!--Custom CSS-->
 
 
     {{--{!! Html::style('css/statevis.css') !!}--}}
     {!! Html::style('css/rerouting.css') !!}
     {!! Html::style('css/dnd.css') !!}
+
     {{--{!! Html::style('lib/ui-select/select.css') !!}--}}
     {{--{!! Html::style('css/jquery.rateyo.css') !!}--}}
     <!--Fonts-->
 
+    {{--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>--}}
+    {{--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>--}}
+    {{--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>--}}
+    {{--<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">--}}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
 
@@ -105,8 +113,8 @@
 
 {!! Html::script('lib/angular-permission-ui.js')!!}
 {!! Html::script('lib/angular-drag-and-drop-lists.min.js') !!}
-{!! Html::script('lib/selectize.min.js') !!}
-{!! Html::script('lib/angular-selectize.js') !!}
+{!! Html::script('lib/nya-bs-select.js') !!}
+<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 {{--angular controllers--}}
 {!! Html::script('js/controllers/home.js') !!}
 {!! Html::script('js/controllers/login.js') !!}

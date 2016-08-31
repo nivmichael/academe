@@ -27,6 +27,33 @@ class UserRepository
         return $roles;
 
     }
+
+    public function getLabeledPosts(User $user)
+    {
+
+
+
+        $id = $user->id;
+        $posts = [];
+        $appliedIds = DB::table('sys_param_values as spv')
+            ->leftJoin( 'param as p',      DB::raw( 'p.id'  ), '=', DB::raw( 'spv.param_id' ) )
+            ->leftJoin( 'doc_param as dp', DB::raw( 'dp.id' ), '=', DB::raw( 'p.doc_param_id' ) )
+            ->where('p.name', '=', 'applied')
+            ->where('spv.ref_id', '=', $id)
+            ->where( 'dp.doc_sub_type', '=', $user->subtype)
+            ->value('spv.value_short');
+
+        $explode = explode('|', $appliedIds);
+        foreach($explode as $postId){
+            if($postId != '' && $postId != null)
+                $posts['applied'][] = (int) $postId;
+        }
+
+        return $posts;
+
+    }
+
+
     public function all(User $user)
     {
 

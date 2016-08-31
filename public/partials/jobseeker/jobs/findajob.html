@@ -1,15 +1,49 @@
-<main style="height:100%;background-color:#EDEDED; ">
+
+<style>
+	body{
+		background-color:#efefef;
+	}
+</style>
+<main>
 
 
+	<div class="">
 
+	</div>
+	<!--<style>-->
+		<!--.typeahead-demo .custom-popup-wrapper {-->
+			<!--position: absolute;-->
+			<!--top: 100%;-->
+			<!--left: 0;-->
+			<!--z-index: 1000;-->
+			<!--display: none;-->
+			<!--background-color: #f9f9f9;-->
+		<!--}-->
 
+		<!--.typeahead-demo .custom-popup-wrapper > .message {-->
+			<!--padding: 10px 20px;-->
+			<!--border-bottom: 1px solid #ddd;-->
+			<!--color: #868686;-->
+		<!--}-->
+
+		<!--.typeahead-demo .custom-popup-wrapper > .dropdown-menu {-->
+			<!--position: static;-->
+			<!--float: none;-->
+			<!--display: block;-->
+			<!--min-width: 160px;-->
+			<!--background-color: transparent;-->
+			<!--border: none;-->
+			<!--border-radius: 0;-->
+			<!--box-shadow: none;-->
+		<!--}-->
+	<!--</style>-->
 
 
 	<!--<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">-->
 	<!--<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.bootstrap3.css">-->
 
 	<div class="">
-			<div class="" style="width: 90%; margin:0 auto; margin-top:15px;">
+			<div class="" style="width: 80%; margin:0 auto; margin-top:15px;">
 
 
 
@@ -30,19 +64,85 @@
 						<!--</div>-->
 
 
+				<!--<input type="text" typeahead-min-length="0" ng-Focus="json = 1" ng-model="selected" uib-typeahead="state for state in states | filter:$viewValue | limitTo:8" class="form-control" typeahead>-->
 
+				<div class="col-md-3 typeahead-demo">
+					<input type="text"
+						   typeahead-min-length="0"
+						   placeholder="Main Field"
+						   ng-Focus="json = 1"
+						   ng-model="filter.main_field"
+						   uib-typeahead="mf.value | capitalize as mf.text | capitalize for mf in groups['main_field'] | filter:$viewValue  | limitTo:8"
+						   class="form-control"
+						   typeahead>
 
-						<!--<div class="col-md-2">-->
-							<!--<input type="text" placeholder="Main Field" ng-model="selected" uib-typeahead="mf.value as mf.text for mf in groups['main_field'] | filter:$viewValue | limitTo:8" class="form-control">-->
-							<!--<span><i class="glyphicon glyphicon-menu-down"></i></span>-->
-						<!--</div>-->
+					<span  class="showonhoverparent" style="" ng-show="filter.main_field" showonhoverparent>
+						<span ng-click="filter.main_field = ''">
+							<i class="glyphicon glyphicon-remove"
+							   uib-tooltip="reset"
+							   tooltip-placement="top"
+							   tooltip-trigger="mouseenter">
+							</i>
+						</span>
+					</span>
+				</div>
 
+				<div class="col-md-3 typeahead-demo">
+					<input type="text"
+						   typeahead-min-length="0"
+						   placeholder="Employment Type"
+						   ng-Focus="json = 1"
+						   ng-model="filter.employment_type"
+						   uib-typeahead="mf.value | capitalize as mf.text | capitalize for mf in groups['employment type'] | filter:$viewValue"
+						   class="form-control"
+						   typeahead>
 
+					<span  class="showonhoverparent" style="" ng-show="filter.employment_type" showonhoverparent>
+						<span ng-click="filter.employment_type = ''">
+							<i class="glyphicon glyphicon-remove"
+							   uib-tooltip="reset"
+							   tooltip-placement="top"
+							   tooltip-trigger="mouseenter">
+							</i>
+						</span>
+					</span>
+				</div>
+				<div class="col-md-2 typeahead-demo">
+					<input type="text"
+						   typeahead-min-length="0"
+						   placeholder="Location"
+						   ng-Focus="json = 1"
+						   ng-model="filter.state"
+						   uib-typeahead="state for state in states | filter:$viewValue"
+						   class="form-control"
+						   typeahead>
 
+					<span  class="showonhoverparent" ng-show="filter.state" showonhoverparent >
+						<span ng-click="filter.state = ''" class=""><i class="glyphicon glyphicon-remove "></i></span>
+					</span>
+				</div>
+				<div class="col-md-2 typeahead-demo">
+					<input type="text"
+						   typeahead-min-length="0"
+						   placeholder="Experience"
+						   ng-Focus="json = 1"
+						   ng-model="filter.experience"
+						   uib-typeahead="mf.value as mf.text for mf in groups['experience'] | filter:$viewValue"
+						   class="form-control" typeahead>
 
-						<!--<div class="col-md-2">-->
-							<!--<input type="text" class="form-control" ng-model="searchText" placeholder="Free Query" />-->
-						<!--</div>-->
+					<span  class="showonhoverparent" style="" ng-show="filter.experience" showonhoverparent>
+						<span ng-click="filter.experience = ''">
+							<i class="glyphicon glyphicon-remove"
+							   uib-tooltip="reset"
+							   tooltip-placement="top"
+							   tooltip-trigger="mouseenter">
+							</i>
+						</span>
+					</span>
+				</div>
+				<div class="col-md-2">
+					<input type="text" class="form-control" ng-model="searchText" placeholder="Free Query" />
+				</div>
 
 
 
@@ -156,7 +256,7 @@
 					</div>
 					<div class="clearfix"></div>
 					<div  class=" text-center col-xs-12 col-sm-6 col-lg-6 col-lg-6"
-						  ng-repeat="(key,job) in allPosts  |  toArray:false  | labeled:label:this | filter:filter.main_field  | filter:filter.employment_type | filter:filter.location | filter:searchText | orderBy:orderByFilter:reverse" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
+						  ng-repeat="(key,job) in allPosts  |  toArray:false  | labeled:label:this | filter:filter.main_field  | filter:filter.employment_type | filter:filter.location | filter:filter.experience |  filter:filter.state | filter:searchText | orderBy:orderByFilter:reverse" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
 
 								<div   class="job-card card text-center" ui-sref="general({jobId:job.postInfo.id})" >
 

@@ -89,10 +89,14 @@ angular.module('acadb')
         return $auth.isAuthenticated();
       };
       $scope.changeStatus = function(status){
-            $http.post('/setStatus',{status:$scope.currentStatus})
+          $scope.ajaxing = true;
+            $http.post('/setStatus',{status: $scope.currentStatus})
             .success(function(data){
+              $scope.currentStatus = data;
+                    $scope.ajaxing = false;
               console.log(data);
             }).error(function(data){
+                    $scope.ajaxing = false;
               console.log(data);
 
             })

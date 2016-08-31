@@ -8,7 +8,7 @@ angular.module('acadb.services.jobseekerJobModal', [])
             openTextEditModal: function(id) {
 
                 var modalInstance = $uibModal.open({
-                    templateUrl: '../partials/jobseeker/job.html',
+                    templateUrl: '../partials/jobseeker/jobs/job/job.html',
                     backdrop: 'static',
                     controller: function($scope, $uibModalInstance, $sce, data, $http, $stateParams, An_applyData, An_openFileData, Account) {
 

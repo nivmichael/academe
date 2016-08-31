@@ -161,7 +161,7 @@ angular.module("acadb")
 
                     $auth.setToken(response.token);
 
-                    Account.getProfile().then(function(account) {
+                    Account.getProfileAgain().then(function(account) {
                         var userRoles = account.roles;
                         var roles = [];
                         RoleData.query(function (data) {

@@ -52,6 +52,68 @@ angular.module('acadb.directives', []).
 //    // }
 //  };
 //})
+    .directive('showonhoverparent',
+    function() {
+        return {
+            link : function(scope, element, attrs) {
+
+                    element.parent().bind('mouseenter', function() {
+                        element.show();
+                    });
+                    element.parent().bind('mouseleave', function() {
+                        element.hide();
+                    });
+
+
+            }
+        };
+    })
+    //.directive('removeIcnBtn',
+    //function() {
+    //    return {
+    //        link : function(scope, element, attrs) {
+    //            console.log('hsjkhsaghsiahisug');
+    //            //element.bind('mouseenter', function() {
+    //            //
+    //            //    element.toggleClass('glyphicon glyphicon-remove', false);
+    //            //});
+    //
+    //
+    //        }
+    //    };
+    //})
+    .directive('typeahead', function () {
+        return {
+            require: 'ngModel',
+            link: function($scope, element, attrs, ctrl) {
+                var reset = element.next();
+
+
+                element.bind('focus', function() {
+                    ctrl.$setViewValue();
+                    $(element).trigger('input');
+                    $(element).trigger('change');
+
+                });
+                //
+                //
+                ctrl.$parsers.unshift(function(inputValue) {
+                    var value = (inputValue ? inputValue : '');
+                    ctrl.$viewValue = value;
+
+                    return value;
+                });
+
+                ctrl.$parsers.push(function(inputValue) {
+                    return inputValue === '' ? '' : inputValue;
+                });
+
+                reset.bind('click'), function(){
+                   console.log('clicked');
+                }
+            }
+        };
+    })
     .directive('bsDropdown', function ($compile) {
         return {
             restrict: 'E',

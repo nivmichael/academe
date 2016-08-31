@@ -54,27 +54,30 @@
 
 					<div ng-repeat="(key,params) in iteration_key"  style="" repeat-done="initDatePicker()" ng-show="isArray(iteration_key)" style="margin-bottom:20px;">
 
-						<div ng-repeat="(param_id, param) in params track by $index" ng-if="param.inputType">
-							<div class="col-md-3" style="float:left;font-weight:bold;">
+						<div ng-repeat="(param_id, param) in params track by $index" ng-if="param.inputType"  class="col-md-6" style="min-height:60px;">
+							<div class="col-md-6" style="font-weight:bold;">
 								{{ param.paramName | underscoreless | capitalize }}
 							</div>
-							<div ng-switch="param.inputType" class="col-md-3" style="padding-right:15px;margin-bottom:10px; ">
+
+							<div ng-switch="param.inputType" class="col-md-6" style="padding-right:15px;margin-bottom:10px; ">
 
 								<div ng-switch-when="text">
 									<div editable-text="param.paramValue" e-class="form-control">
 										{{param.paramValue}}
 									</div>
-
 								</div>
 
 								<div ng-switch-when="select">
+									<!--{{param.paramValue}}-->
 									<div editable-select="param.paramValue"
 										 name="user[docParamName][key][param_id]['paramName']"
 										 e-name="user[docParamName][key][param_id]['paramName']"
 										 e-class="form-control"
-										 e-ng-options="o.value as o.text for o in groups[param.paramName] | toArray:false ">
+										 e-ng-options="o.value as o.text for o in groups[param.paramName] | toArray:false | filter:{parent_id:  user[docParamName][key][ param.paramParentId ].paramValue }:true">
 
-										{{ user[docParamName][key][param_id]['paramValue'] }}
+
+										{{ showIterableGroup(param.paramId, docParamName, key, param.paramName) }}
+
 									</div>
 								</div>
 
@@ -84,36 +87,35 @@
 								</div>
 
 								<div ng-switch-when="date">
-
-
+									<div ng-show="!editableForm.$visible">
+										{{param.paramValue}}
+									</div>
+									<div ng-show="editableForm.$visible">
+										<div class="input-group" >
+											<input type="text" class="form-control"
+												   uib-datepicker-popup ng-model="param.paramValue"
+												   is-open="datepickers[key][param_id]"
+												   datepicker-options="dateOptions"
+												   close-text="Close" />
+									  <span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="open($event,param_id,key)"><i class="glyphicon glyphicon-calendar"></i></button>
+									  </span>
+										</div>
+									</div>
 								</div>
 
-								<div ng-switch-when="slider" ng-init="sliders.integrity = 50">
-
+								<div ng-switch-when="slider">
 									<div ng-show="!editableForm.$visible">
 										{{sliders.integrity}}
 									</div>
-
 									<div ng-show="editableForm.$visible">
-
-										<!--<label>{{sliders.integrity}}</label>-->
-
 										<label class="left">0</label>
 										<div class="left" ui-slider min="0" max="200" ng-model="sliders.integrity" ></div>
 										<label class="left">100</label>
-
-
 									</div>
-
-
-
-
-
-
 								</div>
-
 								<div ng-switch-default>
-									{{ user[docParamName][key][param_id]['paramValue'] }}
+									{{ param.paramValue }}
 								</div>
 							</div>
 						</div>

@@ -344,7 +344,7 @@ class TypeUserController extends Controller
 
 							$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',null)->where('ref_id',$authId)->value('id');
 							if(!$existsId) {
-								$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',$iterableCount)->where('ref_id',$authId)->value('id');
+								$existsId  = DB::table('sys_param_values')->where('param_id',$param_id)->where('iteration',$iterableCount)->where('doc_type', 1)->where('ref_id',$authId)->value('id');
 							}
 
 

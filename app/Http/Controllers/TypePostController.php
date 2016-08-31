@@ -317,7 +317,6 @@ class TypePostController extends Controller {
 											   WHERE doc_type_id = 2 AND authorized = 1 ORDER BY paramPosition"));
 
 		$postInfo = Schema::getColumnListing('type_post');
-
 		$postInfoKeys = array_flip($postInfo);
 		foreach ($postInfoKeys as $key => $value) {
 			$postInfoKeys[$key] = '';

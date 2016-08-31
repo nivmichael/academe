@@ -9,7 +9,7 @@ var acadb = angular.module('acadb', [
     'angular-loading-bar',
     'ngAnimate',
     'ui.bootstrap',
-        'selectize',
+        'nya.bootstrap.select',
     'acadb.controllers',
     'acadb.services',
     'acadb.filters',
@@ -32,7 +32,8 @@ var acadb = angular.module('acadb', [
     'angular.filter',
     'dndLists',
     'ui.slider',
-
+        //'ngAria',
+//'ngMaterial'
     ])
 
 
@@ -72,10 +73,10 @@ var acadb = angular.module('acadb', [
 
                 //$httpProvider.interceptors.push('httpInterceptor');
 
-                //$urlRouterProvider.otherwise( function($injector) {
-                //    var $state = $injector.get("$state");
-                //    $state.go('/');
-                //});
+                $urlRouterProvider.otherwise( function($injector) {
+                    var $state = $injector.get("$state");
+                    $state.go('/');
+                });
 
 
                 $urlRouterProvider.deferIntercept();
@@ -300,7 +301,7 @@ var acadb = angular.module('acadb', [
                         //sticky: true,
                         //deepStateRedirect: true,
                         params: {type: 'jobseeker',  sub_type : null},
-                        templateUrl: '../partials/jobseeker/profile.html',
+                        templateUrl: '../partials/jobseeker/profile/profile.html',
                         controller: 'ProfileCtrl as PC',
 
 
@@ -322,7 +323,7 @@ var acadb = angular.module('acadb', [
                                 controller:  'SideNavCtrl as NC',
                             },
                             '': {
-                                templateUrl: '../partials/jobseeker/findajob.html',
+                                templateUrl: '../partials/jobseeker/jobs/findajob.html',
                                 controller: 'FindajobController as FJC',
                             },
                         }
@@ -1027,12 +1028,12 @@ var acadb = angular.module('acadb', [
 
 
 
-        if(toState.name != 'login' && fromState != 'login' && !$auth.isAuthenticated()){
-            $rootScope.returnToState = toState;
-            $rootScope.returnToStateParams = toParams;
-
-            //console.log($rootScope.returnToState);
-        }
+        //if(toState.name != 'login' && fromState != 'login' && !$auth.isAuthenticated()){
+        //    $rootScope.returnToState = toState;
+        //    $rootScope.returnToStateParams = toParams;
+        //
+        //    //console.log($rootScope.returnToState);
+        //}
 
         if(toState.parent == 'admin'  && toState.name != 'login' && !$auth.isAuthenticated()){
             $rootScope.redirectToAdmin = toState;

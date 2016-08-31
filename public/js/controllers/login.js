@@ -46,7 +46,7 @@ angular.module('acadb')
               //removing `guest` role
               RoleStore.removeRoleDefinition('guest');
               //getting user account data
-              Account.getProfile().then(function(account) {
+              Account.getProfileAgain().then(function(account) {
                   //getting user roles
                   var userRoles = account.roles;
                   var roles = [];
@@ -70,10 +70,10 @@ angular.module('acadb')
                       //`jobseeker` should go to his profile
                       //`employer`  should go to his portal
                       //`admin`     should go to dashboard
-                      console.log($stateParams.redirect);
-                      if($stateParams.redirect){
-                          $state.go($stateParams.redirect);
-                      }else
+                      //console.log($stateParams.redirect);
+                      //if($stateParams.redirect){
+                      //    $state.go($stateParams.redirect);
+                      //}else
 
                       //if (_.contains(userRoles, 'tech_admin') ) {
                       //    $state.go('admin.forms.jobseeker');
