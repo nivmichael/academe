@@ -345,6 +345,9 @@ EventComponentCtrl.prototype.$onInit = function () {
         if (!vm.eventFormEditor.isCreating()) {
             vm.event = event;
 
+
+            vm.newAttachments = [];
+
             vm.event.notifyNew = vm.event.notifyUpdated = vm.event.notifyDeleted = true;
 
 

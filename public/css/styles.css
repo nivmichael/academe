@@ -402,6 +402,7 @@ table.dataTable.table-striped > tbody > tr:nth-of-type(even) {
 table.dataTable.table-striped > tbody > tr:hover {
     background-color: #a3ade1;
     color: white;
+    cursor: pointer;
 }
 
 table.dataTable.table-striped > tbody > tr:nth-of-type > td {
