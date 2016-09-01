@@ -9,7 +9,13 @@ use App\UserStatusType;
 
 class EventRepository
 {
-    // get all events
+    /**
+     * return all events
+     * type collection
+     * 
+     * @return string
+     */
+    
     public function getEvents()
     {
         $events = new Event();
@@ -23,19 +29,26 @@ class EventRepository
             $eventsArr[$i]['numOfInvitees'] = $thisEvent->users()->count();
         }
 
-        return collect($eventsArr)->toJson();
+        return collect($eventsArr);
 
     }
 
-    // get event by id
+    /**
+     * return event by id
+     * include all event data (event data, invites data, files data)
+     * type array
+     * 
+     * @param $id
+     */
+    
     public function getEvent($id)
     {
 
         $events = new Event();
         $event = $events::find($id);
-        $event->numOfInvitees = $event->invites()->count();
-        $event->invites->toArray();
-        $event->files->toArray();
+        $event->numOfInvitees = $event->invites()->count(); // 
+        $event->invites->toArray(); // all event invites
+        $event->files->toArray(); // all event files
 
         $eventArr = $event->toArray();
 
@@ -48,11 +61,15 @@ class EventRepository
 
         }
 
-        echo json_encode($eventArr);
+        return $eventArr;
     }
 
 
-    // create or update event
+    /**
+     * @param $jsonEvent
+     * @param null $event
+     * @return Event|null
+     */
     public function mapFromJsonEvent($jsonEvent, $event = null)
     {
         if ($event === null) {
@@ -87,6 +104,14 @@ class EventRepository
         return $event;
     }
 
+    /**
+     * return all event files by id
+     * type array
+     * 
+     * @param $id
+     * @return mixed
+     */
+    
     public function getEventFiles($id)
     {
         $event = new Event();
