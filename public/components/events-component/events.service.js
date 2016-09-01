@@ -73,7 +73,10 @@ EventsService.prototype.createEmptyEvent = function () {
 
     return {
         files: [],
-        invites: []
+        invites: [],
+        notifyNew: true,
+        notifyUpdated: true,
+        notifyDeleted: false
     };
 
 };
@@ -98,7 +101,7 @@ EventsService.prototype.saveEvent = function (event, newAttachments) {
 
     var fd = new FormData();
 
-    _.forEach(newAttachments, function(file){
+    _.forEach(newAttachments, function (file) {
         fd.append('file[]', file);
     });
 

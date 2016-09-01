@@ -149,7 +149,7 @@ class EventController extends Controller
         }
 
 
-        if($newInviteEmail) {
+        if($eventJson->notifyNew) {
 
             // email for new invites
             if (count($newInvites) > 0) {
@@ -157,7 +157,7 @@ class EventController extends Controller
             }
         }
 
-        if($updateInviteEmail) {
+        if($eventJson->notifyUpdated) {
 
             // email for update invite
             if (count($updateInvite) > 0) {
@@ -165,7 +165,7 @@ class EventController extends Controller
             }
         }
 
-        if($deleteInviteEmail) {
+        if($eventJson->notifyDeleted) {
 
             // email for deleted invites
             if (count($deleteInvites) > 0) {
